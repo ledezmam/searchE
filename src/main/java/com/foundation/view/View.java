@@ -15,6 +15,8 @@ import javax.swing.*;
 
 public class View extends JFrame {
 
+    private JPanel topPanel;
+
     private class frame{
 
     }
@@ -23,6 +25,6 @@ public class View extends JFrame {
 
     }
 
-    
+
 
 }
