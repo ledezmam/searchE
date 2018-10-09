@@ -1,5 +1,5 @@
 /*
- * @(#)Main.java Copyright (c) 2018 Jalasoft.
+ * @(#)Validator.java Copyright (c) 2018 Jalasoft.
  *  2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  *  All rights reserved.
  *  <p>
@@ -10,8 +10,8 @@
  *  with Jalasoft.
  */
 
-package com.foundation;
+public class Validator {
+    public Validator() {
 
-public class Main {
-    Controller control = new Controller();
+    }
 }
