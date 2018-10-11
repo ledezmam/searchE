@@ -1,3 +1,4 @@
+package com.foundation.view;
 /*
  *  @(#)View.java Copyright (c) 2018 Jalasoft.
  *  2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
@@ -12,18 +13,36 @@
  */
 
 import javax.swing.*;
+import java.awt.*;
 
 public class View extends JFrame {
 
-    private JPanel topPanel;
+    //private JPanel topPanel;
+    private JTextArea textArea;
+    private JButton btn;
 
-    private class frame{
+    public View(){
+        super("Search-E");
+        // make the frame be visible
+        setVisible(true);
+        // make the program stop and exit correctly when the User presses the 'X' button of the window
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // set the default size of the frame
+        setSize(600, 500);
+
+        setLayout(new BorderLayout());
+        textArea = new JTextArea();
+        btn = new JButton("Search");
+
+        add(textArea, BorderLayout.CENTER);
+        add(btn, BorderLayout.SOUTH);
+
 
     }
 
-    private class mainPanel{
-
-    }
+//    private class mainPanel{
+//
+//    }
 
 
 
