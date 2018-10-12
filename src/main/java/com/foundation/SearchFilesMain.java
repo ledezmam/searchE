@@ -29,10 +29,10 @@ public class SearchFilesMain {
      */
     public static void main(String[] args) {
 
-        // View view = new View();
-        // SearchModel model = new SearchModel();
+        // View view = new View();                not implemented yet
+        // SearchModel model = new SearchModel(); not implemented yet
         Controller control = new Controller(); /* Controller instance */
-        // controller.StartView();
+        // controller.StartView();                not implemented yet
         control.ValidateSearchCriteria();
     }
 }

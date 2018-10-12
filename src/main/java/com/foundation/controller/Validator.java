@@ -60,4 +60,40 @@ public class Validator implements IValidator {
         Pattern pattern = Pattern.compile(regEx);
         return Pattern.matches(regEx, fileType);
     }
+
+    /**
+     * Method to validate the file size
+     *
+     * @param fileSize size of the file
+     * @return true if fileSize are just digits, otherwise false
+     */
+    public boolean validateFileSize(String fileSize) {
+        String regEx = "\\d+";
+        Pattern pattern = Pattern.compile(regEx);
+        return Pattern.matches(regEx, fileSize);
+    }
+
+    /**
+     * Method to validate if a date is correct
+     *
+     * @param date date to validate
+     * @return true if date is correct, otherwise false
+     */
+    public boolean validateDate(String date) {
+        String regEx = "(0?[1-9]|1[012])\\/(0?[1-9]|[12][0-9]|3[01])\\/(\\d{4})";
+        Pattern pattern = Pattern.compile(regEx);
+        return Pattern.matches(regEx, date);
+    }
+
+    /**
+     * Method to validate a person name
+     *
+     * @param owner date to validate
+     * @return true if name is correct, otherwise false
+     */
+    public boolean validateOwnerName(String owner) {
+        String regEx = "(([A-Z]\\.?\\s?)*([A-Z][a-z]+\\.?\\s?)+([A-Z]\\.?\\s?[a-z]*)*)";
+        Pattern pattern = Pattern.compile(regEx);
+        return Pattern.matches(regEx, owner);
+    }
 }

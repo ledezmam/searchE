@@ -37,10 +37,34 @@ public interface IValidator {
     boolean validateFileName(String fileName);
 
     /**
-     * Method to validate the extension of a file,
+     * Method declaration to validate the extension of a file,
      *
      * @param fileType a file extension like: .exe
      * @return true if the file extension is correct, otherwise false
      */
     boolean validateFileType(String fileType);
+
+    /**
+     * Method declaration to validate the file size
+     *
+     * @param fileSize size of the file
+     * @return true if fileSize are just digits, otherwise false
+     */
+    boolean validateFileSize(String fileSize);
+
+    /**
+     * Method declaration to validate a date
+     *
+     * @param date date to validate
+     * @return true if date is correct, otherwise false
+     */
+    boolean validateDate(String date);
+
+    /**
+     * Method declaration to validate a person name
+     *
+     * @param owner date to validate
+     * @return true if name is correct, otherwise false
+     */
+    boolean validateOwnerName(String owner);
 }
