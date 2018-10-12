@@ -10,6 +10,8 @@
  *  with Jalasoft.
  */
 
+package com.foundation.controller;
+
 /**
  * Class to integrate View and Search classes
  *
@@ -17,21 +19,33 @@
  * @version 1.0.
  */
 public class Controller {
+
+    /* Class instance variables */
+    Validator validate;
     private String path;
     private String fileName;
+    private String fileType;
 
     /**
-     *
+     * Controller constructor
      */
     public Controller() {
+        this.path = "c:\\install";
+        this.fileName = "jenkins-2.143.zip";
+        this.fileType = ".java";
 
+        validate = new Validator();
     }
 
-    public String getPath() {
-        return "";
+    /**
+     * Method to read search criteria and call validator methods
+     *
+     * This method is still in progress
+     */
+    public void ValidateSearchCriteria() {
+        validate.validatePath(this.path);
+        validate.validateFileName(this.path);
+        validate.validateFileType(this.path);
     }
 
-    public String getFileName() {
-        return "";
-    }
 }
