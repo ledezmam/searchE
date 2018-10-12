@@ -26,7 +26,7 @@ import static org.junit.Assert.assertNotEquals;
 public class ValidatorTest {
 
     /*
-     * =============== UNIT TESTs - FOLDER/DIRECTORY ================
+     * =============== UNIT TESTS - FOLDER/DIRECTORY ================
      */
 
     /**
@@ -66,7 +66,7 @@ public class ValidatorTest {
     }
 
     /*
-     * =============== UNIT TESTs - FILE NAME ================
+     * =============== UNIT TESTS - FILE NAME ================
      */
 
     /**
