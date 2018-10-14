@@ -1,4 +1,5 @@
 package com.foundation.view;
 
-public class StringListener {
+public interface StringListener {
+    public void textEmitted(String text);
 }

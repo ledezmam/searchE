@@ -14,16 +14,19 @@ package com.foundation.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class View extends JFrame {
 
-    //private JPanel topPanel;
-    private JTextArea textArea;
-    private JButton btn;
+    private TextPanel textPanel;
+    //private JButton btn;
+    private ToolBar toolBar;
+    private FormPanel formPanel;
 
     public View(){
         super("Search-E");
-        // make the frame be visible
+        // make the Frame be visible
         setVisible(true);
         // make the program stop and exit correctly when the User presses the 'X' button of the window
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,19 +34,31 @@ public class View extends JFrame {
         setSize(600, 500);
 
         setLayout(new BorderLayout());
-        textArea = new JTextArea();
-        btn = new JButton("Search");
+        textPanel = new TextPanel();
+        //btn = new JButton("Search");
+        toolBar = new ToolBar();
+        formPanel = new FormPanel();
 
-        add(textArea, BorderLayout.CENTER);
-        add(btn, BorderLayout.SOUTH);
+        add(textPanel, BorderLayout.CENTER);
+        //add(btn, BorderLayout.SOUTH);
+        add(toolBar, BorderLayout.NORTH);
+        add(formPanel, BorderLayout.WEST);
 
+        toolBar.setStringListener(new StringListener() {
+            public void textEmitted(String text) {
+                textPanel.appendText(text);
+            }
+        });
 
+        formPanel.setFormListener(new FormListener(){
+                                      public void formEventOccurred(FormEvent e){
+                                          String name = e.getOne();
+                                          String occupation = e.getTwo();
+
+                                          textPanel.appendText(name + " : " + occupation + "\n");
+
+                                      }
+                                  }
+        );
     }
-
-//    private class mainPanel{
-//
-//    }
-
-
-
 }
