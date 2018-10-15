@@ -1,4 +1,3 @@
-package com.foundation.view;
 /*
  *  @(#)View.java Copyright (c) 2018 Jalasoft.
  *  2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
@@ -12,10 +11,17 @@ package com.foundation.view;
  *
  */
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+package com.foundation.view;
+
+import javax.swing.JFrame;
+import java.awt.BorderLayout;
+
+/*
+ * View class with variables set.
+ *
+ * @Author Ruben Mendoza
+ * @Version 1.0
+ */
 
 public class View extends JFrame {
 
@@ -24,25 +30,34 @@ public class View extends JFrame {
     private ToolBar toolBar;
     private FormPanel formPanel;
 
-    public View(){
+    public View() {
         super("Search-E");
         // make the Frame be visible
         setVisible(true);
         // make the program stop and exit correctly when the User presses the 'X' button of the window
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // set the default size of the frame
-        setSize(600, 500);
+        setSize(800, 800);
 
+        init();
+    }
+
+    /*
+     * Init Class with the configuration of the View, includes the toolbar, Text Panel and Form Panel
+     *
+     * @Author Ruben Mendoza
+     * @Version 1.0
+     */
+
+    public void init(){
         setLayout(new BorderLayout());
         textPanel = new TextPanel();
-        //btn = new JButton("Search");
         toolBar = new ToolBar();
         formPanel = new FormPanel();
 
         add(textPanel, BorderLayout.CENTER);
-        //add(btn, BorderLayout.SOUTH);
-        add(toolBar, BorderLayout.NORTH);
-        add(formPanel, BorderLayout.WEST);
+        //add(toolBar, BorderLayout.NORTH);
+        add(formPanel, BorderLayout.NORTH);
 
         toolBar.setStringListener(new StringListener() {
             public void textEmitted(String text) {
@@ -52,11 +67,9 @@ public class View extends JFrame {
 
         formPanel.setFormListener(new FormListener(){
                                       public void formEventOccurred(FormEvent e){
-                                          String name = e.getOne();
-                                          String occupation = e.getTwo();
+                                          String input = e.getInput();
 
-                                          textPanel.appendText(name + " : " + occupation + "\n");
-
+                                          textPanel.appendText(input);
                                       }
                                   }
         );
