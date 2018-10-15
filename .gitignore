@@ -1,0 +1,21 @@
+# Gradle
+.gradle/
+build/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+/.idea/
+/classes/
+/logs/
+/out/
+*.iml
+*.iws
+
+gradlew.bat
+gradlew
+gradle/wrapper/gradle-wrapper.properties
+gradle/wrapper/gradle-wrapper.jar
