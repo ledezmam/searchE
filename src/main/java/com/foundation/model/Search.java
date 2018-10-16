@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Model class that will search in the System based on a criteria.
  *
- * @version 1.0 0 Oct 2018
+ * @version 1.0.0 Oct 2018
  * @author Maria Ledezma
  */
 public class Search {
@@ -55,7 +55,7 @@ public class Search {
                     searchFilesByCriteria(file.getAbsolutePath(), criteria);
                 }
                 else {
-                    if (file.getName().contains(criteria)){
+                    if (file.getName().contains(criteria)){ // por el negativo y un break
                         resultFiles.add(file);
                     }
                 }
