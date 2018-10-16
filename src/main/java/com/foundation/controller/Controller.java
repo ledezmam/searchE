@@ -20,7 +20,6 @@ package com.foundation.controller;
  */
 public class Controller {
 
-    /* Class instance variables */
     Validator validate;
     // View view;
     // Search search;

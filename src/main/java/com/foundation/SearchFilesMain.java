@@ -29,7 +29,6 @@ public class SearchFilesMain {
      */
     public static void main(String[] args) {
 
-        /* Controller instance */
         Controller control = new Controller();
         // controller.InitView();
     }
