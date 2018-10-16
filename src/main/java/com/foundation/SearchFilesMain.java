@@ -23,16 +23,14 @@ import com.foundation.controller.Controller;
 public class SearchFilesMain {
 
     /**
-     *  Main method which execute the application
+     *  Main method which executes the application
      *
      * @param args parameters passed from command line
      */
     public static void main(String[] args) {
 
-        // View view = new View();                not implemented yet
-        // SearchModel model = new SearchModel(); not implemented yet
-        Controller control = new Controller(); /* Controller instance */
-        // controller.StartView();                not implemented yet
-        control.ValidateSearchCriteria();
+        /* Controller instance */
+        Controller control = new Controller();
+        // controller.InitView();
     }
 }

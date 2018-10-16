@@ -75,6 +75,7 @@ public class Validator implements IValidator {
 
     /**
      * Method to validate if a date is correct
+     * date format: MM/DD/YYYY
      *
      * @param date date to validate
      * @return true if date is correct, otherwise false

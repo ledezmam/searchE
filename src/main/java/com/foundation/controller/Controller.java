@@ -22,30 +22,22 @@ public class Controller {
 
     /* Class instance variables */
     Validator validate;
-    private String path;
-    private String fileName;
-    private String fileType;
+    // View view;
+    // Search search;
 
     /**
      * Controller constructor
      */
     public Controller() {
-        this.path = "c:\\install";
-        this.fileName = "jenkins-2.143.zip";
-        this.fileType = ".java";
+        // view = new View();
+        // search = new Search();
 
         validate = new Validator();
+        //view.getPanel().getButton().addActionListener(e -> getCriteriaView());
     }
 
-    /**
-     * Method to read search criteria and call validator methods
-     *
-     * This method is still in progress
-     */
-    public void ValidateSearchCriteria() {
-        validate.validatePath(this.path);
-        validate.validateFileName(this.path);
-        validate.validateFileType(this.path);
+    private void getCriteriaView() {
+        
     }
 
 }
