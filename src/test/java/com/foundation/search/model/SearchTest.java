@@ -18,14 +18,13 @@ import com.foundation.model.Search;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.io.File;
 import java.io.IOException;
-
-import static org.junit.Assert.*;
+import java.util.List;
 
 /**
- * Test class for Search Model that will verify its functionality based on test cases.
+ * Test class for Search Model that will verify its functionality based on test
+ * cases.
  *
  * @version 1.0 0 Oct 2018
  * @author Maria Ledezma
@@ -38,19 +37,28 @@ public class SearchTest {
     Search search;
 
     /**
-     * Initializes the environment before running the tests, it will create generic files required for the different
+     * Initializes the environment before running the tests, it will create
+     * generic files required for the different
      * tests
      */
     @Before
     public void initialize(){
         String testDirName = "c://test";
+        String subDirName1 = testDirName + "/subDir1";
+        String subDirName2 = subDirName1 + "/subDir1";
         File testDir = new File(testDirName);
+        File subDir1 = new File(subDirName1);
+        File subDir2 = new File(subDirName2);
         if(!testDir.exists()){
             testDir.mkdir();
+            subDir1.mkdir();
+            subDir2.mkdir();
         }
-        this.createFilesByExtension(testDirName,"testJPG", "jpg", false, 3);
-        this.createFilesByExtension(testDirName,"testTXT", "txt", false, 5);
-        this.createFilesByExtension(testDirName,"testCSV", "csv", false, 2);
+        this.createFilesByExtension(testDirName,"testJPG", "jpg",false, 3);
+        this.createFilesByExtension(testDirName,"testTXT", "txt",false, 5);
+        this.createFilesByExtension(testDirName,"testCSV", "csv",false, 2);
+        this.createFilesByExtension(subDirName1,"testCSV", "csv",false, 1);
+        this.createFilesByExtension(subDirName2,"testCSV", "csv",false, 1);
     }
 
     /**
@@ -58,10 +66,12 @@ public class SearchTest {
      * @param path The path of the folder where the files will be created.
      * @param patternName The pattern name for the files that will be generated.
      * @param extension The extension of the files that will be generated.
-     * @param includeContent The flag that indicates if the the files will include some content.
+     * @param includeContent The flag that indicates if the the files will
+     *                       include some content.
      * @param numbFiles The number of files that will be generated.
      */
-    private void createFilesByExtension(String path, String patternName, String extension, boolean includeContent,
+    private void createFilesByExtension(String path, String patternName,
+                                        String extension, boolean includeContent,
                                         int numbFiles) {
 
         for (int i = 0; i < numbFiles; i++) {
@@ -70,49 +80,68 @@ public class SearchTest {
             sb.append(i);
             sb.append('.');
             sb.append(extension);
-           String fileName = sb.toString();
-           try{
-               File file = new File(path + "/" + fileName);
-               if (!file.exists()){
-                   file.createNewFile();
-               }
-           } catch (IOException e){
-               e.printStackTrace();
-           }
+            String fileName = sb.toString();
+            try{
+                File file = new File(path + "/" + fileName);
+                if (!file.exists()){
+                    file.createNewFile();
+                }
+            } catch (IOException e){
+                e.printStackTrace();
+            }
         }
     }
 
     /**
-     * Method that tests method searchByCriteria when the file does not exist
+     * Method that tests method searchFilesByCriteria when the file does not
+     * exist
      */
     @Test
-    public void searchByCriteriaWhenAFileDoesNotExist () {
-        String path="c://", fileName = "DoesNotExist.txt";
-        search = new Search(path, fileName);
-        String[] actualFiles = search.searchByCriteria();
-        Assert.assertEquals(0, actualFiles.length);
+    public void searchFilesByCriteriaWhenAFileDoesNotExist () {
+        String path="c://test", fileName = "DoesNotExist.txt";
+        search = new Search();
+        List<File> actualFiles = search.searchFilesByCriteria(path, fileName);
+        Assert.assertEquals(0, actualFiles.size());
     }
 
     /**
      * Method that tests method searchByCriteria when a text file exists
      */
     @Test
-    public void searchByCriteriaWhenATextFileExists () {
+    public void searchFilesByCriteriaWhenATextFileExists () {
         String path="c://test", fileName = "testTXT0.txt";
-        search = new Search(path, fileName);
-        String[] actualFiles = search.searchByCriteria();
-        Assert.assertEquals(fileName, actualFiles[0]);
+        search = new Search();
+        List<File> actualFiles = search.searchFilesByCriteria(path, fileName);
+        Assert.assertEquals("c:\\test\\testTXT0.txt",
+                actualFiles.get(0).getAbsolutePath());
     }
 
     /**
-     * Method that tests method searchByCriteria to search for several files that matches the criteria in the name
+     * Method that tests method searchFilesByCriteria to search for several
+     * files that matches the criteria in the name
      */
     @Test
-    public void searchByCriteriaForSeveralFilesThatMatchesTheCriteriaByName () {
+    public void searchFilesByCriteriaThatMatchesTheCriteriaByName () {
         String path="c://test", fileName = "testTXT";
-        search = new Search(path, fileName);
-        String[] actualFiles = search.searchByCriteria();
-        String[] expectedFiles = {"testTXT0.txt", "testTXT1.txt", "testTXT2.txt", "testTXT3.txt", "testTXT4.txt"};
-        Assert.assertArrayEquals(expectedFiles, actualFiles);
+        search = new Search();
+        List<File>  actualFiles = search.searchFilesByCriteria(path, fileName);
+        String expectedFiles = "[c:\\test\\testTXT0.txt," +
+                " c:\\test\\testTXT1.txt, c:\\test\\testTXT2.txt," +
+                " c:\\test\\testTXT3.txt, c:\\test\\testTXT4.txt]";
+        Assert.assertEquals(expectedFiles, actualFiles.toString());
+    }
+
+    /**
+     * Method that tests searchFilesByCriteria to search for files that
+     * matches the criteria in directories and subdirectories
+     */
+    @Test
+    public void searchFilesByCriteriaThatMatchesTheCriteriaInDirAndSubDir () {
+        String path="c://test", fileName = "testCSV0.csv";
+        search = new Search();
+        List<File>  actualFiles = search.searchFilesByCriteria(path, fileName);
+        String expectedFiles = "[c:\\test\\subDir1\\subDir1\\testCSV0.csv," +
+                " c:\\test\\subDir1\\testCSV0.csv, c:\\test\\testCSV0.csv]";
+        Assert.assertEquals(expectedFiles, actualFiles.toString());
     }
 }

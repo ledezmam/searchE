@@ -13,7 +13,9 @@
 
 package com.foundation.model;
 
-import java.io.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Model class that will search in the System based on a criteria.
@@ -24,35 +26,41 @@ import java.io.*;
 public class Search {
 
     /**
-     * path, it is the directory to search
-     * criteria, the criteria of the search, it can be a filename, extension or part of the name of the files to search.
+     * resultFiles, the list of files as the result of the search.
      */
-    private String path;
-    private String criteria;
+      List<File> resultFiles;
 
     /**
-     * Constructor of the class that initializes the path and criteria that will be used in the search.
-     * @param path The path of the directory to search
-     * @param criteria The criteria of the search, it can be a filename, extension or part of the name of the files to
-     *                 search.
+     * Default constructor of the class
      */
-    public Search(String path, String criteria){
-        this.path = path;
-        this.criteria = criteria;
+    public Search(){
+        resultFiles = new ArrayList<File>();
     }
 
     /**
-     * Method that looks for the files that matches the criteria under the path specified
+     * Method that looks for the files that matches the criteria under the path
+     * specified
+     * @param path The path of the directory to search
+     * @param criteria The criteria of the search, it can be a filename,
+     *                 extension or part of the name of the files to search.
      * @return A list of files that matched with the criteria
      */
-    public String[] searchByCriteria(){
-        File fileDir = new File(this.path);
-        FilenameFilter filter = new FilenameFilter(){
-            public boolean accept(File fileDir, String name){
-                return name.contains(criteria);
-            }
-        };
-        return fileDir.list(filter);
-    }
+    public List<File> searchFilesByCriteria(String path, String criteria){
+        File fileDir = new File(path);
+        File[] fileList = fileDir.listFiles();
 
+        if(fileList != null) {
+            for (File file : fileList) {
+                if (file.isDirectory()){
+                    searchFilesByCriteria(file.getAbsolutePath(), criteria);
+                }
+                else {
+                    if (file.getName().contains(criteria)){
+                        resultFiles.add(file);
+                    }
+                }
+            }
+        }
+        return resultFiles;
+    }
 }
