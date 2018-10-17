@@ -14,6 +14,8 @@ package com.foundation;
 
 import com.foundation.controller.Controller;
 
+import java.text.ParseException;
+
 /**
  * Class that calls MVC classes and run the application
  *
@@ -27,9 +29,9 @@ public class SearchFilesMain {
      *
      * @param args parameters passed from command line
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
-        Controller control = new Controller();
+        Controller controller = new Controller();
         // controller.InitView();
     }
 }
