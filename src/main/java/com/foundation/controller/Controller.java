@@ -69,7 +69,7 @@ public class Controller {
         }
 
         fileType = ".java";
-        if (fileType != null && validate.validatePath(fileType)) {
+        if (fileType != null && validate.validateFileType(fileType)) {
             criteria.setFileExtension(fileType);
         }
 
