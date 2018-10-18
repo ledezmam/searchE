@@ -12,7 +12,6 @@
  */
 
 package com.foundation.view;
-
 import java.util.EventObject;
 
 /*
@@ -25,6 +24,7 @@ import java.util.EventObject;
 public class FormEvent extends EventObject {
 
     private String string;
+    private FileCategory extCategory, visibilityCategory, fileSizeCategory, dateCreatedCategory, dateModifiedCategory, dateAccessedCategory, fileCompareCategory;
 
     public FormEvent(Object source) {
         super(source);
@@ -35,12 +35,47 @@ public class FormEvent extends EventObject {
         this.string = string;
     }
 
+    public FormEvent(Object source, String string, FileCategory extCategory, FileCategory visibilityCategory, FileCategory fileSizeCategory, FileCategory dateCreatedCategory, FileCategory dateModifiedCategory, FileCategory dateAccessedCategory, FileCategory fileCompareCategory) {
+        super(source);
+        this.string = string;
+        this.extCategory = extCategory;
+        this.visibilityCategory = visibilityCategory;
+        this.fileSizeCategory = fileSizeCategory;
+        this.dateCreatedCategory = dateCreatedCategory;
+        this.dateModifiedCategory = dateModifiedCategory;
+        this.dateAccessedCategory = dateAccessedCategory;
+        this.fileCompareCategory = fileCompareCategory;
+    }
+
     public String getInput() {
         return string;
     }
-    public void setInput(String one) {
-        this.string = string;
+
+    public FileCategory getExtCategory() {
+        return extCategory;
     }
 
+    public FileCategory getFileSizeCategory() {
+        return fileSizeCategory;
+    }
 
+    public FileCategory getDateCreatedCategory() {
+        return dateCreatedCategory;
+    }
+
+    public FileCategory getDateModifiedCategory() {
+        return dateModifiedCategory;
+    }
+
+    public FileCategory getDateAccessedCategory() {
+        return dateAccessedCategory;
+    }
+
+    public FileCategory getFileCompareCategory() {
+        return fileCompareCategory;
+    }
+
+    public FileCategory getVisibilityCategory() {
+        return visibilityCategory;
+    }
 }

@@ -29,7 +29,6 @@ public class View extends JFrame {
     //private JButton btn;
     private ToolBar toolBar;
     private FormPanel formPanel;
-    private AdvancedPanel advancedPanel;
 
     public View() {
         super("Search-E");
@@ -50,18 +49,15 @@ public class View extends JFrame {
      * @Version 1.0
      */
 
-    public void init(){
+    private void init(){
         setLayout(new BorderLayout());
         textPanel = new TextPanel();
         toolBar = new ToolBar();
         formPanel = new FormPanel();
-        advancedPanel = new AdvancedPanel();
 
         add(textPanel, BorderLayout.CENTER);
         //add(toolBar, BorderLayout.NORTH);
         add(formPanel, BorderLayout.NORTH);
-        add(advancedPanel, BorderLayout.SOUTH);
-
 
         toolBar.setStringListener(new StringListener() {
             public void textEmitted(String text) {
@@ -72,8 +68,15 @@ public class View extends JFrame {
         formPanel.setFormListener(new FormListener(){
                                       public void formEventOccurred(FormEvent e){
                                           String input = e.getInput();
-
-                                          textPanel.appendText(input);
+                                          FileCategory ext = e.getExtCategory();
+                                          FileCategory vis = e.getVisibilityCategory();
+                                          FileCategory size = e.getFileSizeCategory();
+                                          FileCategory created = e.getDateCreatedCategory();
+                                          FileCategory mod = e.getDateModifiedCategory();
+                                          FileCategory accs = e.getDateAccessedCategory();
+                                          FileCategory comp = e.getFileCompareCategory();
+                                          textPanel.appendText("input: " + input + " extension: " + ext + " Visibility: " + vis + " File size: " + size + "\n" +
+                                                  "File comparator: " + comp + " Date created: " + created + " Date modified: " + mod + " Date accessed: " + accs + "\n" + "\n");
                                       }
                                   }
         );
