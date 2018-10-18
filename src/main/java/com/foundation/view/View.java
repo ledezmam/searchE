@@ -29,6 +29,7 @@ public class View extends JFrame {
     //private JButton btn;
     private ToolBar toolBar;
     private FormPanel formPanel;
+    private AdvancedPanel advancedPanel;
 
     public View() {
         super("Search-E");
@@ -54,10 +55,13 @@ public class View extends JFrame {
         textPanel = new TextPanel();
         toolBar = new ToolBar();
         formPanel = new FormPanel();
+        advancedPanel = new AdvancedPanel();
 
         add(textPanel, BorderLayout.CENTER);
         //add(toolBar, BorderLayout.NORTH);
         add(formPanel, BorderLayout.NORTH);
+        add(advancedPanel, BorderLayout.SOUTH);
+
 
         toolBar.setStringListener(new StringListener() {
             public void textEmitted(String text) {

@@ -35,9 +35,9 @@ import java.awt.event.ActionListener;
 
 public class FormPanel extends JPanel {
 
-    private JLabel inputButton;
-    private JTextField inputField;
-    private JButton searchButton;
+    private JLabel folderButtonLabel, fileButtonLabel;
+    private JTextField folderField, fileField;
+    private JButton folderButton, fileButton;
     private FormListener formListener;
 
     public FormPanel(){
@@ -48,13 +48,27 @@ public class FormPanel extends JPanel {
         dim.height = 100;
         setPreferredSize(dim);
 
-        inputButton = new JLabel("Search: ");
-        inputField = new JTextField(50);
-
-        searchButton = new JButton("Search");
-        searchButton.addActionListener(new ActionListener() {
+        folderButtonLabel = new JLabel("Folder Path: ");
+        folderField = new JTextField(50);
+        folderButton = new JButton("Browse");
+        folderButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String one = inputField.getText();
+                String one = folderField.getText();
+
+                FormEvent event = new FormEvent(this, one);
+
+                if(formListener != null){
+                    formListener.formEventOccurred(event);
+                }
+            }
+        });
+
+        fileButtonLabel = new JLabel("File Name: ");
+        fileField = new JTextField(50);
+        fileButton = new JButton("Search");
+        fileButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String one = fileField.getText();
 
                 FormEvent event = new FormEvent(this, one);
 
@@ -81,13 +95,13 @@ public class FormPanel extends JPanel {
         gc.insets = new Insets(0,20,0,0);
         // use anchor to align the elements of GC to either start or end of the line
         gc.anchor = GridBagConstraints.LINE_START;
-        add(inputButton, gc);
+        add(folderButtonLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 0;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(inputField, gc);
+        add(folderField, gc);
 
         // set weight for Search button
         //gc.weightx = 1;
@@ -97,7 +111,34 @@ public class FormPanel extends JPanel {
         gc.gridy = 0;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(searchButton, gc);
+        add(folderButton, gc);
+
+        // set weight to second row
+
+        gc.gridx = 0;
+        gc.gridy = 1;
+        gc.fill = GridBagConstraints.NONE;
+        // give gc a little space between components
+        gc.insets = new Insets(0,20,0,0);
+        // use anchor to align the elements of GC to either start or end of the line
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(fileButtonLabel, gc);
+
+        gc.gridx = 1;
+        gc.gridy = 1;
+        gc.insets = new Insets(0,0,0,0);
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(fileField, gc);
+
+        // set weight for Search button
+        //gc.weightx = 1;
+        //gc.weighty = 2;
+
+        gc.gridx = 2;
+        gc.gridy = 1;
+        gc.insets = new Insets(0,0,0,0);
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(fileButton, gc);
     }
 
     /*
