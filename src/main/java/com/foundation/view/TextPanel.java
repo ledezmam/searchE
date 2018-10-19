@@ -1,4 +1,3 @@
-
 /*
  * @(#)TextPanel.java Copyright (c) 2018 Jalasoft.
  * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
@@ -10,7 +9,6 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-
 package com.foundation.view;
 
 import javax.swing.JPanel;
@@ -24,11 +22,16 @@ import java.awt.BorderLayout;
  * @Author Ruben Mendoza
  * @Version 1.0
  */
-
 public class TextPanel extends JPanel {
 
     private JTextArea textArea;
 
+    /*
+     * Panel method configuration
+     *
+     * @Author Ruben Mendoza
+     * @Version 1.0
+     */
     public TextPanel(){
         textArea = new JTextArea();
         setLayout(new BorderLayout());
@@ -43,7 +46,6 @@ public class TextPanel extends JPanel {
      * @Author Ruben Mendoza
      * @Version 1.0
      */
-
     public void appendText(String text){
         textArea.append(text);
     }

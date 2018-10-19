@@ -1,4 +1,3 @@
-
 /*
  * @(#)ToolBar.java Copyright (c) 2018 Jalasoft.
  * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
@@ -10,11 +9,12 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-
 package com.foundation.view;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.BorderFactory;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,11 +24,16 @@ import java.awt.event.ActionListener;
  * @Author Ruben Mendoza
  * @Version 1.0
  */
-
 public class ToolBar extends JPanel implements ActionListener {
     private JButton buttonOne;
     private JButton buttonTwo;
 
+    /*
+     * Toolbar method configuration
+     *
+     * @Author Ruben Mendoza
+     * @Version 1.0
+     */
     public ToolBar(){
         buttonOne = new JButton("Button1");
         buttonTwo = new JButton("Button2");
@@ -42,7 +47,6 @@ public class ToolBar extends JPanel implements ActionListener {
         buttonTwo.addActionListener(this);
 
         setBorder(BorderFactory.createEtchedBorder());
-
     }
 
     private StringListener textListener;
@@ -51,6 +55,12 @@ public class ToolBar extends JPanel implements ActionListener {
         this.textListener = listener;
     }
 
+    /*
+     * Action event method for the Buttons
+     *
+     * @Author Ruben Mendoza
+     * @Version 1.0
+     */
     @Override
     public void actionPerformed(ActionEvent e){
         JButton clicked = (JButton) e.getSource();
@@ -64,5 +74,4 @@ public class ToolBar extends JPanel implements ActionListener {
             }
         }
     }
-
 }

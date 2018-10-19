@@ -10,7 +10,6 @@
  *  with Jalasoft.
  *
  */
-
 package com.foundation.view;
 
 import javax.swing.JFrame;
@@ -22,14 +21,19 @@ import java.awt.BorderLayout;
  * @Author Ruben Mendoza
  * @Version 1.0
  */
-
 public class View extends JFrame {
 
     private TextPanel textPanel;
     //private JButton btn;
-    private ToolBar toolBar;
+    //private ToolBar toolBar;
     private FormPanel formPanel;
 
+    /*
+     * View configuration
+     *
+     * @Author Ruben Mendoza
+     * @Version 1.0
+     */
     public View() {
         super("Search-E");
         // make the Frame be visible
@@ -48,23 +52,21 @@ public class View extends JFrame {
      * @Author Ruben Mendoza
      * @Version 1.0
      */
-
     private void init(){
         setLayout(new BorderLayout());
         textPanel = new TextPanel();
-        toolBar = new ToolBar();
+        //toolBar = new ToolBar();
         formPanel = new FormPanel();
 
         add(textPanel, BorderLayout.CENTER);
         //add(toolBar, BorderLayout.NORTH);
         add(formPanel, BorderLayout.NORTH);
 
-        toolBar.setStringListener(new StringListener() {
-            public void textEmitted(String text) {
-                textPanel.appendText(text);
-            }
-        });
-
+//        toolBar.setStringListener(new StringListener() {
+//            public void textEmitted(String text) {
+//                textPanel.appendText(text);
+//            }
+//        });
         formPanel.setFormListener(new FormListener(){
                                       public void formEventOccurred(FormEvent e){
                                           String input = e.getInput();
@@ -75,8 +77,10 @@ public class View extends JFrame {
                                           FileCategory mod = e.getDateModifiedCategory();
                                           FileCategory accs = e.getDateAccessedCategory();
                                           FileCategory comp = e.getFileCompareCategory();
-                                          textPanel.appendText("input: " + input + " extension: " + ext + " Visibility: " + vis + " File size: " + size + "\n" +
-                                                  "File comparator: " + comp + " Date created: " + created + " Date modified: " + mod + " Date accessed: " + accs + "\n" + "\n");
+                                          textPanel.appendText("input: " + input + " extension: " + ext + " Visibility: "
+                                                  + vis + " File size: " + size + "\n" + "File comparator: " + comp
+                                                  + " Date created: " + created + " Date modified: " + mod + " Date accessed: "
+                                                  + accs + "\n" + "\n");
                                       }
                                   }
         );

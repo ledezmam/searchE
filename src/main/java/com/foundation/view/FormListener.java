@@ -1,5 +1,3 @@
-
-
 /*
  * @(#)FormListener.java Copyright (c) 2018 Jalasoft.
  * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
@@ -11,7 +9,6 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-
 package com.foundation.view;
 
 import java.util.EventListener;
@@ -22,7 +19,6 @@ import java.util.EventListener;
  * @Author Ruben Mendoza
  * @Version 1.0
  */
-
 public interface FormListener extends EventListener {
     public void formEventOccurred(FormEvent e);
 }

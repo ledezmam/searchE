@@ -1,4 +1,3 @@
-
 /*
  * @(#)FormPanel.java Copyright (c) 2018 Jalasoft.
  * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
@@ -10,7 +9,6 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-
 package com.foundation.view;
 
 import javax.swing.*;
@@ -28,14 +26,15 @@ import java.awt.event.ActionListener;
  * @Author Ruben Mendoza
  * @Version 1.0
  */
-
 public class FormPanel extends JPanel {
 
-    private JLabel folderButtonLabel, fileButtonLabel, extLabel, visibilityLabel, ownerLabel, fileSizeLabel, dateCreatedLabel, dateModifiedLabel, dateAccessedLabel;
+    private JLabel folderButtonLabel, fileButtonLabel, extLabel, visibilityLabel,
+            ownerLabel, fileSizeLabel, dateCreatedLabel, dateModifiedLabel, dateAccessedLabel;
     private JTextField folderField, fileField, ownerField, fileSizeField;
     private JButton folderButton, fileButton;
     private FormListener formListener;
-    private JComboBox extList, visibilityList, fileCompareList, fileSizeList, dateCreatedPicker, dateModifiedPicker, dateAccessedPicker;
+    private JComboBox extList, visibilityList, fileCompareList, fileSizeList,
+            dateCreatedPicker, dateModifiedPicker, dateAccessedPicker;
 
 
     public FormPanel() {
@@ -92,8 +91,9 @@ public class FormPanel extends JPanel {
                 FileCategory dateAccessedCategory = (FileCategory) dateAccessedPicker.getSelectedItem();
                 FileCategory fileCompareCategory = (FileCategory) fileCompareList.getSelectedItem();
 
-
-                FormEvent event = new FormEvent(this, string, extCategory, visibilityCategory, fileSizeCategory, dateCreatedCategory, dateModifiedCategory, dateAccessedCategory, fileCompareCategory);
+                FormEvent event = new FormEvent(this, string, extCategory, visibilityCategory,
+                        fileSizeCategory, dateCreatedCategory, dateModifiedCategory, dateAccessedCategory,
+                        fileCompareCategory);
                 if (formListener != null) {
                     formListener.formEventOccurred(event);
                 }
@@ -179,6 +179,12 @@ public class FormPanel extends JPanel {
         layoutComponents();
     }
 
+    /*
+     * Method used for the Grid components layout
+     *
+     * @Author Ruben Mendoza
+     * @Version 1.0
+     */
     private void layoutComponents(){
         setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
@@ -342,18 +348,12 @@ public class FormPanel extends JPanel {
         add(fileSizeList, gc);
     }
 
-
-
-
-
-
     /*
      * Form listener method
      *
      * @Author Ruben Mendoza
      * @Version 1.0
      */
-
     public void setFormListener(FormListener listener){
         this.formListener = listener;
     }
@@ -365,7 +365,6 @@ public class FormPanel extends JPanel {
  * @Author Ruben Mendoza
  * @Version 1.0
  */
-
 class FileCategory{
 
     private int id;

@@ -9,7 +9,6 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-
 package com.foundation.view;
 
 import javax.swing.SwingUtilities;
@@ -20,7 +19,6 @@ import javax.swing.SwingUtilities;
  * @Author Ruben Mendoza
  * @Version 1.0
  */
-
 public class App {
 
     public static void main(String[] args){

@@ -1,4 +1,3 @@
-
 /*
  * @(#)StringListener.java Copyright (c) 2018 Jalasoft.
  * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
@@ -10,7 +9,6 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-
 package com.foundation.view;
 
 /*
@@ -19,7 +17,6 @@ package com.foundation.view;
  * @Author Ruben Mendoza
  * @Version 1.0
  */
-
 public interface StringListener {
     public void textEmitted(String text);
 }

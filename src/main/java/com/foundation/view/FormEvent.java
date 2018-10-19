@@ -1,4 +1,3 @@
-
 /*
  * @(#)FormEvent.java Copyright (c) 2018 Jalasoft.
  * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
@@ -10,7 +9,6 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-
 package com.foundation.view;
 import java.util.EventObject;
 
@@ -20,11 +18,12 @@ import java.util.EventObject;
  * @Author Ruben Mendoza
  * @Version 1.0
  */
-
 public class FormEvent extends EventObject {
 
     private String string;
-    private FileCategory extCategory, visibilityCategory, fileSizeCategory, dateCreatedCategory, dateModifiedCategory, dateAccessedCategory, fileCompareCategory;
+    private FileCategory extCategory, visibilityCategory, fileSizeCategory,
+            dateCreatedCategory, dateModifiedCategory, dateAccessedCategory,
+            fileCompareCategory;
 
     public FormEvent(Object source) {
         super(source);
@@ -35,7 +34,10 @@ public class FormEvent extends EventObject {
         this.string = string;
     }
 
-    public FormEvent(Object source, String string, FileCategory extCategory, FileCategory visibilityCategory, FileCategory fileSizeCategory, FileCategory dateCreatedCategory, FileCategory dateModifiedCategory, FileCategory dateAccessedCategory, FileCategory fileCompareCategory) {
+    public FormEvent(Object source, String string, FileCategory extCategory,
+                     FileCategory visibilityCategory, FileCategory fileSizeCategory,
+                     FileCategory dateCreatedCategory, FileCategory dateModifiedCategory,
+                     FileCategory dateAccessedCategory, FileCategory fileCompareCategory) {
         super(source);
         this.string = string;
         this.extCategory = extCategory;
