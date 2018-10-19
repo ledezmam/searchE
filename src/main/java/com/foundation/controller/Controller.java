@@ -26,16 +26,6 @@ public class Controller {
     SearchCriteria criteria;
     // View view;
     // Search search;
-    private String path;
-    private String fileName;
-    private String fileType;
-    private String visibility;
-    private String fileSize;
-    private String dateModified;
-    private String dateCreated;
-    private String dateAccessed;
-    private String owner;
-    private String content;
 
     /**
      * Controller constructor
@@ -58,29 +48,29 @@ public class Controller {
     private void getCriteriaView() throws ParseException {
 
         // All hardcoded data must be replaced with data read from UI
-        path = "c:\\install";
+        String path = "c:\\install";
         if (path != null && validate.validatePath(path)) {
             criteria.setPath(path);
         }
 
-        fileName = "jenkins-2.143.zip";
+        String fileName = "jenkins-2.143.zip";
         if (fileName != null && validate.validateFileName(fileName)) {
             criteria.setFileName(fileName);
         }
 
-        fileType = ".java";
+        String fileType = ".java";
         if (fileType != null && validate.validateFileType(fileType)) {
             criteria.setFileExtension(fileType);
         }
 
-        visibility = "Hidden";
+        String visibility = "Hidden";
         if (visibility != null) {
             criteria.setFileVisibility(visibility);
         }
 
         /* file size will be validated an converted to bytes */
         String operator = "greater than";
-        fileSize = "12";
+        String fileSize = "12";
         String unit = "MB";
         if (fileSize != null
                 && (operator != null)
@@ -105,32 +95,32 @@ public class Controller {
             criteria.setFileSize(operator, size);
         }
 
-        dateModified = "10/17/2018";
+        String dateModified = "10/17/2018";
         if (dateModified != null && validate.validateDate(dateModified)) {
             criteria.setDateModified(dateModified);
         }
 
-        dateCreated = "10/17/2018";
+        String dateCreated = "10/17/2018";
         if (dateCreated != null && validate.validateDate(dateCreated)) {
             criteria.setDateCreated(dateCreated);
         }
 
-        dateAccessed = "10/17/2018";
+        String dateAccessed = "10/17/2018";
         if (dateAccessed != null && validate.validateDate(dateAccessed)) {
             criteria.setDateAccessed(dateAccessed);
         }
 
-        owner = "Marco Velasquez";
+        String owner = "Marco Velasquez";
         if (owner != null && validate.validateOwnerName(owner)) {
             criteria.setFileOwner(owner);
         }
 
-        content = "any text here";
+        String content = "any text here";
         if (content != null) {
             criteria.setFileContent(content);
         }
 
-        //search.initSearch(criteria);
+        //search.setCriteria(criteria);
         //search.fileFound();
     }
 
