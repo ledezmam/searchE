@@ -14,8 +14,10 @@ package com.foundation.view;
 
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-/*
+/**
  * View class with variables set.
  *
  * @Author Ruben Mendoza
@@ -28,11 +30,8 @@ public class View extends JFrame {
     //private ToolBar toolBar;
     private FormPanel formPanel;
 
-    /*
+    /**
      * View configuration
-     *
-     * @Author Ruben Mendoza
-     * @Version 1.0
      */
     public View() {
         super("Search-E");
@@ -46,11 +45,8 @@ public class View extends JFrame {
         init();
     }
 
-    /*
-     * Init Class with the configuration of the View, includes the toolbar, Text Panel and Form Panel
-     *
-     * @Author Ruben Mendoza
-     * @Version 1.0
+    /**
+     * Initiation method
      */
     private void init(){
         setLayout(new BorderLayout());
@@ -84,5 +80,6 @@ public class View extends JFrame {
                                       }
                                   }
         );
+
     }
 }

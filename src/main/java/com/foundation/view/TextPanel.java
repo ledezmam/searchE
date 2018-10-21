@@ -16,7 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
 
-/*
+/**
  * Panel class setting
  *
  * @Author Ruben Mendoza
@@ -26,25 +26,20 @@ public class TextPanel extends JPanel {
 
     private JTextArea textArea;
 
-    /*
+    /**
      * Panel method configuration
-     *
-     * @Author Ruben Mendoza
-     * @Version 1.0
      */
     public TextPanel(){
         textArea = new JTextArea();
         setLayout(new BorderLayout());
         // enabling scrollbar for the textArea
         add(new JScrollPane(textArea), BorderLayout.CENTER);
-
     }
 
-    /*
+    /**
      * Append text method created for testing purposes
      *
-     * @Author Ruben Mendoza
-     * @Version 1.0
+     * @param text Text that is appended in text area
      */
     public void appendText(String text){
         textArea.append(text);

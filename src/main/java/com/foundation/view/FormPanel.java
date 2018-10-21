@@ -11,8 +11,14 @@
  */
 package com.foundation.view;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.border.Border;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.BorderFactory;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -20,7 +26,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/*
+/**
  * Panel class setting with grid definition
  *
  * @Author Ruben Mendoza
@@ -36,7 +42,9 @@ public class FormPanel extends JPanel {
     private JComboBox extList, visibilityList, fileCompareList, fileSizeList,
             dateCreatedPicker, dateModifiedPicker, dateAccessedPicker;
 
-
+    /**
+     * Method used for the Panel configuration
+     */
     public FormPanel() {
         // check the current preferred Size and set a new one
         Dimension dim = getPreferredSize();
@@ -179,11 +187,8 @@ public class FormPanel extends JPanel {
         layoutComponents();
     }
 
-    /*
-     * Method used for the Grid components layout
-     *
-     * @Author Ruben Mendoza
-     * @Version 1.0
+    /**
+     * Method used for the Grid components layout     *
      */
     private void layoutComponents(){
         setLayout(new GridBagLayout());
@@ -348,18 +353,17 @@ public class FormPanel extends JPanel {
         add(fileSizeList, gc);
     }
 
-    /*
+    /**
      * Form listener method
      *
-     * @Author Ruben Mendoza
-     * @Version 1.0
+     * @param listener The listener from the Form
      */
     public void setFormListener(FormListener listener){
         this.formListener = listener;
     }
 }
 
-/*
+/**
  * Complementary Class to get the Id and Text from the file information
  *
  * @Author Ruben Mendoza
@@ -370,16 +374,34 @@ class FileCategory{
     private int id;
     private String text;
 
+    /**
+     * File category constructor
+     *
+     * @param id used to the get Id of the input
+     * @param text used to get the Text of the input
+     */
     public FileCategory(int id, String text){
         this.id = id;
         this.text = text;
     }
 
+    /**
+     * Method to get the text input return
+     *
+     * @return
+     */
     public String toString(){
         return text;
     }
 
+    /**
+     * Method to get the Id input return
+     *
+     * @return
+     */
     public int getId(){
         return id;
     }
 }
+
+

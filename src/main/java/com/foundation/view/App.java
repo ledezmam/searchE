@@ -13,7 +13,7 @@ package com.foundation.view;
 
 import javax.swing.SwingUtilities;
 
-/*
+/**
  * App class created to test 'View' implementation.
  *
  * @Author Ruben Mendoza
@@ -21,13 +21,20 @@ import javax.swing.SwingUtilities;
  */
 public class App {
 
+    /**
+     * main method created to test the View
+     *
+     * @param args
+     */
     public static void main(String[] args){
-
         // run swing on a thread to avoid possible multithreading problems
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+
                 new View();
             }
         });
+
+        }
     }
-}
+

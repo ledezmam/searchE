@@ -11,7 +11,7 @@
  */
 package com.foundation.view;
 
-/*
+/**
  * Interface created for the string listener
  *
  * @Author Ruben Mendoza

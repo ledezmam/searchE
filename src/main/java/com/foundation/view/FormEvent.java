@@ -12,7 +12,7 @@
 package com.foundation.view;
 import java.util.EventObject;
 
-/*
+/**
  * Event class setting with constructor, getter and setter
  *
  * @Author Ruben Mendoza
@@ -25,15 +25,39 @@ public class FormEvent extends EventObject {
             dateCreatedCategory, dateModifiedCategory, dateAccessedCategory,
             fileCompareCategory;
 
+    /**
+     * Form event constructor with Source only
+     *
+     * @param source gets the Source from the event
+     */
     public FormEvent(Object source) {
         super(source);
     }
 
+    /**
+     * Form event constructor with Source and String
+     *
+     * @param source gets the Source from the event
+     * @param string gets the String from the event
+     */
     public FormEvent(Object source, String string) {
         super(source);
         this.string = string;
     }
 
+    /**
+     * Form event constructor used by the Search Button
+     *
+     * @param source gets the Source from the event
+     * @param string gets the String from the event
+     * @param extCategory gets the Extension from the event
+     * @param visibilityCategory gets the Visibility from the event
+     * @param fileSizeCategory gets the File Size from the event
+     * @param dateCreatedCategory gets the Date Created from the event
+     * @param dateModifiedCategory gets the Date Modified from the event
+     * @param dateAccessedCategory gets the Date Accessed from the event
+     * @param fileCompareCategory gets the Comparator from the event
+     */
     public FormEvent(Object source, String string, FileCategory extCategory,
                      FileCategory visibilityCategory, FileCategory fileSizeCategory,
                      FileCategory dateCreatedCategory, FileCategory dateModifiedCategory,
@@ -49,34 +73,74 @@ public class FormEvent extends EventObject {
         this.fileCompareCategory = fileCompareCategory;
     }
 
+    /**
+     * String input getter
+     *
+     * @return string input
+     */
     public String getInput() {
         return string;
     }
 
+    /**
+     * Extension category getter
+     *
+     * @return extension category
+     */
     public FileCategory getExtCategory() {
         return extCategory;
     }
 
+    /**
+     * File size getter
+     *
+     * @return File size category
+     */
     public FileCategory getFileSizeCategory() {
         return fileSizeCategory;
     }
 
+    /**
+     * Date created getter
+     *
+     * @return Date created category
+     */
     public FileCategory getDateCreatedCategory() {
         return dateCreatedCategory;
     }
 
+    /**
+     * Date modified getter
+     *
+     * @return date modified category
+     */
     public FileCategory getDateModifiedCategory() {
         return dateModifiedCategory;
     }
 
+    /**
+     * Date accessed getter
+     *
+     * @return date accessed category
+     */
     public FileCategory getDateAccessedCategory() {
         return dateAccessedCategory;
     }
 
+    /**
+     * File comparator getter
+     *
+     * @return File comparator category
+     */
     public FileCategory getFileCompareCategory() {
         return fileCompareCategory;
     }
 
+    /**
+     * Visibility getter
+     *
+     * @return file Visibility category
+     */
     public FileCategory getVisibilityCategory() {
         return visibilityCategory;
     }

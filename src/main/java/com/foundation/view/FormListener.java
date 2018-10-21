@@ -13,7 +13,7 @@ package com.foundation.view;
 
 import java.util.EventListener;
 
-/*
+/**
  * Interface created for the Event listener
  *
  * @Author Ruben Mendoza

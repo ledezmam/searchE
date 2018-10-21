@@ -18,7 +18,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/*
+/**
  * Toolbar class setting with listener and action recognition. Buttons may be used in the future.
  *
  * @Author Ruben Mendoza
@@ -28,11 +28,8 @@ public class ToolBar extends JPanel implements ActionListener {
     private JButton buttonOne;
     private JButton buttonTwo;
 
-    /*
-     * Toolbar method configuration
-     *
-     * @Author Ruben Mendoza
-     * @Version 1.0
+    /**
+     * Toolbar method
      */
     public ToolBar(){
         buttonOne = new JButton("Button1");
@@ -51,15 +48,19 @@ public class ToolBar extends JPanel implements ActionListener {
 
     private StringListener textListener;
 
+    /**
+     * String listener constructor
+     *
+     * @param listener string input listener
+     */
     public void setStringListener(StringListener listener){
         this.textListener = listener;
     }
 
-    /*
+    /**
      * Action event method for the Buttons
      *
-     * @Author Ruben Mendoza
-     * @Version 1.0
+     * @param e action event
      */
     @Override
     public void actionPerformed(ActionEvent e){
