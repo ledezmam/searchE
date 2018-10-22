@@ -14,7 +14,7 @@
 
 package com.foundation.search.model;
 
-import com.foundation.model.FileFound;
+import com.foundation.model.Asset;
 import com.foundation.model.Search;
 import org.junit.Assert;
 import org.junit.Before;
