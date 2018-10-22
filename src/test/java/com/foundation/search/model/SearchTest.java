@@ -14,6 +14,7 @@
 
 package com.foundation.search.model;
 
+import com.foundation.model.FileFound;
 import com.foundation.model.Search;
 import org.junit.Assert;
 import org.junit.Before;
@@ -100,7 +101,7 @@ public class SearchTest {
     public void searchFilesByCriteriaWhenAFileDoesNotExist () {
         String path="c://test", fileName = "DoesNotExist.txt";
         search = new Search();
-        List<File> actualFiles = search.searchFilesByCriteria(path, fileName);
+        List<FileFound> actualFiles = search.searchFilesByCriteria(path, fileName);
         Assert.assertEquals(0, actualFiles.size());
     }
 
@@ -111,7 +112,8 @@ public class SearchTest {
     public void searchFilesByCriteriaWhenATextFileExists () {
         String path="c://test", fileName = "testTXT0.txt";
         search = new Search();
-        List<File> actualFiles = search.searchFilesByCriteria(path, fileName);
+        List<FileFound> actualFiles = search.searchFilesByCriteria(path, fileName);
+        System.out.println(actualFiles.size());
         Assert.assertEquals("c:\\test\\testTXT0.txt",
                 actualFiles.get(0).getAbsolutePath());
     }
@@ -124,7 +126,7 @@ public class SearchTest {
     public void searchFilesByCriteriaThatMatchesTheCriteriaByName () {
         String path="c://test", fileName = "testTXT";
         search = new Search();
-        List<File>  actualFiles = search.searchFilesByCriteria(path, fileName);
+        List<FileFound>  actualFiles = search.searchFilesByCriteria(path, fileName);
         String expectedFiles = "[c:\\test\\testTXT0.txt," +
                 " c:\\test\\testTXT1.txt, c:\\test\\testTXT2.txt," +
                 " c:\\test\\testTXT3.txt, c:\\test\\testTXT4.txt]";
@@ -139,7 +141,7 @@ public class SearchTest {
     public void searchFilesByCriteriaThatMatchesTheCriteriaInDirAndSubDir () {
         String path="c://test", fileName = "testCSV0.csv";
         search = new Search();
-        List<File>  actualFiles = search.searchFilesByCriteria(path, fileName);
+        List<FileFound>  actualFiles = search.searchFilesByCriteria(path, fileName);
         String expectedFiles = "[c:\\test\\subDir1\\subDir1\\testCSV0.csv," +
                 " c:\\test\\subDir1\\testCSV0.csv, c:\\test\\testCSV0.csv]";
         Assert.assertEquals(expectedFiles, actualFiles.toString());

@@ -28,13 +28,17 @@ public class Search {
     /**
      * resultFiles, the list of files as the result of the search.
      */
-      List<File> resultFiles;
+      List<FileFound> resultFiles;
+
+      //SearchCriteria criteria;
 
     /**
      * Default constructor of the class
      */
     public Search(){
-        resultFiles = new ArrayList<File>();
+
+        resultFiles = new ArrayList<FileFound>();
+        // this.criteria = criteria;
     }
 
     /**
@@ -45,7 +49,7 @@ public class Search {
      *                 extension or part of the name of the files to search.
      * @return A list of files that matched with the criteria
      */
-    public List<File> searchFilesByCriteria(String path, String criteria){
+    public List<FileFound> searchFilesByCriteria(String path, String criteria){
         File fileDir = new File(path);
         File[] fileList = fileDir.listFiles();
 
@@ -55,12 +59,19 @@ public class Search {
                     searchFilesByCriteria(file.getAbsolutePath(), criteria);
                 }
                 else {
-                    if (file.getName().contains(criteria)){ // por el negativo y un break
-                        resultFiles.add(file);
+                    //file.getName().contains(criteria)
+                    if (doesFileMatchesCriteria(criteria)){
+                        FileFound fileFound = new FileFound(file);
+                        resultFiles.add(fileFound);
                     }
                 }
             }
         }
         return resultFiles;
+    }
+
+    private boolean doesFileMatchesCriteria(String criteria) {
+
+        return true;
     }
 }
