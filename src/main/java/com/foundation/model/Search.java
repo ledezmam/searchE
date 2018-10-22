@@ -13,6 +13,8 @@
 
 package com.foundation.model;
 
+import com.foundation.controller.SearchCriteria;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +32,13 @@ public class Search {
      */
       List<FileFound> resultFiles;
 
-      //SearchCriteria criteria;
-
     /**
      * Default constructor of the class
      */
     public Search(){
 
         resultFiles = new ArrayList<FileFound>();
-        // this.criteria = criteria;
+
     }
 
     /**
@@ -49,7 +49,7 @@ public class Search {
      *                 extension or part of the name of the files to search.
      * @return A list of files that matched with the criteria
      */
-    public List<FileFound> searchFilesByCriteria(String path, String criteria){
+    public List<FileFound> searchFilesByCriteria(String path, SearchCriteria criteria){
         File fileDir = new File(path);
         File[] fileList = fileDir.listFiles();
 
@@ -60,7 +60,7 @@ public class Search {
                 }
                 else {
                     //file.getName().contains(criteria)
-                    if (doesFileMatchesCriteria(criteria)){
+                    if (doesFileMatchesCriteria(file, criteria)){
                         FileFound fileFound = new FileFound(file);
                         resultFiles.add(fileFound);
                     }
@@ -72,12 +72,15 @@ public class Search {
 
     /**
      * Method that will verify if the file matches the search criteria
+     * @param file The file that will be analyzed to check if it matches the
+     *             criteria
      * @param criteria The criteria of the search, it can be a filename,
      *                 extension or part of the name of the files to search.
      * @return true if the files matches the criteria and false if not.
      */
-    private boolean doesFileMatchesCriteria(String criteria) {
+    private boolean doesFileMatchesCriteria(File file, SearchCriteria criteria) {
 
+        /** TODO */
         return true;
     }
 }

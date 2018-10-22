@@ -42,7 +42,8 @@ public class FileFound  extends File{
         super(file.getPath());
 
         try {
-            BasicFileAttributes attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+            BasicFileAttributes attr = Files.readAttributes(file.toPath(),
+                    BasicFileAttributes.class);
             this.owner = Files.getOwner(file.toPath()).toString();
             this.path = file.getPath();
             this.filename = file.getName();
@@ -58,35 +59,67 @@ public class FileFound  extends File{
 
     }
 
+    /**
+     * Getter of the path attribute
+     * @return the path of the file
+     */
     @Override
     public String getPath() {
         return path;
     }
 
+    /**
+     * Getter of the file name attribute
+     * @return the file name of the file
+     */
     public String getFilename() {
         return filename;
     }
 
+    /**
+     * Getter of the size attribute
+     * @return the size of the file
+     */
     public String getSize() {
         return size;
     }
 
+    /**
+     * Getter of the owner attribute
+     * @return the owner of the file
+     */
     public String getOwner() {
         return owner;
     }
 
+    /**
+     * Getter of the creation date attribute
+     * @return the creation date of the file
+     */
     public String getDateCreation() {
         return dateCreation;
     }
 
+    /**
+     * Getter of the modified date attribute
+     * @return the modified date of the file
+     */
     public String getDateModified() {
         return dateModified;
     }
 
+    /**
+     * Getter of the accessed date attribute
+     * @return the last date of access to the file
+     */
     public String getDateAccessed() {
         return dateAccessed;
     }
 
+    /**
+     * Getter of the hidden attribute
+     * @return the hidden status of the file
+     */
     public boolean getHidden() {
         return hidden;
     }
