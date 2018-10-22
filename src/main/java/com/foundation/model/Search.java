@@ -16,8 +16,13 @@ package com.foundation.model;
 import com.foundation.controller.SearchCriteria;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
 
 /**
  * Model class that will search in the System based on a criteria.
@@ -44,19 +49,18 @@ public class Search {
     /**
      * Method that looks for the files that matches the criteria under the path
      * specified
-     * @param path The path of the directory to search
      * @param criteria The criteria of the search, it can be a filename,
      *                 extension or part of the name of the files to search.
      * @return A list of files that matched with the criteria
      */
-    public List<FileFound> searchFilesByCriteria(String path, SearchCriteria criteria){
-        File fileDir = new File(path);
+    public List<FileFound> searchFilesByCriteria(SearchCriteria criteria){
+        File fileDir = new File(criteria.getPath());
         File[] fileList = fileDir.listFiles();
 
         if(fileList != null) {
             for (File file : fileList) {
                 if (file.isDirectory()){
-                    searchFilesByCriteria(file.getAbsolutePath(), criteria);
+                    searchFilesByCriteria(criteria);
                 }
                 else {
                     //file.getName().contains(criteria)
@@ -80,7 +84,44 @@ public class Search {
      */
     private boolean doesFileMatchesCriteria(File file, SearchCriteria criteria) {
 
-        /** TODO */
+        try {
+            BasicFileAttributes attr = Files.readAttributes(file.toPath(),
+                    BasicFileAttributes.class);
+            String owner = Files.getOwner(file.toPath()).toString();
+            Long size =  file.getTotalSpace();
+            FileTime dateCreation = attr.creationTime();
+            FileTime dateModified = attr.lastModifiedTime();
+            FileTime dateAccessed = attr.lastAccessTime();
+            boolean hidden = file.isHidden();
+
+            Date criteriaDateCreated = criteria.getDateCreated();
+            Date criteriaDateModified = criteria.getDateModified();
+            Date criteriaDateAccessed = criteria.getDateAccessed();
+
+            if(!file.getName().contains(criteria.getFileName())){
+                return false;
+            }
+
+            if(!criteria.getFileOwner().equalsIgnoreCase(owner)){
+                return false;
+            }
+
+            if (criteriaDateCreated != null && criteriaDateCreated.getTime() != dateCreation.toMillis()){
+                return false;
+            }
+
+            if (criteriaDateModified != null && criteriaDateModified.getTime() != dateModified.toMillis()){
+                return false;
+            }
+
+            if (criteriaDateAccessed != null && criteriaDateAccessed.getTime() != dateAccessed.toMillis()){
+                return false;
+            }
+
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
+
         return true;
     }
 }
