@@ -14,8 +14,6 @@ package com.foundation.view;
 
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * View class with variables set.
@@ -26,8 +24,6 @@ import java.awt.event.ActionListener;
 public class View extends JFrame {
 
     private TextPanel textPanel;
-    //private JButton btn;
-    //private ToolBar toolBar;
     private FormPanel formPanel;
 
     /**
@@ -45,17 +41,19 @@ public class View extends JFrame {
         init();
     }
 
+    public FormPanel getFormPanel() {
+        return formPanel;
+    }
+
     /**
      * Initiation method
      */
-    private void init(){
+    public void init(){
         setLayout(new BorderLayout());
         textPanel = new TextPanel();
-        //toolBar = new ToolBar();
         formPanel = new FormPanel();
 
         add(textPanel, BorderLayout.CENTER);
-        //add(toolBar, BorderLayout.NORTH);
         add(formPanel, BorderLayout.NORTH);
 
 //        toolBar.setStringListener(new StringListener() {
@@ -63,23 +61,23 @@ public class View extends JFrame {
 //                textPanel.appendText(text);
 //            }
 //        });
-        formPanel.setFormListener(new FormListener(){
-                                      public void formEventOccurred(FormEvent e){
-                                          String input = e.getInput();
-                                          FileCategory ext = e.getExtCategory();
-                                          FileCategory vis = e.getVisibilityCategory();
-                                          FileCategory size = e.getFileSizeCategory();
-                                          FileCategory created = e.getDateCreatedCategory();
-                                          FileCategory mod = e.getDateModifiedCategory();
-                                          FileCategory accs = e.getDateAccessedCategory();
-                                          FileCategory comp = e.getFileCompareCategory();
-                                          textPanel.appendText("input: " + input + " extension: " + ext + " Visibility: "
-                                                  + vis + " File size: " + size + "\n" + "File comparator: " + comp
-                                                  + " Date created: " + created + " Date modified: " + mod + " Date accessed: "
-                                                  + accs + "\n" + "\n");
-                                      }
-                                  }
-        );
+//        formPanel.setFormListener(new FormListener(){
+//                                      public void formEventOccurred(FormEvent e){
+//                                          String input = e.getInput();
+//                                          FileCategory ext = e.getExtCategory();
+//                                          FileCategory vis = e.getVisibilityCategory();
+//                                          FileCategory size = e.getFileSizeCategory();
+//                                          FileCategory created = e.getDateCreatedCategory();
+//                                          FileCategory mod = e.getDateModifiedCategory();
+//                                          FileCategory accs = e.getDateAccessedCategory();
+//                                          FileCategory comp = e.getFileCompareCategory();
+//                                          textPanel.appendText("input: " + input + " extension: " + ext + " Visibility: "
+//                                                  + vis + " File size: " + size + "\n" + "File comparator: " + comp
+//                                                  + " Date created: " + created + " Date modified: " + mod + " Date accessed: "
+//                                                  + accs + "\n" + "\n");
+//                                      }
+//                                  }
+//        );
 
     }
 }

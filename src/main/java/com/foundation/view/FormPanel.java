@@ -34,13 +34,22 @@ import java.awt.event.ActionListener;
  */
 public class FormPanel extends JPanel {
 
-    private JLabel folderButtonLabel, fileButtonLabel, extLabel, visibilityLabel,
+    private JLabel pathButtonLabel, searchButtonLabel, extLabel, visibilityLabel,
             ownerLabel, fileSizeLabel, dateCreatedLabel, dateModifiedLabel, dateAccessedLabel;
-    private JTextField folderField, fileField, ownerField, fileSizeField;
-    private JButton folderButton, fileButton;
+    private JTextField pathField, searchField, ownerField, fileSizeField;
+    private JButton pathButton, searchButton;
     private FormListener formListener;
     private JComboBox extList, visibilityList, fileCompareList, fileSizeList,
             dateCreatedPicker, dateModifiedPicker, dateAccessedPicker;
+    private ActionListener searchActionListener;
+
+    public JButton getSearchButton() {
+        return searchButton;
+    }
+
+    public ActionListener getSearchActionListener() {
+        return searchActionListener;
+    }
 
     /**
      * Method used for the Panel configuration
@@ -70,12 +79,13 @@ public class FormPanel extends JPanel {
         dateAccessedLabel = new JLabel("Date Accessed");
         dateAccessedPicker = new JComboBox();
 
-        folderButtonLabel = new JLabel("Folder Path: ");
-        folderField = new JTextField(30);
-        folderButton = new JButton("Browse");
-        folderButton.addActionListener(new ActionListener() {
+        pathButtonLabel = new JLabel("Folder Path: ");
+        pathField = new JTextField(30);
+        pathButton = new JButton("Browse");
+
+        pathButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String string = folderField.getText();
+                String string = pathField.getText();
 
                 FormEvent event = new FormEvent(this, string);
 
@@ -85,12 +95,12 @@ public class FormPanel extends JPanel {
             }
         });
 
-        fileButtonLabel = new JLabel("File Name: ");
-        fileField = new JTextField(30);
-        fileButton = new JButton("Search");
-        fileButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String string = fileField.getText();
+        searchButtonLabel = new JLabel("File Name: ");
+        searchField = new JTextField(30);
+        searchButton = new JButton("Search");
+        searchActionListener = new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
+                String string = searchField.getText();
                 FileCategory extCategory = (FileCategory) extList.getSelectedItem();
                 FileCategory visibilityCategory = (FileCategory) visibilityList.getSelectedItem();
                 FileCategory fileSizeCategory = (FileCategory) fileSizeList.getSelectedItem();
@@ -98,7 +108,6 @@ public class FormPanel extends JPanel {
                 FileCategory dateModifiedCategory = (FileCategory) dateModifiedPicker.getSelectedItem();
                 FileCategory dateAccessedCategory = (FileCategory) dateAccessedPicker.getSelectedItem();
                 FileCategory fileCompareCategory = (FileCategory) fileCompareList.getSelectedItem();
-
                 FormEvent event = new FormEvent(this, string, extCategory, visibilityCategory,
                         fileSizeCategory, dateCreatedCategory, dateModifiedCategory, dateAccessedCategory,
                         fileCompareCategory);
@@ -106,7 +115,8 @@ public class FormPanel extends JPanel {
                     formListener.formEventOccurred(event);
                 }
             }
-        });
+        };
+        searchButton.addActionListener(searchActionListener );
 
         DefaultComboBoxModel extModel = new DefaultComboBoxModel();
         extModel.addElement(new FileCategory(0, "All"));
@@ -202,19 +212,19 @@ public class FormPanel extends JPanel {
         gc.insets = new Insets(0,0,0,0);
         // use anchor to align the elements of GC to either start or end of the line
         gc.anchor = GridBagConstraints.LINE_START;
-        add(folderButtonLabel, gc);
+        add(pathButtonLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 0;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(folderField, gc);
+        add(pathField, gc);
 
         gc.gridx = 2;
         gc.gridy = 0;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(folderButton, gc);
+        add(pathButton, gc);
 
         // set second row
         gc.gridx = 0;
@@ -222,19 +232,19 @@ public class FormPanel extends JPanel {
         gc.fill = GridBagConstraints.NONE;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(fileButtonLabel, gc);
+        add(searchButtonLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 1;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(fileField, gc);
+        add(searchField, gc);
 
         gc.gridx = 2;
         gc.gridy = 1;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(fileButton, gc);
+        add(searchButton, gc);
 
         // set Third row
         gc.gridx = 0;
@@ -403,5 +413,3 @@ class FileCategory{
         return id;
     }
 }
-
-

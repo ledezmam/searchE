@@ -12,6 +12,7 @@
 package com.foundation.view;
 
 import javax.swing.SwingUtilities;
+import java.awt.event.ActionListener;
 
 /**
  * App class created to test 'View' implementation.
@@ -30,11 +31,12 @@ public class App {
         // run swing on a thread to avoid possible multithreading problems
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-
-                new View();
+                View view = new View();
+                ActionListener event = view.getFormPanel().getSearchActionListener();
+                view.getFormPanel().getSearchButton().addActionListener(event);
+                //view.getFormPanel().getSearchButton().getActionListeners();
             }
         });
-
         }
     }
 
