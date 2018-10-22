@@ -31,6 +31,6 @@ public class SearchFilesMain {
     public static void main(String[] args) throws ParseException {
 
         Controller controller = new Controller();
-        // controller.InitView();
+        controller.printResult();
     }
 }
