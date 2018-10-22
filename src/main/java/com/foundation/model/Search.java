@@ -70,6 +70,12 @@ public class Search {
         return resultFiles;
     }
 
+    /**
+     * Method that will verify if the file matches the search criteria
+     * @param criteria The criteria of the search, it can be a filename,
+     *                 extension or part of the name of the files to search.
+     * @return true if the files matches the criteria and false if not.
+     */
     private boolean doesFileMatchesCriteria(String criteria) {
 
         return true;

@@ -135,7 +135,7 @@ public class SearchTest {
 
     /**
      * Method that tests searchFilesByCriteria to search for files that
-     * matches the criteria in directories and subdirectories
+     * matches the criteria in directories and subdirectories.
      */
     @Test
     public void searchFilesByCriteriaThatMatchesTheCriteriaInDirAndSubDir () {

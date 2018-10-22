@@ -35,6 +35,9 @@ public class FileFound  extends File{
     private String dateAccessed;
     private boolean hidden;
 
+    /**
+     * Constructor of the class
+     */
     public FileFound(File file){
         super(file.getPath());
 
