@@ -49,19 +49,18 @@ public class Search {
     /**
      * Method that looks for the files that matches the criteria under the path
      * specified
-     * @param path The path of the directory to search
      * @param criteria The criteria of the search, it can be a filename,
      *                 extension or part of the name of the files to search.
      * @return A list of files that matched with the criteria
      */
-    public List<FileFound> searchFilesByCriteria(String path, SearchCriteria criteria){
-        File fileDir = new File(path);
+    public List<FileFound> searchFilesByCriteria(SearchCriteria criteria){
+        File fileDir = new File(criteria.getPath());
         File[] fileList = fileDir.listFiles();
 
         if(fileList != null) {
             for (File file : fileList) {
                 if (file.isDirectory()){
-                    searchFilesByCriteria(file.getAbsolutePath(), criteria);
+                    searchFilesByCriteria(criteria);
                 }
                 else {
                     //file.getName().contains(criteria)
