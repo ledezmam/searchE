@@ -31,7 +31,7 @@ public class Controller {
     SearchCriteria criteria;
     // View view;
     Search search;
-    List<FileFound> results;
+    //List<FileFound> results;
 
     /**
      * Controller constructor
@@ -51,7 +51,7 @@ public class Controller {
      *
      * @throws ParseException
      */
-    private void getCriteriaView() throws ParseException {
+    private List<FileFound> getCriteriaView() throws ParseException {
 
         // All hardcoded data must be replaced with data read from UI
         String path = "c:\\install";
@@ -126,7 +126,7 @@ public class Controller {
             criteria.setFileContent(content);
         }
 */
-        List<FileFound> results = search.searchFilesByCriteria(criteria);
+        return search.searchFilesByCriteria(criteria);
     }
 
     /**
@@ -135,16 +135,16 @@ public class Controller {
      * @throws ParseException
      */
     public void printResult() throws ParseException {
-        this.getCriteriaView();
+        List<FileFound> results = this.getCriteriaView();
         for (FileFound item : results) {
             System.out.println("Path: " + item.getPath());
             System.out.println("FileName: " + item.getFilename());
-            /*System.out.println("Size: " + item.getSize());
+            System.out.println("Size: " + item.getSize());
             System.out.println("Owner: " + item.getOwner());
             System.out.println("Creation Date: " + item.getDateCreation());
             System.out.println("Accessed Date: " + item.getDateAccessed());
             System.out.println("Modified Date: " + item.getDateModified());
-            System.out.println("Hidden: " + item.getHidden());*/
+            System.out.println("Hidden: " + item.getHidden());
         }
     }
 
