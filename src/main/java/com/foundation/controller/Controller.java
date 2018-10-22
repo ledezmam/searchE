@@ -12,7 +12,12 @@
 
 package com.foundation.controller;
 
+import com.foundation.model.FileFound;
+import com.foundation.model.Search;
+
+import java.sql.SQLOutput;
 import java.text.ParseException;
+import java.util.List;
 
 /**
  * Class to integrate View and Search classes
@@ -25,14 +30,15 @@ public class Controller {
     Validator validate;
     SearchCriteria criteria;
     // View view;
-    // Search search;
+    Search search;
+    List<FileFound> results;
 
     /**
      * Controller constructor
      */
     public Controller() {
         // view = new View();
-        // search = new Search();
+        search = new Search();
 
         validate = new Validator();
         criteria = new SearchCriteria();
@@ -57,7 +63,7 @@ public class Controller {
         if (fileName != null && validate.validateFileName(fileName)) {
             criteria.setFileName(fileName);
         }
-
+/*
         String fileType = ".java";
         if (fileType != null && validate.validateFileType(fileType)) {
             criteria.setFileExtension(fileType);
@@ -69,7 +75,7 @@ public class Controller {
         }
 
         /* file size will be validated an converted to bytes */
-        String operator = "greater than";
+/*        String operator = "greater than";
         String fileSize = "12";
         String unit = "MB";
         if (fileSize != null
@@ -119,9 +125,27 @@ public class Controller {
         if (content != null) {
             criteria.setFileContent(content);
         }
+*/
+        List<FileFound> results = search.searchFilesByCriteria(criteria);
+    }
 
-        //search.setCriteria(criteria);
-        //search.fileFound();
+    /**
+     * Method to print results in console
+     *
+     * @throws ParseException
+     */
+    public void printResult() throws ParseException {
+        this.getCriteriaView();
+        for (FileFound item : results) {
+            System.out.println("Path: " + item.getPath());
+            System.out.println("FileName: " + item.getFilename());
+            /*System.out.println("Size: " + item.getSize());
+            System.out.println("Owner: " + item.getOwner());
+            System.out.println("Creation Date: " + item.getDateCreation());
+            System.out.println("Accessed Date: " + item.getDateAccessed());
+            System.out.println("Modified Date: " + item.getDateModified());
+            System.out.println("Hidden: " + item.getHidden());*/
+        }
     }
 
 }
