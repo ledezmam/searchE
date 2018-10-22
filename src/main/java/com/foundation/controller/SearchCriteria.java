@@ -39,6 +39,22 @@ public class SearchCriteria {
     private String content;
 
     /**
+     * Class constructor
+     */
+    public SearchCriteria() {
+        path = null;
+        fileName = null;
+        fileExtension = null;
+        visibility = null;
+        fileSize = null;
+        dateModified = null;
+        dateCreated = null;
+        dateAccessed = null;
+        owner = null;
+        content = null;
+    }
+
+    /**
      * Method to set the path of a folder
      *
      * @param path folder/directory name

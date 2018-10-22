@@ -251,7 +251,7 @@ public class AdvancedPanel extends JPanel {
 
 }
 
-class FileCategory{
+/*class FileCategory{
 
     private int id;
     private String text;
@@ -268,4 +268,4 @@ class FileCategory{
     public int getId(){
         return id;
     }
-}
+}*/

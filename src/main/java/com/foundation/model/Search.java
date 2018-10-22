@@ -102,8 +102,10 @@ public class Search {
                 return false;
             }
 
-            if(!criteria.getFileOwner().equalsIgnoreCase(owner)){
-                return false;
+            if (criteria.getFileOwner() != null) {
+                if (!criteria.getFileOwner().equalsIgnoreCase(owner)) {
+                    return false;
+                }
             }
 
             if (criteriaDateCreated != null && criteriaDateCreated.getTime() != dateCreation.toMillis()){
