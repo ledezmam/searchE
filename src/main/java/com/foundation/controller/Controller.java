@@ -39,34 +39,20 @@ public class Controller {
      * Controller constructor
      */
     public Controller() throws ParseException {
-        /*SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                view = new View();
-                ActionListener event = view.getFormPanel().getSearchActionListener();
-                view.getFormPanel().getSearchButton().addActionListener(event);
-                try {
-                    getCriteriaView();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                //view.getFormPanel().getSearchButton().getActionListeners();
-            }
-        });*/
-        //view = new View();
+        view = new View();
         search = new Search();
 
         validate = new Validator();
         criteria = new SearchCriteria();
 
-        /*view.getFormPanel().getSearchButton().addActionListener(e -> {
+        view.getFormPanel().getSearchButton().addActionListener(e -> {
             try {
+                view.getTextPanel().clean();
                 getCriteriaView();
             } catch (ParseException e1) {
                 e1.printStackTrace();
             }
-        });*/
-        //view.getPanel().getButton().addActionListener(e -> getCriteriaView());
-        getCriteriaView();
+        });
     }
 
     /**
@@ -78,18 +64,18 @@ public class Controller {
     private void getCriteriaView() throws ParseException {
 
         // All hardcoded data must be replaced with data read from UI
-        //String path = "c:\\install";
-        String path = "c:\\install";
+        String path = view.getFormPanel().getPathField().getText();
+        System.out.println(path);
         if (path != null && validate.validatePath(path)) {
             criteria.setPath(path);
         }
 
-        String fileName = "jenkins-2.143.zip";
+        String fileName = view.getFormPanel().getSearchField().getText();
         if (fileName != null && validate.validateFileName(fileName)) {
             criteria.setFileName(fileName);
         }
 /*
-        String fileType = ".exe";
+        String fileType = ".jpg";
         if (fileType != null && validate.validateFileType(fileType)) {
             criteria.setFileExtension(fileType);
         }
@@ -162,14 +148,22 @@ public class Controller {
      */
     public void printResult(List<FileFound> results) throws ParseException {
         for (FileFound item : results) {
-            System.out.println("Path: " + item.getPath());
+            /*System.out.println("Path: " + item.getPath());
             System.out.println("FileName: " + item.getFilename());
             System.out.println("Size: " + item.getSize());
             System.out.println("Owner: " + item.getOwner());
             System.out.println("Creation Date: " + item.getDateCreation());
             System.out.println("Accessed Date: " + item.getDateAccessed());
             System.out.println("Modified Date: " + item.getDateModified());
-            System.out.println("Hidden: " + item.getHidden());
+            System.out.println("Hidden: " + item.getHidden());*/
+            view.getTextPanel().appendText(item.getPath()+"\t");
+            view.getTextPanel().appendText(item.getFilename()+"\t");
+            view.getTextPanel().appendText(item.getSize()+"\t");
+            view.getTextPanel().appendText(item.getOwner()+"\t");
+            view.getTextPanel().appendText(item.getDateCreation()+"\t");
+            view.getTextPanel().appendText(item.getDateAccessed()+"\t");
+            view.getTextPanel().appendText(item.getDateModified()+"\t");
+            view.getTextPanel().appendText(item.getHidden()+"\n");
         }
     }
 

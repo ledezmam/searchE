@@ -197,6 +197,14 @@ public class FormPanel extends JPanel {
         layoutComponents();
     }
 
+    public JTextField getPathField() {
+        return pathField;
+    }
+
+    public JTextField getSearchField() {
+        return searchField;
+    }
+
     /**
      * Method used for the Grid components layout     *
      */
