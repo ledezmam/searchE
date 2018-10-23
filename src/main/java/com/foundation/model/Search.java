@@ -55,11 +55,15 @@ public class Search {
      */
     public List<FileFound> searchFilesByCriteria(SearchCriteria criteria){
         File fileDir = new File(criteria.getPath());
+        if (!fileDir.exists()){
+            return null;
+        }
         File[] fileList = fileDir.listFiles();
 
         if(fileList != null) {
             for (File file : fileList) {
                 if (file.isDirectory()){
+                    criteria.setPath(file.getPath());
                     searchFilesByCriteria(criteria);
                 }
                 else {
@@ -98,14 +102,17 @@ public class Search {
             Date criteriaDateModified = criteria.getDateModified();
             Date criteriaDateAccessed = criteria.getDateAccessed();
 
-            if(!file.getName().contains(criteria.getFileName())){
+            if(criteria.getFileName() != null && !file.getName().contains(criteria.getFileName())){
                 return false;
             }
 
-            if (criteria.getFileOwner() != null) {
-                if (!criteria.getFileOwner().equalsIgnoreCase(owner)) {
-                    return false;
-                }
+            if(criteria.getFileExtension() != null && !file.getName().contains(criteria.getFileExtension())){
+                return false;
+            }
+
+            if(criteria.getFileOwner()!= null && !criteria.getFileOwner().equalsIgnoreCase(owner)){
+                return false;
+
             }
 
             if (criteriaDateCreated != null && criteriaDateCreated.getTime() != dateCreation.toMillis()){

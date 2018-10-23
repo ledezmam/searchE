@@ -121,6 +121,7 @@ public class FileFound  extends File{
      * @return the hidden status of the file
      */
     public boolean getHidden() {
+
         return hidden;
     }
 
