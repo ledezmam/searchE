@@ -38,7 +38,7 @@ public class Controller {
     /**
      * Controller constructor
      */
-    public Controller() {
+    public Controller() throws ParseException {
         /*SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 view = new View();
@@ -52,20 +52,21 @@ public class Controller {
                 //view.getFormPanel().getSearchButton().getActionListeners();
             }
         });*/
-        view = new View();
+        //view = new View();
         search = new Search();
 
         validate = new Validator();
         criteria = new SearchCriteria();
 
-        view.getFormPanel().getSearchButton().addActionListener(e -> {
+        /*view.getFormPanel().getSearchButton().addActionListener(e -> {
             try {
                 getCriteriaView();
             } catch (ParseException e1) {
                 e1.printStackTrace();
             }
-        });
+        });*/
         //view.getPanel().getButton().addActionListener(e -> getCriteriaView());
+        getCriteriaView();
     }
 
     /**
@@ -78,17 +79,17 @@ public class Controller {
 
         // All hardcoded data must be replaced with data read from UI
         //String path = "c:\\install";
-        String path = "c:\\nuget";
+        String path = "c:\\install";
         if (path != null && validate.validatePath(path)) {
             criteria.setPath(path);
         }
 
-        String fileName = "nuget.exe";
+        String fileName = "jenkins-2.143.zip";
         if (fileName != null && validate.validateFileName(fileName)) {
             criteria.setFileName(fileName);
         }
 /*
-        String fileType = ".java";
+        String fileType = ".exe";
         if (fileType != null && validate.validateFileType(fileType)) {
             criteria.setFileExtension(fileType);
         }
