@@ -41,8 +41,12 @@ public class TextPanel extends JPanel {
      *
      * @param text Text that is appended in text area
      */
-    public void appendText(String text){
+    public void appendText(String text) {
         textArea.append(text);
+    }
+
+    public void clean() {
+        textArea.setText("");
     }
 
 }

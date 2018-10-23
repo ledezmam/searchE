@@ -31,18 +31,22 @@ public class View extends JFrame {
      */
     public View() {
         super("Search-E");
-        // make the Frame be visible
-        setVisible(true);
         // make the program stop and exit correctly when the User presses the 'X' button of the window
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // set the default size of the frame
         setSize(800, 800);
 
         init();
+        // make the Frame be visible
+        setVisible(true);
     }
 
     public FormPanel getFormPanel() {
         return formPanel;
+    }
+
+    public TextPanel getTextPanel() {
+        return textPanel;
     }
 
     /**
