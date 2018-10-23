@@ -14,6 +14,7 @@
 
 package com.foundation.search.model;
 
+import com.foundation.controller.SearchCriteria;
 import com.foundation.model.FileFound;
 import com.foundation.model.Search;
 import org.junit.Assert;
@@ -21,6 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,31 +38,6 @@ public class SearchTest {
      *  Search object that will be tested.
      */
     Search search;
-
-    /**
-     * Initializes the environment before running the tests, it will create
-     * generic files required for the different
-     * tests
-     */
-    @Before
-    public void initialize(){
-        String testDirName = "c://test";
-        String subDirName1 = testDirName + "/subDir1";
-        String subDirName2 = subDirName1 + "/subDir1";
-        File testDir = new File(testDirName);
-        File subDir1 = new File(subDirName1);
-        File subDir2 = new File(subDirName2);
-        if(!testDir.exists()){
-            testDir.mkdir();
-            subDir1.mkdir();
-            subDir2.mkdir();
-        }
-        this.createFilesByExtension(testDirName,"testJPG", "jpg",false, 3);
-        this.createFilesByExtension(testDirName,"testTXT", "txt",false, 5);
-        this.createFilesByExtension(testDirName,"testCSV", "csv",false, 2);
-        this.createFilesByExtension(subDirName1,"testCSV", "csv",false, 1);
-        this.createFilesByExtension(subDirName2,"testCSV", "csv",false, 1);
-    }
 
     /**
      * Method that creates files given an extension with or without content
@@ -99,9 +76,12 @@ public class SearchTest {
      */
     @Test
     public void searchFilesByCriteriaWhenAFileDoesNotExist () {
-        String path="c://test", fileName = "DoesNotExist.txt";
+        String path="src/test/java/com/foundation/search/test", fileName = "DoesNotExist.txt";
         search = new Search();
-        List<FileFound> actualFiles = search.searchFilesByCriteria(path, fileName);
+        SearchCriteria criteria = new SearchCriteria();
+        criteria.setPath(path);
+        criteria.setFileName(fileName);
+        List<FileFound> actualFiles = search.searchFilesByCriteria(criteria);
         Assert.assertEquals(0, actualFiles.size());
     }
 
@@ -110,12 +90,14 @@ public class SearchTest {
      */
     @Test
     public void searchFilesByCriteriaWhenATextFileExists () {
-        String path="c://test", fileName = "testTXT0.txt";
+        String path="src/test/java/com/foundation/search/test", fileName = "testTXT0.txt";
         search = new Search();
-        List<FileFound> actualFiles = search.searchFilesByCriteria(path, fileName);
-        System.out.println(actualFiles.size());
-        Assert.assertEquals("c:\\test\\testTXT0.txt",
-                actualFiles.get(0).getAbsolutePath());
+        SearchCriteria criteria = new SearchCriteria();
+        criteria.setPath(path);
+        criteria.setFileName(fileName);
+        List<FileFound> actualFiles = search.searchFilesByCriteria(criteria);
+        Assert.assertEquals("testTXT0.txt",
+                actualFiles.get(0).getFilename());
     }
 
     /**
@@ -124,13 +106,18 @@ public class SearchTest {
      */
     @Test
     public void searchFilesByCriteriaThatMatchesTheCriteriaByName () {
-        String path="c://test", fileName = "testTXT";
+        String path="src/test/java/com/foundation/search/test", fileName = "testTXT";
         search = new Search();
-        List<FileFound>  actualFiles = search.searchFilesByCriteria(path, fileName);
-        String expectedFiles = "[c:\\test\\testTXT0.txt," +
-                " c:\\test\\testTXT1.txt, c:\\test\\testTXT2.txt," +
-                " c:\\test\\testTXT3.txt, c:\\test\\testTXT4.txt]";
-        Assert.assertEquals(expectedFiles, actualFiles.toString());
+        SearchCriteria criteria = new SearchCriteria();
+        criteria.setPath(path);
+        criteria.setFileName(fileName);
+        List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+        String expectedFiles = "testTXT";
+        int i = 0;
+        for (FileFound file: actualFiles) {
+            Assert.assertEquals(expectedFiles + Integer.toString(i) + ".txt", file.getFilename());
+            i++;
+        }
     }
 
     /**
@@ -139,11 +126,35 @@ public class SearchTest {
      */
     @Test
     public void searchFilesByCriteriaThatMatchesTheCriteriaInDirAndSubDir () {
-        String path="c://test", fileName = "testCSV0.csv";
+        String path="src/test/java/com/foundation/search/test", fileName = "testCSV0.csv";
         search = new Search();
-        List<FileFound>  actualFiles = search.searchFilesByCriteria(path, fileName);
-        String expectedFiles = "[c:\\test\\subDir1\\subDir1\\testCSV0.csv," +
-                " c:\\test\\subDir1\\testCSV0.csv, c:\\test\\testCSV0.csv]";
-        Assert.assertEquals(expectedFiles, actualFiles.toString());
+        SearchCriteria criteria = new SearchCriteria();
+        criteria.setPath(path);
+        criteria.setFileName(fileName);
+        List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+        int expectedSizeFiles = 3;
+        Assert.assertEquals(expectedSizeFiles, actualFiles.size());
+    }
+
+    /**
+     * Method that tests searchFilesByCriteria to search by extension
+     */
+    @Test
+    public void searchFilesByCriteriaGivenAnExtension () {
+        String path="src/test/java/com/foundation/search/test", extension = ".csv";
+        search = new Search();
+        SearchCriteria criteria = new SearchCriteria();
+        criteria.setPath(path);
+        criteria.setFileExtension(extension);
+        List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+        List<String> expectedFiles = new ArrayList<>();
+        expectedFiles.add("testCSV0.csv");
+        expectedFiles.add("testCSV0.csv");
+        expectedFiles.add("testCSV0.csv");
+        expectedFiles.add("testCSV1.csv");
+
+        for (int i = 0; i < expectedFiles.size(); i++) {
+            Assert.assertEquals(actualFiles.get(i).getFilename(), expectedFiles.get(i));
+        }
     }
 }
