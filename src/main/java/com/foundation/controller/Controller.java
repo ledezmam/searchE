@@ -12,7 +12,15 @@
 
 package com.foundation.controller;
 
+import com.foundation.model.FileFound;
+import com.foundation.model.Search;
+import com.foundation.view.View;
+
+import javax.swing.SwingUtilities;
+import java.awt.event.ActionListener;
+import java.sql.SQLOutput;
 import java.text.ParseException;
+import java.util.List;
 
 /**
  * Class to integrate View and Search classes
@@ -24,18 +32,39 @@ public class Controller {
 
     Validator validate;
     SearchCriteria criteria;
-    // View view;
-    // Search search;
+    View view;
+    Search search;
 
     /**
      * Controller constructor
      */
     public Controller() {
-        // view = new View();
-        // search = new Search();
+        /*SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                view = new View();
+                ActionListener event = view.getFormPanel().getSearchActionListener();
+                view.getFormPanel().getSearchButton().addActionListener(event);
+                try {
+                    getCriteriaView();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                //view.getFormPanel().getSearchButton().getActionListeners();
+            }
+        });*/
+        view = new View();
+        search = new Search();
 
         validate = new Validator();
         criteria = new SearchCriteria();
+
+        view.getFormPanel().getSearchButton().addActionListener(e -> {
+            try {
+                getCriteriaView();
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+        });
         //view.getPanel().getButton().addActionListener(e -> getCriteriaView());
     }
 
@@ -48,16 +77,17 @@ public class Controller {
     private void getCriteriaView() throws ParseException {
 
         // All hardcoded data must be replaced with data read from UI
-        String path = "c:\\install";
+        //String path = "c:\\install";
+        String path = "c:\\nuget";
         if (path != null && validate.validatePath(path)) {
             criteria.setPath(path);
         }
 
-        String fileName = "jenkins-2.143.zip";
+        String fileName = "nuget.exe";
         if (fileName != null && validate.validateFileName(fileName)) {
             criteria.setFileName(fileName);
         }
-
+/*
         String fileType = ".java";
         if (fileType != null && validate.validateFileType(fileType)) {
             criteria.setFileExtension(fileType);
@@ -69,7 +99,7 @@ public class Controller {
         }
 
         /* file size will be validated an converted to bytes */
-        String operator = "greater than";
+/*        String operator = "greater than";
         String fileSize = "12";
         String unit = "MB";
         if (fileSize != null
@@ -119,9 +149,27 @@ public class Controller {
         if (content != null) {
             criteria.setFileContent(content);
         }
+*/
+        List<FileFound> results = search.searchFilesByCriteria(criteria);
+        printResult(results);
+    }
 
-        //search.setCriteria(criteria);
-        //search.fileFound();
+    /**
+     * Method to print results in console
+     *
+     * @throws ParseException
+     */
+    public void printResult(List<FileFound> results) throws ParseException {
+        for (FileFound item : results) {
+            System.out.println("Path: " + item.getPath());
+            System.out.println("FileName: " + item.getFilename());
+            System.out.println("Size: " + item.getSize());
+            System.out.println("Owner: " + item.getOwner());
+            System.out.println("Creation Date: " + item.getDateCreation());
+            System.out.println("Accessed Date: " + item.getDateAccessed());
+            System.out.println("Modified Date: " + item.getDateModified());
+            System.out.println("Hidden: " + item.getHidden());
+        }
     }
 
 }

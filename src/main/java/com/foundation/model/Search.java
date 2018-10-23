@@ -112,6 +112,7 @@ public class Search {
 
             if(criteria.getFileOwner()!= null && !criteria.getFileOwner().equalsIgnoreCase(owner)){
                 return false;
+
             }
 
             if (criteriaDateCreated != null && criteriaDateCreated.getTime() != dateCreation.toMillis()){
