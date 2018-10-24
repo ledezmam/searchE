@@ -45,8 +45,10 @@ public class TextPanel extends JPanel {
         textArea.append(text);
     }
 
+    /**
+     * Clean text panel method
+     */
     public void clean() {
         textArea.setText("");
     }
-
 }

@@ -31,20 +31,24 @@ public class View extends JFrame {
      */
     public View() {
         super("Search-E");
-        // make the program stop and exit correctly when the User presses the 'X' button of the window
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // set the default size of the frame
-        setSize(800, 800);
-
         init();
-        // make the Frame be visible
-        setVisible(true);
+        settings();
     }
 
+    /**
+     * Form Panel getter
+     *
+     * @return Form Panel
+     */
     public FormPanel getFormPanel() {
         return formPanel;
     }
 
+    /**
+     * Text Panel getter
+     *
+     * @return Text panel
+     */
     public TextPanel getTextPanel() {
         return textPanel;
     }
@@ -59,29 +63,17 @@ public class View extends JFrame {
 
         add(textPanel, BorderLayout.CENTER);
         add(formPanel, BorderLayout.NORTH);
+    }
 
-//        toolBar.setStringListener(new StringListener() {
-//            public void textEmitted(String text) {
-//                textPanel.appendText(text);
-//            }
-//        });
-//        formPanel.setFormListener(new FormListener(){
-//                                      public void formEventOccurred(FormEvent e){
-//                                          String input = e.getInput();
-//                                          FileCategory ext = e.getExtCategory();
-//                                          FileCategory vis = e.getVisibilityCategory();
-//                                          FileCategory size = e.getFileSizeCategory();
-//                                          FileCategory created = e.getDateCreatedCategory();
-//                                          FileCategory mod = e.getDateModifiedCategory();
-//                                          FileCategory accs = e.getDateAccessedCategory();
-//                                          FileCategory comp = e.getFileCompareCategory();
-//                                          textPanel.appendText("input: " + input + " extension: " + ext + " Visibility: "
-//                                                  + vis + " File size: " + size + "\n" + "File comparator: " + comp
-//                                                  + " Date created: " + created + " Date modified: " + mod + " Date accessed: "
-//                                                  + accs + "\n" + "\n");
-//                                      }
-//                                  }
-//        );
-
+    /**
+     * Method with the settings
+     */
+    public void settings(){
+        // make the program stop and exit correctly when the User presses the 'X' button of the window
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // set the default size of the frame
+        setSize(800, 800);
+        // make the Frame be visible
+        setVisible(true);
     }
 }

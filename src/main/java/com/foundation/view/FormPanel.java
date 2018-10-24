@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.border.Border;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.BorderFactory;
@@ -42,26 +43,68 @@ public class FormPanel extends JPanel {
     private JComboBox extList, visibilityList, fileCompareList, fileSizeList,
             dateCreatedPicker, dateModifiedPicker, dateAccessedPicker;
     private ActionListener searchActionListener;
-
-    public JButton getSearchButton() {
-        return searchButton;
-    }
-
-    public ActionListener getSearchActionListener() {
-        return searchActionListener;
-    }
+    //private JFileChooser pathChooser;
 
     /**
      * Method used for the Panel configuration
      */
     public FormPanel() {
+        settings();
+        components();
+        layoutComponents();
+    }
+
+    /**
+     * Method with the class settings
+     */
+    public void settings(){
         // check the current preferred Size and set a new one
         Dimension dim = getPreferredSize();
-        //System.out.println(dim);
         dim.width = 150;
         dim.height = 200;
         setPreferredSize(dim);
+    }
 
+    /**
+     * Path value getter
+     *
+     * @return File Path
+     */
+    public JTextField getPathField() {
+        return pathField;
+    }
+
+    /**
+     * Search field getter
+     *
+     * @return value of the serach field
+     */
+    public JTextField getSearchField() {
+        return searchField;
+    }
+
+    /**
+     * Search button getter
+     *
+     * @return search button criteria
+     */
+    public JButton getSearchButton() {
+        return searchButton;
+    }
+
+    /**
+     * Form listener method
+     *
+     * @param listener The listener from the Form
+     */
+    public void setFormListener(FormListener listener){
+        this.formListener = listener;
+    }
+
+    /**
+     * Method with the components of the class
+      */
+    public void components(){
         extLabel = new JLabel("By Extension: ");
         extList = new JComboBox();
         visibilityLabel = new JLabel("By Visibility: ");
@@ -83,14 +126,31 @@ public class FormPanel extends JPanel {
         pathField = new JTextField(30);
         pathButton = new JButton("Browse");
 
+
+//        pathButton.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                String string = pathField.getText();
+//
+//                FormEvent event = new FormEvent(this, string);
+//
+//                if (formListener != null) {
+//                    formListener.formEventOccurred(event);
+//                }
+//            }
+//        });
+
         pathButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String string = pathField.getText();
+                JFileChooser pathChooser = new JFileChooser();
+                pathChooser.setCurrentDirectory(new java.io.File("."));
+                pathChooser.setDialogTitle("Select Path");
+                pathChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                pathChooser.setAcceptAllFileFilterUsed(false);
 
-                FormEvent event = new FormEvent(this, string);
-
-                if (formListener != null) {
-                    formListener.formEventOccurred(event);
+                if(pathChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+                    System.out.println("Selection : "+ pathChooser.getSelectedFile());
+                } else {
+                    System.out.println("No path selected");
                 }
             }
         });
@@ -99,7 +159,7 @@ public class FormPanel extends JPanel {
         searchField = new JTextField(30);
         searchButton = new JButton("Search");
         searchActionListener = new ActionListener(){
-                public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 String string = searchField.getText();
                 FileCategory extCategory = (FileCategory) extList.getSelectedItem();
                 FileCategory visibilityCategory = (FileCategory) visibilityList.getSelectedItem();
@@ -119,10 +179,10 @@ public class FormPanel extends JPanel {
         searchButton.addActionListener(searchActionListener );
 
         DefaultComboBoxModel extModel = new DefaultComboBoxModel();
-        extModel.addElement(new FileCategory(0, "All"));
+        extModel.addElement(new FileCategory(0, ""));
         extModel.addElement(new FileCategory(1, "txt"));
-        extModel.addElement(new FileCategory(2, "java"));
-        extModel.addElement(new FileCategory(3, "exe"));
+        extModel.addElement(new FileCategory(2, "jpg"));
+        extModel.addElement(new FileCategory(3, "csv"));
         extList.setModel(extModel);
 
         extList.setPreferredSize(new Dimension(100, 20));
@@ -130,20 +190,19 @@ public class FormPanel extends JPanel {
         extList.setSelectedIndex(0);
 
         DefaultComboBoxModel visibilityModel = new DefaultComboBoxModel();
-        visibilityModel.addElement(new FileCategory(0, "All"));
+        visibilityModel.addElement(new FileCategory(0, ""));
         visibilityModel.addElement(new FileCategory(1, "Public"));
         visibilityModel.addElement(new FileCategory(2, "Hidden"));
         visibilityList.setModel(visibilityModel);
 
         visibilityList.setPreferredSize(new Dimension(100, 20));
         visibilityList.setBorder(BorderFactory.createEtchedBorder());
-        visibilityList.setSelectedIndex(1);
+        visibilityList.setSelectedIndex(0);
 
         DefaultComboBoxModel fileCompareModel = new DefaultComboBoxModel();
-        fileCompareModel.addElement(new FileCategory(0, "All"));
-        fileCompareModel.addElement(new FileCategory(1, "Less than"));
-        fileCompareModel.addElement(new FileCategory(2, "equals to"));
-        fileCompareModel.addElement(new FileCategory(4, "More than"));
+        fileCompareModel.addElement(new FileCategory(0, "Less than"));
+        fileCompareModel.addElement(new FileCategory(1, "equals to"));
+        fileCompareModel.addElement(new FileCategory(2, "greater than"));
         fileCompareList.setModel(fileCompareModel);
 
         fileCompareList.setPreferredSize(new Dimension(100, 20));
@@ -194,15 +253,6 @@ public class FormPanel extends JPanel {
         Border outerBorder = BorderFactory.createEmptyBorder(3, 3, 3, 3);
         setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
-        layoutComponents();
-    }
-
-    public JTextField getPathField() {
-        return pathField;
-    }
-
-    public JTextField getSearchField() {
-        return searchField;
     }
 
     /**
@@ -369,15 +419,6 @@ public class FormPanel extends JPanel {
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
         add(fileSizeList, gc);
-    }
-
-    /**
-     * Form listener method
-     *
-     * @param listener The listener from the Form
-     */
-    public void setFormListener(FormListener listener){
-        this.formListener = listener;
     }
 }
 
