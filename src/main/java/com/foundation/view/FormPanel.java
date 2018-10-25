@@ -26,6 +26,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * Panel class setting with grid definition
@@ -43,7 +44,6 @@ public class FormPanel extends JPanel {
     private JComboBox extList, visibilityList, fileCompareList, fileSizeList,
             dateCreatedPicker, dateModifiedPicker, dateAccessedPicker;
     private ActionListener searchActionListener;
-    //private JFileChooser pathChooser;
 
     /**
      * Method used for the Panel configuration
@@ -126,19 +126,6 @@ public class FormPanel extends JPanel {
         pathField = new JTextField(30);
         pathButton = new JButton("Browse");
 
-
-//        pathButton.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                String string = pathField.getText();
-//
-//                FormEvent event = new FormEvent(this, string);
-//
-//                if (formListener != null) {
-//                    formListener.formEventOccurred(event);
-//                }
-//            }
-//        });
-
         pathButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser pathChooser = new JFileChooser();
@@ -146,12 +133,10 @@ public class FormPanel extends JPanel {
                 pathChooser.setDialogTitle("Select Path");
                 pathChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                 pathChooser.setAcceptAllFileFilterUsed(false);
-
-                if(pathChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-                    System.out.println("Selection : "+ pathChooser.getSelectedFile());
-                } else {
-                    System.out.println("No path selected");
-                }
+                pathChooser.showOpenDialog(null);
+                File select = pathChooser.getSelectedFile();
+                String selection = (select).getAbsolutePath();
+                pathField.setText(selection);
             }
         });
 
