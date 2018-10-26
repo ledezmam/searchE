@@ -23,8 +23,9 @@ import java.awt.BorderLayout;
  */
 public class View extends JFrame {
 
-    private TextPanel textPanel;
+    //private TextPanel textPanel;
     private FormPanel formPanel;
+    private TablePanel tablePanel;
 
     /**
      * View configuration
@@ -49,20 +50,24 @@ public class View extends JFrame {
      *
      * @return Text panel
      */
-    public TextPanel getTextPanel() {
-        return textPanel;
-    }
+//    public TextPanel getTextPanel() {
+//        return textPanel;
+//    }
 
     /**
      * Initiation method
      */
     public void init(){
         setLayout(new BorderLayout());
-        textPanel = new TextPanel();
+        //textPanel = new TextPanel();
         formPanel = new FormPanel();
+        tablePanel = new TablePanel();
 
-        add(textPanel, BorderLayout.CENTER);
+        //add(textPanel, BorderLayout.CENTER);
         add(formPanel, BorderLayout.NORTH);
+        add(tablePanel, BorderLayout.CENTER);
+
+
     }
 
     /**
