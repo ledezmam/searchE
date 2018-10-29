@@ -11,22 +11,17 @@
  */
 package com.foundation.view;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.BorderFactory;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Properties;
 
 /**
  * Panel class setting with grid definition
@@ -36,14 +31,15 @@ import java.io.File;
  */
 public class FormPanel extends JPanel {
 
-    private JLabel pathButtonLabel, searchButtonLabel, extLabel, visibilityLabel,
-            ownerLabel, fileSizeLabel, dateCreatedLabel, dateModifiedLabel, dateAccessedLabel;
+    private JLabel pathButtonLabel, searchButtonLabel, extLabel, visibilityLabel, ownerLabel,
+            fileSizeLabel, dateCreatedLabel, dateModifiedLabel, dateAccessedLabel, fileAttribute;
     private JTextField pathField, searchField, ownerField, fileSizeField;
     private JButton pathButton, searchButton;
     private FormListener formListener;
-    private JComboBox extList, visibilityList, fileCompareList, fileSizeList,
-            dateCreatedPicker, dateModifiedPicker, dateAccessedPicker;
+    private JComboBox extList, visibilityList, fileCompareList, fileSizeList;
     private ActionListener searchActionListener;
+    private JDatePickerImpl dateCreatedPicker, dateModifiedPicker, dateAccessedPicker;
+    private JCheckBox fileIsReadOnly;
 
     /**
      * Method used for the Panel configuration
@@ -60,8 +56,8 @@ public class FormPanel extends JPanel {
     public void settings(){
         // check the current preferred Size and set a new one
         Dimension dim = getPreferredSize();
-        dim.width = 150;
-        dim.height = 200;
+        dim.width = 200;
+        dim.height = 240;
         setPreferredSize(dim);
     }
 
@@ -93,6 +89,15 @@ public class FormPanel extends JPanel {
     }
 
     /**
+     * File is read only getter
+     *
+     * @return file attribute
+     */
+    public JCheckBox getFileIsReadOnly() {
+        return fileIsReadOnly;
+    }
+
+    /**
      * Form listener method
      *
      * @param listener The listener from the Form
@@ -116,15 +121,27 @@ public class FormPanel extends JPanel {
         fileSizeList = new JComboBox();
         fileSizeField = new JTextField(10);
         dateCreatedLabel = new JLabel("Date Created");
-        dateCreatedPicker = new JComboBox();
         dateModifiedLabel = new JLabel("Date Modified");
-        dateModifiedPicker = new JComboBox();
         dateAccessedLabel = new JLabel("Date Accessed");
-        dateAccessedPicker = new JComboBox();
+        fileAttribute = new JLabel("Read only");
+        fileIsReadOnly = new JCheckBox();
 
         pathButtonLabel = new JLabel("Folder Path: ");
         pathField = new JTextField(30);
         pathButton = new JButton("Browse");
+        pathField.setEditable(false);
+
+        UtilDateModel model = new UtilDateModel();
+        model.setDate(2018, 10, 29);
+        model.setSelected(true);
+        Properties p = new Properties();
+        p.put("text.today", "Today");
+        p.put("text.month", "Month");
+        p.put("text.year", "Year");
+        JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+        dateCreatedPicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+        dateModifiedPicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+        dateAccessedPicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 
         pathButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -149,13 +166,14 @@ public class FormPanel extends JPanel {
                 FileCategory extCategory = (FileCategory) extList.getSelectedItem();
                 FileCategory visibilityCategory = (FileCategory) visibilityList.getSelectedItem();
                 FileCategory fileSizeCategory = (FileCategory) fileSizeList.getSelectedItem();
-                FileCategory dateCreatedCategory = (FileCategory) dateCreatedPicker.getSelectedItem();
-                FileCategory dateModifiedCategory = (FileCategory) dateModifiedPicker.getSelectedItem();
-                FileCategory dateAccessedCategory = (FileCategory) dateAccessedPicker.getSelectedItem();
+                FileCategory dateCreatedCategory = (FileCategory) dateCreatedPicker.getJDateInstantPanel();
+                FileCategory dateModifiedCategory = (FileCategory) dateModifiedPicker.getJDateInstantPanel();
+                FileCategory dateAccessedCategory = (FileCategory) dateAccessedPicker.getJDateInstantPanel();
                 FileCategory fileCompareCategory = (FileCategory) fileCompareList.getSelectedItem();
+                boolean readOnly = fileIsReadOnly.isSelected();
                 FormEvent event = new FormEvent(this, string, extCategory, visibilityCategory,
                         fileSizeCategory, dateCreatedCategory, dateModifiedCategory, dateAccessedCategory,
-                        fileCompareCategory);
+                        fileCompareCategory, readOnly);
                 if (formListener != null) {
                     formListener.formEventOccurred(event);
                 }
@@ -185,9 +203,10 @@ public class FormPanel extends JPanel {
         visibilityList.setSelectedIndex(0);
 
         DefaultComboBoxModel fileCompareModel = new DefaultComboBoxModel();
-        fileCompareModel.addElement(new FileCategory(0, "Less than"));
+        fileCompareModel.addElement(new FileCategory(0, ""));
         fileCompareModel.addElement(new FileCategory(1, "equals to"));
         fileCompareModel.addElement(new FileCategory(2, "greater than"));
+        fileCompareModel.addElement(new FileCategory(3, "Less than"));
         fileCompareList.setModel(fileCompareModel);
 
         fileCompareList.setPreferredSize(new Dimension(100, 20));
@@ -195,49 +214,19 @@ public class FormPanel extends JPanel {
         fileCompareList.setSelectedIndex(0);
 
         DefaultComboBoxModel fileSizeModel = new DefaultComboBoxModel();
-        fileSizeModel.addElement(new FileCategory(0, "KB"));
-        fileSizeModel.addElement(new FileCategory(1, "MB"));
-        fileSizeModel.addElement(new FileCategory(2, "GB"));
+        fileSizeModel.addElement(new FileCategory(0, ""));
+        fileSizeModel.addElement(new FileCategory(1, "KB"));
+        fileSizeModel.addElement(new FileCategory(2, "MB"));
+        fileSizeModel.addElement(new FileCategory(3, "GB"));
         fileSizeList.setModel(fileSizeModel);
 
         fileSizeList.setPreferredSize(new Dimension(100, 20));
         fileSizeList.setBorder(BorderFactory.createEtchedBorder());
         fileSizeList.setSelectedIndex(0);
 
-        DefaultComboBoxModel dateCreatedModel = new DefaultComboBoxModel();
-        dateCreatedModel.addElement(new FileCategory(0, "2018-10-18"));
-        dateCreatedModel.addElement(new FileCategory(1, "2018-10-19"));
-        dateCreatedModel.addElement(new FileCategory(2, "2018-10-20"));
-        dateCreatedPicker.setModel(dateCreatedModel);
-
-        dateCreatedPicker.setPreferredSize(new Dimension(100, 20));
-        dateCreatedPicker.setBorder(BorderFactory.createEtchedBorder());
-        dateCreatedPicker.setSelectedIndex(0);
-
-        DefaultComboBoxModel dateModifiedModel = new DefaultComboBoxModel();
-        dateModifiedModel.addElement(new FileCategory(0, "2018-10-18"));
-        dateModifiedModel.addElement(new FileCategory(1, "2018-10-19"));
-        dateModifiedModel.addElement(new FileCategory(2, "2018-10-20"));
-        dateModifiedPicker.setModel(dateCreatedModel);
-
-        dateModifiedPicker.setPreferredSize(new Dimension(100, 20));
-        dateModifiedPicker.setBorder(BorderFactory.createEtchedBorder());
-        dateModifiedPicker.setSelectedIndex(0);
-
-        DefaultComboBoxModel dateAccessedModel = new DefaultComboBoxModel();
-        dateAccessedModel.addElement(new FileCategory(0, "2018-10-18"));
-        dateAccessedModel.addElement(new FileCategory(1, "2018-10-19"));
-        dateAccessedModel.addElement(new FileCategory(2, "2018-10-20"));
-        dateAccessedPicker.setModel(dateCreatedModel);
-
-        dateAccessedPicker.setPreferredSize(new Dimension(100, 20));
-        dateAccessedPicker.setBorder(BorderFactory.createEtchedBorder());
-        dateAccessedPicker.setSelectedIndex(0);
-
-        Border innerBorder = BorderFactory.createTitledBorder("Menu");
+        Border innerBorder = BorderFactory.createTitledBorder("Options");
         Border outerBorder = BorderFactory.createEmptyBorder(3, 3, 3, 3);
         setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-
     }
 
     /**
@@ -374,7 +363,7 @@ public class FormPanel extends JPanel {
         gc.gridx = 0;
         gc.gridy = 5;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,0,3,0);
         gc.anchor = GridBagConstraints.LINE_START;
         add(new JLabel("By Size"), gc);
 
@@ -397,14 +386,29 @@ public class FormPanel extends JPanel {
         gc.fill = GridBagConstraints.NONE;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(fileSizeField, gc);
+        add(fileAttribute, gc);
 
         gc.gridx = 3;
         gc.gridy = 6;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
+        add(fileIsReadOnly, gc);
+
+        // set eight row
+        gc.gridx = 0;
+        gc.gridy = 7;
+        gc.fill = GridBagConstraints.NONE;
+        gc.insets = new Insets(0,0,0,0);
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(fileSizeField, gc);
+
+        gc.gridx = 1;
+        gc.gridy = 7;
+        gc.insets = new Insets(0,0,0,0);
+        gc.anchor = GridBagConstraints.LINE_START;
         add(fileSizeList, gc);
     }
+
 }
 
 /**
