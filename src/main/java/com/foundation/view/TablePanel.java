@@ -59,4 +59,15 @@ public class TablePanel extends JPanel {
     public void refresh(){
         tableModel.fireTableDataChanged();
     }
+
+    /**
+     *Method to clear the table
+     */
+    public void clear(){
+//        table.selectAll();
+//        table.clearSelection();
+        //tableModel.se;
+    }
+
+
 }

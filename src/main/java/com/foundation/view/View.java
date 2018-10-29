@@ -37,6 +37,15 @@ public class View extends JFrame {
     }
 
     /**
+     * Table panel getter
+     *
+     * @return Table panel
+     */
+    public TablePanel getTablePanel() {
+        return tablePanel;
+    }
+
+    /**
      * Form Panel getter
      *
      * @return Form Panel

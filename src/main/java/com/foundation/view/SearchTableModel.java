@@ -16,6 +16,7 @@ package com.foundation.view;
 import com.foundation.model.FileFound;
 
 import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,11 +29,14 @@ public class SearchTableModel extends AbstractTableModel {
 
     private List<FileFound> results;
     private String[] colNames = {"Path", "File Name", "File Size", "Owner", "Date Created", "Date Modified", "Date Accessed", "Hidden"};
+    private int rowCount;
 
     /**
      * Table model constructor
      */
-    public SearchTableModel(){}
+    public SearchTableModel(){
+        this.results = new ArrayList<>();
+    }
 
     /**
      * Method to get the Column names
@@ -62,6 +66,13 @@ public class SearchTableModel extends AbstractTableModel {
     @Override
     public int getRowCount() {
         return results.size();
+    }
+
+    /**
+     *
+     */
+    public void setRowCount(int rowCount){
+        this.rowCount = rowCount;
     }
 
     /**
