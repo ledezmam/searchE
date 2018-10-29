@@ -54,8 +54,12 @@ public class Search {
      *                 extension or part of the name of the files to search.
      * @return A list of files that matched with the criteria
      */
-    public List<FileFound> searchFilesByCriteria(SearchCriteria criteria){
+    public List<FileFound> searchFilesByCriteria(SearchCriteria criteria)
+            throws IOException{
         File fileDir = new File(criteria.getPath());
+        if (criteria.getPath().isEmpty()){
+            throw new IOException("Path was not set!");
+        }
         if (!fileDir.exists()){
             return null;
         }
@@ -138,25 +142,26 @@ public class Search {
         return true;
     }
     private boolean doesFileSizeMatch(Map<String, Long> mapSize, Long currentFileSize){
+        boolean match = false;
         for ( String operator : mapSize.keySet() ) {
             switch (operator){
                 case "greater than":
                     if (mapSize.get(operator) > currentFileSize){
-                        return true;
+                        match = true;
                     }
                 case "less than":
                     if (mapSize.get(operator) < currentFileSize){
-                        return true;
+                        match = true;
                     }
                 case "equals":
                     if (mapSize.get(operator) == currentFileSize){
-                        return true;
+                        match = true;
                     }
                 default:
-                    return false;
+                    break;
 
             }
         }
-        return false;
+        return match;
     }
 }
