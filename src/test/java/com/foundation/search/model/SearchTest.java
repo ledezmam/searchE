@@ -82,6 +82,7 @@ public class SearchTest {
         criteria.setPath(path);
         criteria.setFileName(fileName);
         List<FileFound> actualFiles = search.searchFilesByCriteria(criteria);
+        System.out.println(actualFiles.toString());
         Assert.assertEquals(0, actualFiles.size());
     }
 

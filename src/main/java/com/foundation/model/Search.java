@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Map;
 
 /**
  * Model class that will search in the System based on a criteria.
@@ -112,7 +113,6 @@ public class Search {
 
             if(criteria.getFileOwner()!= null && !criteria.getFileOwner().equalsIgnoreCase(owner)){
                 return false;
-
             }
 
             if (criteriaDateCreated != null && criteriaDateCreated.getTime() != dateCreation.toMillis()){
@@ -127,10 +127,36 @@ public class Search {
                 return false;
             }
 
+            if (criteria.getFileSize() != null && !doesFileSizeMatch(criteria.getFileSize(), file.length())){
+                return false;
+            }
+
         }catch(IOException e){
             System.out.println(e.getMessage());
         }
 
         return true;
+    }
+    private boolean doesFileSizeMatch(Map<String, Long> mapSize, Long currentFileSize){
+        for ( String operator : mapSize.keySet() ) {
+            switch (operator){
+                case "greater than":
+                    if (mapSize.get(operator) > currentFileSize){
+                        return true;
+                    }
+                case "less than":
+                    if (mapSize.get(operator) < currentFileSize){
+                        return true;
+                    }
+                case "equals":
+                    if (mapSize.get(operator) == currentFileSize){
+                        return true;
+                    }
+                default:
+                    return false;
+
+            }
+        }
+        return false;
     }
 }
