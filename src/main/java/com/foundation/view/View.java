@@ -12,13 +12,8 @@
  */
 package com.foundation.view;
 
-import javax.swing.JFrame;
-import javax.swing.JFileChooser;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -74,10 +69,13 @@ public class View extends JFrame {
     /**
      * Text panel setter
      *
-     * @param textPanel message displayed
+     * @param text message displayed
      */
-    public void setTextPanel(TextPanel textPanel) {
-        this.textPanel = textPanel;
+    public void setTextPanel(String text) {
+        Font font = new Font("Verdana", Font.BOLD, 12);
+        this.textPanel.setForeground(Color.red);
+        this.textPanel.setFont(font);
+        this.textPanel.appendText(text);
     }
 
     /**
