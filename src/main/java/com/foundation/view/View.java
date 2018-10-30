@@ -13,7 +13,14 @@
 package com.foundation.view;
 
 import javax.swing.JFrame;
+import javax.swing.JFileChooser;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * View class with variables set.
@@ -23,9 +30,10 @@ import java.awt.BorderLayout;
  */
 public class View extends JFrame {
 
-    //private TextPanel textPanel;
+    private TextPanel textPanel;
     private FormPanel formPanel;
     private TablePanel tablePanel;
+    private JFileChooser fileChooser;
 
     /**
      * View configuration
@@ -59,20 +67,30 @@ public class View extends JFrame {
      *
      * @return Text panel
      */
-//    public TextPanel getTextPanel() {
-//        return textPanel;
-//    }
+    public TextPanel getTextPanel() {
+        return textPanel;
+    }
+
+    /**
+     * Text panel setter
+     *
+     * @param textPanel message displayed
+     */
+    public void setTextPanel(TextPanel textPanel) {
+        this.textPanel = textPanel;
+    }
 
     /**
      * Initiation method
      */
     public void init(){
         setLayout(new BorderLayout());
-        //textPanel = new TextPanel();
+        textPanel = new TextPanel();
         formPanel = new FormPanel();
         tablePanel = new TablePanel();
+        fileChooser = new JFileChooser();
 
-        //add(textPanel, BorderLayout.CENTER);
+        add(textPanel, BorderLayout.SOUTH);
         add(formPanel, BorderLayout.NORTH);
         add(tablePanel, BorderLayout.CENTER);
 
@@ -89,5 +107,49 @@ public class View extends JFrame {
         setSize(800, 800);
         // make the Frame be visible
         setVisible(true);
+        // set Menu bar
+        setJMenuBar(menuBar());
+    }
+
+    /**
+     * Method to create Menu Bar on the Top
+     *
+     * @return menu bar
+     */
+    private JMenuBar menuBar(){
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu optionsMenu = new JMenu("Menu");
+        JMenuItem aboutOption = new JMenuItem("About");
+        JMenuItem exitOption = new JMenuItem("Exit");
+
+        optionsMenu.add(aboutOption);
+        optionsMenu.addSeparator();
+        optionsMenu.add(exitOption);
+
+        menuBar.add(optionsMenu);
+
+        aboutOption.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(View.this,
+                        "This is a project created by group E for the DevFund class\n\nMaria Ledezma - Model" +
+                                "\nMarco Velasquez - Controller\nRuben Mendoza - View",
+                        "About", JOptionPane.PLAIN_MESSAGE);
+            }
+        });
+
+        exitOption.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int action = JOptionPane.showConfirmDialog(View.this,
+                        "Do you really want to exit the application?",
+                        "Confirm Exit", JOptionPane.OK_CANCEL_OPTION|JOptionPane.WARNING_MESSAGE);
+
+                if (action == JOptionPane.OK_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
+
+        return menuBar;
     }
 }

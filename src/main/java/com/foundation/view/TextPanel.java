@@ -32,8 +32,8 @@ public class TextPanel extends JPanel {
     public TextPanel(){
         textArea = new JTextArea();
         setLayout(new BorderLayout());
-        // enabling scrollbar for the textArea
         add(new JScrollPane(textArea), BorderLayout.CENTER);
+        textArea.setEditable(false);
     }
 
     /**
