@@ -41,7 +41,7 @@ public class Validator implements IValidator {
      * @return true if the file name is correct, otherwise false
      */
     public boolean validateFileName(String fileName) {
-        String regEx = "[^\\:*?\"<>|\r\n]*";
+        String regEx = "[^\\:*?\"<>\\\\\\/|\r\n]*";
         Pattern pattern = Pattern.compile(regEx);
         return Pattern.matches(regEx, fileName);
     }

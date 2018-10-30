@@ -48,6 +48,7 @@ public class Controller {
 
         view.getFormPanel().getSearchButton().addActionListener(e -> {
             try {
+                view.getTextPanel().clean();
                 view.getTablePanel().refresh();
                 //view.getTablePanel().setData(null);
                 getCriteriaView();
@@ -65,16 +66,29 @@ public class Controller {
      */
     private void getCriteriaView() throws ParseException, IOException {
 
-        // All hardcoded data must be replaced with data read from UI
+        boolean flag = true;
+
         String path = view.getFormPanel().getPathField().getText();
-        System.out.println(path);
-        if (path != null && validate.validatePath(path)) {
-            criteria.setPath(path);
+        if (path != null && !path.isEmpty()) {
+            if (validate.validatePath(path)) {
+                criteria.setPath(path);
+            } else {
+                view.setTextPanel("The specified path is not valid.!!!");
+                flag = false;
+            }
+        } else {
+            view.setTextPanel("Folder path is empty");
+            flag = false;
         }
 
         String fileName = view.getFormPanel().getSearchField().getText();
-        if (fileName != null && !fileName.isEmpty() && validate.validateFileName(fileName)) {
-            criteria.setFileName(fileName);
+        if (fileName != null && !fileName.isEmpty()) {
+            if (validate.validateFileName(fileName)) {
+                criteria.setFileName(fileName);
+            } else {
+                view.setTextPanel("File Name contains one of these invalid characters: <>:\"\\/|?*");
+                flag = false;
+            }
         }
 
         String fileType = view.getFormPanel().getExtList().getSelectedItem().toString();
@@ -139,8 +153,10 @@ public class Controller {
             criteria.setFileContent(content);
         }
 */
-        List<FileFound> results = search.searchFilesByCriteria(criteria);
-        printResult(results);
+        if (flag) {
+            List<FileFound> results = search.searchFilesByCriteria(criteria);
+            printResult(results);
+        }
     }
 
     /**

@@ -201,8 +201,19 @@ public class FormPanel extends JPanel {
         DefaultComboBoxModel extModel = new DefaultComboBoxModel();
         extModel.addElement(new FileCategory(0, ""));
         extModel.addElement(new FileCategory(1, ".txt"));
-        extModel.addElement(new FileCategory(2, ".jpg"));
-        extModel.addElement(new FileCategory(3, ".csv"));
+        extModel.addElement(new FileCategory(2, ".gif"));
+        extModel.addElement(new FileCategory(3, ".pdf"));
+        extModel.addElement(new FileCategory(4, ".doc"));
+        extModel.addElement(new FileCategory(5, ".docx"));
+        extModel.addElement(new FileCategory(6, ".xls"));
+        extModel.addElement(new FileCategory(7, ".xlsx"));
+        extModel.addElement(new FileCategory(8, ".xml"));
+        extModel.addElement(new FileCategory(9, ".java"));
+        extModel.addElement(new FileCategory(10, ".jpg"));
+        extModel.addElement(new FileCategory(11, ".bmp"));
+        extModel.addElement(new FileCategory(12, ".zip"));
+        extModel.addElement(new FileCategory(13, ".exe"));
+        extModel.addElement(new FileCategory(14, ".csv"));
         extList.setModel(extModel);
 
         extList.setPreferredSize(new Dimension(100, 20));
