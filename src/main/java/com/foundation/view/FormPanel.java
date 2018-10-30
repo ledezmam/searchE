@@ -11,6 +11,7 @@
  */
 package com.foundation.view;
 
+import org.jdatepicker.JDatePanel;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -59,6 +60,18 @@ public class FormPanel extends JPanel {
         dim.width = 200;
         dim.height = 240;
         setPreferredSize(dim);
+    }
+
+    public JComboBox getExtList() {
+        return extList;
+    }
+
+    public JComboBox getVisibilityList() {
+        return visibilityList;
+    }
+
+    public JTextField getOwnerField() {
+        return ownerField;
     }
 
     /**
@@ -131,17 +144,21 @@ public class FormPanel extends JPanel {
         pathButton = new JButton("Browse");
         pathField.setEditable(false);
 
-        UtilDateModel model = new UtilDateModel();
-        model.setDate(2018, 10, 29);
-        model.setSelected(true);
+        UtilDateModel modelCreated = new UtilDateModel();
+        UtilDateModel modelAccessed = new UtilDateModel();
+        UtilDateModel modelModified = new UtilDateModel();
+        //model.setDate(2018, 10, 29);
+        //model.setSelected(true);
         Properties p = new Properties();
         p.put("text.today", "Today");
         p.put("text.month", "Month");
         p.put("text.year", "Year");
-        JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-        dateCreatedPicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-        dateModifiedPicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-        dateAccessedPicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+        JDatePanelImpl datePanelCreated = new JDatePanelImpl(modelCreated, p);
+        JDatePanelImpl datePanelAccessed = new JDatePanelImpl(modelAccessed, p);
+        JDatePanelImpl datePanelModified = new JDatePanelImpl(modelModified, p);
+        dateCreatedPicker = new JDatePickerImpl(datePanelCreated, new DateLabelFormatter());
+        dateModifiedPicker = new JDatePickerImpl(datePanelModified, new DateLabelFormatter());
+        dateAccessedPicker = new JDatePickerImpl(datePanelAccessed, new DateLabelFormatter());
 
         pathButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -166,9 +183,9 @@ public class FormPanel extends JPanel {
                 FileCategory extCategory = (FileCategory) extList.getSelectedItem();
                 FileCategory visibilityCategory = (FileCategory) visibilityList.getSelectedItem();
                 FileCategory fileSizeCategory = (FileCategory) fileSizeList.getSelectedItem();
-                FileCategory dateCreatedCategory = (FileCategory) dateCreatedPicker.getJDateInstantPanel();
-                FileCategory dateModifiedCategory = (FileCategory) dateModifiedPicker.getJDateInstantPanel();
-                FileCategory dateAccessedCategory = (FileCategory) dateAccessedPicker.getJDateInstantPanel();
+                JDatePanel dateCreatedCategory = dateCreatedPicker.getJDateInstantPanel();
+                JDatePanel dateModifiedCategory = dateModifiedPicker.getJDateInstantPanel();
+                JDatePanel dateAccessedCategory = dateAccessedPicker.getJDateInstantPanel();
                 FileCategory fileCompareCategory = (FileCategory) fileCompareList.getSelectedItem();
                 boolean readOnly = fileIsReadOnly.isSelected();
                 FormEvent event = new FormEvent(this, string, extCategory, visibilityCategory,
@@ -183,9 +200,9 @@ public class FormPanel extends JPanel {
 
         DefaultComboBoxModel extModel = new DefaultComboBoxModel();
         extModel.addElement(new FileCategory(0, ""));
-        extModel.addElement(new FileCategory(1, "txt"));
-        extModel.addElement(new FileCategory(2, "jpg"));
-        extModel.addElement(new FileCategory(3, "csv"));
+        extModel.addElement(new FileCategory(1, ".txt"));
+        extModel.addElement(new FileCategory(2, ".jpg"));
+        extModel.addElement(new FileCategory(3, ".csv"));
         extList.setModel(extModel);
 
         extList.setPreferredSize(new Dimension(100, 20));
