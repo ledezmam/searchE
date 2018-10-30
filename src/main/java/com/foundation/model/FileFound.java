@@ -34,6 +34,7 @@ public class FileFound  extends File{
     private String dateModified;
     private String dateAccessed;
     private boolean hidden;
+    private boolean isReadable;
 
     /**
      * Constructor of the class
@@ -44,7 +45,7 @@ public class FileFound  extends File{
         try {
             BasicFileAttributes attr = Files.readAttributes(file.toPath(),
                     BasicFileAttributes.class);
-            this.owner = Files.getOwner(file.toPath()).toString();
+            this.owner = Files.getOwner(file.toPath()).getName();
             this.path = file.getPath();
             this.filename = file.getName();
             this.size =  String.valueOf(file.getTotalSpace());
@@ -52,11 +53,29 @@ public class FileFound  extends File{
             this.dateModified = attr.lastModifiedTime().toString();
             this.dateAccessed = attr.lastAccessTime().toString();
             this.hidden = file.isHidden();
+            this.isReadable = file.canRead();
 
         }catch(IOException e){
             System.out.println(e.getMessage());
         }
 
+    }
+
+    /**
+     * Getter of the hidden attribute
+     * @return the hidden attribute of the file
+     */
+    @Override
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    /**
+     * Getter of the isReadable attribute
+     * @return the path of the file
+     */
+    public boolean isReadable() {
+        return isReadable;
     }
 
     /**

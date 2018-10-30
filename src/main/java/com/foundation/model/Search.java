@@ -58,7 +58,7 @@ public class Search {
             throws IOException{
         File fileDir = new File(criteria.getPath());
         if (criteria.getPath().isEmpty()){
-            throw new IOException("Path was not set!");
+            throw new IOException("Search path was not set!");
         }
         if (!fileDir.exists()){
             return null;
@@ -68,11 +68,14 @@ public class Search {
         if(fileList != null) {
             for (File file : fileList) {
                 if (file.isDirectory()){
+                    if (criteria.getFileName()!= null && doesFileMatchesName(file.getName(), criteria.getFileName())){
+                        FileFound fileFound = new FileFound(file);
+                        resultFiles.add(fileFound);
+                    }
                     criteria.setPath(file.getPath());
                     searchFilesByCriteria(criteria);
                 }
                 else {
-                    //file.getName().contains(criteria)
                     if (doesFileMatchesCriteria(file, criteria)){
                         FileFound fileFound = new FileFound(file);
                         resultFiles.add(fileFound);
@@ -101,17 +104,16 @@ public class Search {
             FileTime dateCreation = attr.creationTime();
             FileTime dateModified = attr.lastModifiedTime();
             FileTime dateAccessed = attr.lastAccessTime();
-            boolean hidden = file.isHidden();
 
             Date criteriaDateCreated = criteria.getDateCreated();
             Date criteriaDateModified = criteria.getDateModified();
             Date criteriaDateAccessed = criteria.getDateAccessed();
 
-            if(criteria.getFileName() != null && !file.getName().contains(criteria.getFileName())){
+            if(criteria.getFileName() != null && !doesFileMatchesName(file.getName(), criteria.getFileName())){
                 return false;
             }
 
-            if(criteria.getFileExtension() != null && !file.getName().contains(criteria.getFileExtension())){
+            if(criteria.getFileExtension() != null && !doesFileMatchesExtension(file.getName(), criteria.getFileExtension())){
                 return false;
             }
 
@@ -134,6 +136,9 @@ public class Search {
             if (criteria.getFileSize() != null && !doesFileSizeMatch(criteria.getFileSize(), file.length())){
                 return false;
             }
+            if (criteria.getFileVisibility() != null && !doesFileMatchVisibility(criteria.getFileVisibility(), file)){
+                return false;
+            }
 
         }catch(IOException e){
             System.out.println(e.getMessage());
@@ -141,6 +146,46 @@ public class Search {
 
         return true;
     }
+
+    /**
+     * Method that will verify if the file matches the name criteria
+     * @param fileName The file name that will be analyzed to check if it
+     *                 matches the name criteria
+     * @param critName The name criteria of the search, it can be partial name
+     *                 or full name
+     * @return true if the files matches the criteria and false if not.
+     */
+    private boolean doesFileMatchesName(String fileName, String critName){
+        boolean match = false;
+        if (fileName.matches("(?i).*" + critName + ".*")){
+            match =  true;
+        }
+        return match;
+    }
+
+    /**
+     * Method that will verify if the file matches the extension criteria
+     * @param fileName The file name that will be analyzed to check if it
+     *                 matches the  extension criteria
+     * @param critExt The extension criteria of the search to be matched
+     * @return true if the files matches the criteria and false if not.
+     */
+    private boolean doesFileMatchesExtension(String fileName, String critExt){
+        boolean match = false;
+        if (fileName.matches("(?i).*" + critExt)){
+            match =  true;
+        }
+        return match;
+    }
+
+    /**
+     * Method that will verify if the file matches the size criteria
+     * @param mapSize The map that contains the operator and target size to be
+     *                compared
+     * @param currentFileSize the current size of the file that is being
+     *                        analyzed
+     * @return true if the files matches the criteria and false if not.
+     */
     private boolean doesFileSizeMatch(Map<String, Long> mapSize, Long currentFileSize){
         boolean match = false;
         for ( String operator : mapSize.keySet() ) {
@@ -159,7 +204,26 @@ public class Search {
                     }
                 default:
                     break;
+            }
+        }
+        return match;
+    }
 
+    /**
+     * Method that will verify if the file matches the visibility criteria
+     * @param visibility it can be public or hidden
+     * @param file the file that is being analyzed to check its visibility
+     * @return true if the files matches the criteria and false if not.
+     */
+    private boolean doesFileMatchVisibility(String visibility, File file){
+        boolean match = false;
+        if (visibility.equalsIgnoreCase("public")){
+            if (file.isHidden() == false){
+                match = true;
+            }
+        }else{
+            if (file.isHidden() == true){
+                match = true;
             }
         }
         return match;

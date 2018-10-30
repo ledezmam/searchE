@@ -161,7 +161,7 @@ public class SearchTest {
     @Test
     public void searchFilesByCriteriaThatMatchesTheCriteriaInDirAndSubDir () {
         try{
-            String path="src/test/java/com/foundation/search/test", fileName = "testCSV0.csv";
+            String path="src/test/java/com/foundation/search/test", fileName = "testcsv0.csv";
             search = new Search();
             SearchCriteria criteria = new SearchCriteria();
             criteria.setPath(path);
@@ -195,6 +195,50 @@ public class SearchTest {
             for (int i = 0; i < expectedFiles.size(); i++) {
                 Assert.assertEquals(actualFiles.get(i).getFilename(), expectedFiles.get(i));
             }
+        } catch (IOException e) {
+
+        }
+    }
+
+    /**
+     * Method that tests searchFilesByCriteria to search by hidden
+     */
+    @Test
+    public void searchFilesByCriteriaWhenAFileIsHidden () {
+        try{
+            String path="src/test/java/com/foundation/search/test",
+                    visibility = "Hidden";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileVisibility(visibility);
+            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<String> expectedFiles = new ArrayList<>();
+            expectedFiles.add("FileHidden.bmp");
+            for (int i = 0; i < expectedFiles.size(); i++) {
+                Assert.assertEquals(actualFiles.get(i).getFilename(), expectedFiles.get(i));
+            }
+        } catch (IOException e) {
+
+        }
+    }
+
+    /**
+     * Method that tests method searchFilesByCriteria to search for file and
+     * directory that matches the criteria in the name
+     */
+    @Test
+    public void searchFilesByCriteriaWhenFileAndDirMatchNameCriteria () {
+        try{
+            String path="src/test/java/com/foundation/search/test",
+                    fileName = "samename";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileName(fileName);
+            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            int expectedSizeFiles = 2;
+            Assert.assertEquals(expectedSizeFiles, actualFiles.size());
         } catch (IOException e) {
 
         }
