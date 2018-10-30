@@ -56,7 +56,7 @@ public class Validator implements IValidator {
      * @return true if the file extension is correct, otherwise false
      */
     public boolean validateFileType(String fileType) {
-        String regEx = ".(txt|gif|pdf|doc|docx|xls|xlsx|xml|java|jpg|bmp|zip|exe)";
+        String regEx = ".(txt|gif|pdf|doc|docx|xls|xlsx|xml|java|jpg|bmp|zip|exe|csv)";
         Pattern pattern = Pattern.compile(regEx);
         return Pattern.matches(regEx, fileType);
     }

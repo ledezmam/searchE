@@ -71,9 +71,9 @@ public class SearchTableModel extends AbstractTableModel {
     /**
      *
      */
-    public void setRowCount(int rowCount){
+   /* public void setRowCount(int rowCount){
         this.rowCount = rowCount;
-    }
+    }*/
 
     /**
      * Define the total number of columns
