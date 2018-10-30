@@ -99,7 +99,7 @@ public class Search {
         try {
             BasicFileAttributes attr = Files.readAttributes(file.toPath(),
                     BasicFileAttributes.class);
-            String owner = Files.getOwner(file.toPath()).toString();
+            String owner = Files.getOwner(file.toPath()).getName();
             Long size =  file.getTotalSpace();
             FileTime dateCreation = attr.creationTime();
             FileTime dateModified = attr.lastModifiedTime();
@@ -117,7 +117,7 @@ public class Search {
                 return false;
             }
 
-            if(criteria.getFileOwner()!= null && !criteria.getFileOwner().equalsIgnoreCase(owner)){
+            if(criteria.getFileOwner()!= null && !owner.contains(criteria.getFileOwner())){
                 return false;
             }
 

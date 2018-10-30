@@ -45,7 +45,7 @@ public class FileFound  extends File{
         try {
             BasicFileAttributes attr = Files.readAttributes(file.toPath(),
                     BasicFileAttributes.class);
-            this.owner = Files.getOwner(file.toPath()).getName();
+            this.owner = Files.getOwner(file.toPath()).toString();
             this.path = file.getPath();
             this.filename = file.getName();
             this.size =  String.valueOf(file.getTotalSpace());

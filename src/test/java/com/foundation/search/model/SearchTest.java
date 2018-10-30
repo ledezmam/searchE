@@ -224,8 +224,8 @@ public class SearchTest {
     }
 
     /**
-     * Method that tests method searchFilesByCriteria to search for file and
-     * directory that matches the criteria in the name
+     * Method that tests method searchFilesByCriteria to search by name when
+     * file and directory match the criteria in the name
      */
     @Test
     public void searchFilesByCriteriaWhenFileAndDirMatchNameCriteria () {
@@ -238,6 +238,26 @@ public class SearchTest {
             criteria.setFileName(fileName);
             List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
             int expectedSizeFiles = 2;
+            Assert.assertEquals(expectedSizeFiles, actualFiles.size());
+        } catch (IOException e) {
+
+        }
+    }
+
+    /**
+     * Method that tests method searchFilesByCriteria to search by owner
+     */
+    @Test
+    public void searchFilesByCriteriaGivenAnOwnerName () {
+        try{
+            String path="src/test/java/com/foundation/search/test",
+                    owner = "MariaL";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileOwner(owner);
+            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            int expectedSizeFiles = 16;
             Assert.assertEquals(expectedSizeFiles, actualFiles.size());
         } catch (IOException e) {
 
