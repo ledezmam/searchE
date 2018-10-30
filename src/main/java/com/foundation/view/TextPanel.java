@@ -11,10 +11,8 @@
  */
 package com.foundation.view;
 
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Panel class setting
@@ -34,6 +32,9 @@ public class TextPanel extends JPanel {
         setLayout(new BorderLayout());
         add(new JScrollPane(textArea), BorderLayout.CENTER);
         textArea.setEditable(false);
+        Font font = new Font("Verdana", Font.BOLD, 12);
+        textArea.setForeground(Color.red);
+        textArea.setFont(font);
     }
 
     /**
