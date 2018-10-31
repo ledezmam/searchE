@@ -72,6 +72,9 @@ public class View extends JFrame {
      * @param text message displayed
      */
     public void setTextPanel(String text) {
+        Font font = new Font("Verdana", Font.BOLD, 12);
+        this.textPanel.setForeground(Color.red);
+        this.textPanel.setFont(font);
         this.textPanel.appendText(text);
     }
 

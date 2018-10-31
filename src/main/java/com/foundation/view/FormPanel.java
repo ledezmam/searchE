@@ -32,15 +32,16 @@ import java.util.Properties;
  */
 public class FormPanel extends JPanel {
 
-    private JLabel pathButtonLabel, searchButtonLabel, extLabel, visibilityLabel, ownerLabel,
-            fileSizeLabel, dateCreatedLabel, dateModifiedLabel, dateAccessedLabel, fileAttribute;
-    private JTextField pathField, searchField, ownerField, fileSizeField;
-    private JButton pathButton, searchButton;
+    private JLabel folderButtonLabel, searchButtonLabel, extensionLabel, visibilityLabel, ownerLabel,
+            fileSizeLabel, dateCreatedLabel, dateModifiedLabel, dateAccessedLabel, fileIsReadOnlyLabel;
+    private JTextField folderTextField, searchTextField, ownerTextField, fileSizeTextField;
+    private JButton folderButton, searchButton;
     private FormListener formListener;
-    private JComboBox extList, visibilityList, fileCompareList, fileSizeList;
+    private JComboBox extensionList, visibilityList, fileSizeCompareList, fileSizeList;
     private ActionListener searchActionListener;
-    private JDatePickerImpl dateCreatedPicker, dateModifiedPicker, dateAccessedPicker;
-    private JCheckBox fileIsReadOnly;
+    private JDatePickerImpl dateCreatedInitialPicker, dateModifiedInitialPicker, dateAccessedInitialPicker,
+            dateCreatedFinalPicker, dateModifiedFinalPicker, dateAccessedFinalPicker;
+    private JCheckBox fileIsReadOnlyCheckBox;
 
     /**
      * Method used for the Panel configuration
@@ -63,15 +64,15 @@ public class FormPanel extends JPanel {
     }
 
     public JComboBox getExtList() {
-        return extList;
+        return extensionList;
     }
 
-    public JComboBox getVisibilityList() {
-        return visibilityList;
-    }
+//    public JComboBox getVisibilityList() {
+//        return visibilityList;
+//    }
 
     public JTextField getOwnerField() {
-        return ownerField;
+        return ownerTextField;
     }
 
     /**
@@ -79,8 +80,8 @@ public class FormPanel extends JPanel {
      *
      * @return File Path
      */
-    public JTextField getPathField() {
-        return pathField;
+    public JTextField getFolderTextField() {
+        return folderTextField;
     }
 
     /**
@@ -88,8 +89,8 @@ public class FormPanel extends JPanel {
      *
      * @return value of the serach field
      */
-    public JTextField getSearchField() {
-        return searchField;
+    public JTextField getSearchTextField() {
+        return searchTextField;
     }
 
     /**
@@ -106,8 +107,8 @@ public class FormPanel extends JPanel {
      *
      * @return file attribute
      */
-    public JCheckBox getFileIsReadOnly() {
-        return fileIsReadOnly;
+    public JCheckBox getFileIsReadOnlyCheckBox() {
+        return fileIsReadOnlyCheckBox;
     }
 
     /**
@@ -120,47 +121,176 @@ public class FormPanel extends JPanel {
     }
 
     /**
+     * Owner field getter
+     *
+     * @return Owner
+     */
+    public JTextField getOwnerTextField() {
+        return ownerTextField;
+    }
+
+    /**
+     * File Size input field getter
+     *
+     * @return file size input
+     */
+    public JTextField getFileSizeTextField() {
+        return fileSizeTextField;
+    }
+
+    /**
+     * Extension getter
+     *
+     * @return file extension
+     */
+    public JComboBox getExtensionList() {
+        return extensionList;
+    }
+
+    /**
+     * File visibility getter
+     *
+     * @return fle visiblity
+     */
+    public JComboBox getVisibilityList() {
+        return visibilityList;
+    }
+
+    /**
+     * File comparison criteria getter
+     *
+     * @return File comparison criteria
+     */
+    public JComboBox getFileSizeCompareList() {
+        return fileSizeCompareList;
+    }
+
+    /**
+     * File size unit getter
+     *
+     * @return file size unit
+     */
+    public JComboBox getFileSizeList() {
+        return fileSizeList;
+    }
+
+    /**
+     * Initial date created picker
+     *
+     * @return initial date created
+     */
+    public JDatePickerImpl getDateCreatedInitialPicker() {
+        return dateCreatedInitialPicker;
+    }
+
+    /**
+     * Initial date modified picker
+     *
+     * @return initial date modified
+     */
+    public JDatePickerImpl getDateModifiedInitialPicker() {
+        return dateModifiedInitialPicker;
+    }
+
+    /**
+     * Initial date accessed picker
+     *
+     * @return initial date accessed
+     */
+    public JDatePickerImpl getDateAccessedInitialPicker() {
+        return dateAccessedInitialPicker;
+    }
+
+    /**
+     * Folder button getter
+     *
+     * @return folder button
+     */
+    public JButton getFolderButton() {
+        return folderButton;
+    }
+
+    /**
+     * Final date created picker
+     *
+     * @return
+     */
+    public JDatePickerImpl getDateCreatedFinalPicker() {
+        return dateCreatedFinalPicker;
+    }
+
+    /**
+     * Final date modified picker
+     *
+     * @return
+     */
+    public JDatePickerImpl getDateModifiedFinalPicker() {
+        return dateModifiedFinalPicker;
+    }
+
+    /**
+     * Final date accessed picker
+     *
+     * @return
+     */
+    public JDatePickerImpl getDateAccessedFinalPicker() {
+        return dateAccessedFinalPicker;
+    }
+
+    /**
      * Method with the components of the class
       */
     public void components(){
-        extLabel = new JLabel("By Extension: ");
-        extList = new JComboBox();
-        visibilityLabel = new JLabel("By Visibility: ");
+        extensionLabel = new JLabel("Extension: ");
+        extensionList = new JComboBox();
+        visibilityLabel = new JLabel("Visibility: ");
         visibilityList = new JComboBox();
-        ownerLabel = new JLabel("By Owner");
-        ownerField = new JTextField(15);
+        ownerLabel = new JLabel("Owner");
+        ownerTextField = new JTextField(15);
         fileSizeLabel = new JLabel("File Size: ");
-        fileCompareList = new JComboBox();
+        fileSizeCompareList = new JComboBox();
         fileSizeList = new JComboBox();
-        fileSizeField = new JTextField(10);
+        fileSizeTextField = new JTextField(10);
         dateCreatedLabel = new JLabel("Date Created");
         dateModifiedLabel = new JLabel("Date Modified");
         dateAccessedLabel = new JLabel("Date Accessed");
-        fileAttribute = new JLabel("Read only");
-        fileIsReadOnly = new JCheckBox();
 
-        pathButtonLabel = new JLabel("Folder Path: ");
-        pathField = new JTextField(30);
-        pathButton = new JButton("Browse");
-        pathField.setEditable(false);
+        fileIsReadOnlyLabel = new JLabel("Read only");
+        fileIsReadOnlyCheckBox = new JCheckBox();
 
-        UtilDateModel modelCreated = new UtilDateModel();
-        UtilDateModel modelAccessed = new UtilDateModel();
-        UtilDateModel modelModified = new UtilDateModel();
-        //model.setDate(2018, 10, 29);
-        //model.setSelected(true);
+        folderButtonLabel = new JLabel("Folder Path: ");
+        folderTextField = new JTextField(25);
+        folderButton = new JButton("Browse");
+        folderTextField.setEditable(false);
+
+        UtilDateModel modelCreatedInitial = new UtilDateModel();
+        UtilDateModel modelModifiedInitial = new UtilDateModel();
+        UtilDateModel modelAccessedInitial = new UtilDateModel();
+        UtilDateModel modelCreatedFinal = new UtilDateModel();
+        UtilDateModel modelModifiedFinal = new UtilDateModel();
+        UtilDateModel modelAccessedFinal = new UtilDateModel();
+
+
         Properties p = new Properties();
         p.put("text.today", "Today");
         p.put("text.month", "Month");
         p.put("text.year", "Year");
-        JDatePanelImpl datePanelCreated = new JDatePanelImpl(modelCreated, p);
-        JDatePanelImpl datePanelAccessed = new JDatePanelImpl(modelAccessed, p);
-        JDatePanelImpl datePanelModified = new JDatePanelImpl(modelModified, p);
-        dateCreatedPicker = new JDatePickerImpl(datePanelCreated, new DateLabelFormatter());
-        dateModifiedPicker = new JDatePickerImpl(datePanelModified, new DateLabelFormatter());
-        dateAccessedPicker = new JDatePickerImpl(datePanelAccessed, new DateLabelFormatter());
 
-        pathButton.addActionListener(new ActionListener() {
+        JDatePanelImpl datePanelCreatedInitial = new JDatePanelImpl(modelCreatedInitial, p);
+        JDatePanelImpl datePanelModifiedInitial = new JDatePanelImpl(modelModifiedInitial, p);
+        JDatePanelImpl datePanelAccessedInitial = new JDatePanelImpl(modelAccessedInitial, p);
+        JDatePanelImpl datePanelCreatedFinal = new JDatePanelImpl(modelCreatedFinal, p);
+        JDatePanelImpl datePanelModifiedFinal = new JDatePanelImpl(modelModifiedFinal, p);
+        JDatePanelImpl datePanelAccessedFinal = new JDatePanelImpl(modelAccessedFinal, p);
+        dateCreatedInitialPicker = new JDatePickerImpl(datePanelCreatedInitial, new DateLabelFormatter());
+        dateModifiedInitialPicker = new JDatePickerImpl(datePanelModifiedInitial, new DateLabelFormatter());
+        dateAccessedInitialPicker = new JDatePickerImpl(datePanelAccessedInitial, new DateLabelFormatter());
+        dateCreatedFinalPicker = new JDatePickerImpl(datePanelCreatedFinal, new DateLabelFormatter());
+        dateModifiedFinalPicker = new JDatePickerImpl(datePanelModifiedFinal, new DateLabelFormatter());
+        dateAccessedFinalPicker = new JDatePickerImpl(datePanelAccessedFinal, new DateLabelFormatter());
+
+        folderButton.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 JFileChooser pathChooser = new JFileChooser();
                 pathChooser.setCurrentDirectory(new java.io.File("."));
@@ -170,27 +300,32 @@ public class FormPanel extends JPanel {
                 pathChooser.showOpenDialog(null);
                 File select = pathChooser.getSelectedFile();
                 String selection = (select).getAbsolutePath();
-                pathField.setText(selection);
+                folderTextField.setText(selection);
             }
         });
 
         searchButtonLabel = new JLabel("File Name: ");
-        searchField = new JTextField(30);
-        searchButton = new JButton("Search");
+        searchTextField = new JTextField(25);
+        searchButton = new JButton("Search ");
         searchActionListener = new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                String string = searchField.getText();
-                FileCategory extCategory = (FileCategory) extList.getSelectedItem();
+                String string = searchTextField.getText();
+                FileCategory extCategory = (FileCategory) extensionList.getSelectedItem();
                 FileCategory visibilityCategory = (FileCategory) visibilityList.getSelectedItem();
                 FileCategory fileSizeCategory = (FileCategory) fileSizeList.getSelectedItem();
-                JDatePanel dateCreatedCategory = dateCreatedPicker.getJDateInstantPanel();
-                JDatePanel dateModifiedCategory = dateModifiedPicker.getJDateInstantPanel();
-                JDatePanel dateAccessedCategory = dateAccessedPicker.getJDateInstantPanel();
-                FileCategory fileCompareCategory = (FileCategory) fileCompareList.getSelectedItem();
-                boolean readOnly = fileIsReadOnly.isSelected();
+
+                JDatePanel dateCreatedInitialCategory = dateCreatedInitialPicker.getJDateInstantPanel();
+                JDatePanel dateModifiedInitialCategory = dateModifiedInitialPicker.getJDateInstantPanel();
+                JDatePanel dateAccessedInitialCategory = dateAccessedInitialPicker.getJDateInstantPanel();
+                JDatePanel dateCreatedFinalCategory = dateCreatedFinalPicker.getJDateInstantPanel();
+                JDatePanel dateModifiedFinalCategory = dateModifiedFinalPicker.getJDateInstantPanel();
+                JDatePanel dateAccessedFinalCategory = dateAccessedFinalPicker.getJDateInstantPanel();
+                FileCategory fileCompareCategory = (FileCategory) fileSizeCompareList.getSelectedItem();
+                boolean readOnly = getFileIsReadOnlyCheckBox().isSelected();
+
                 FormEvent event = new FormEvent(this, string, extCategory, visibilityCategory,
-                        fileSizeCategory, dateCreatedCategory, dateModifiedCategory, dateAccessedCategory,
-                        fileCompareCategory, readOnly);
+                        fileSizeCategory, dateCreatedInitialCategory, dateModifiedInitialCategory, dateAccessedInitialCategory,
+                        fileCompareCategory, readOnly, dateCreatedFinalCategory, dateModifiedFinalCategory, dateAccessedFinalCategory);
                 if (formListener != null) {
                     formListener.formEventOccurred(event);
                 }
@@ -214,11 +349,11 @@ public class FormPanel extends JPanel {
         extModel.addElement(new FileCategory(12, ".zip"));
         extModel.addElement(new FileCategory(13, ".exe"));
         extModel.addElement(new FileCategory(14, ".csv"));
-        extList.setModel(extModel);
+        extensionList.setModel(extModel);
 
-        extList.setPreferredSize(new Dimension(100, 20));
-        extList.setBorder(BorderFactory.createEtchedBorder());
-        extList.setSelectedIndex(0);
+        extensionList.setPreferredSize(new Dimension(100, 24));
+        extensionList.setBorder(BorderFactory.createEtchedBorder());
+        extensionList.setSelectedIndex(0);
 
         DefaultComboBoxModel visibilityModel = new DefaultComboBoxModel();
         visibilityModel.addElement(new FileCategory(0, ""));
@@ -226,7 +361,7 @@ public class FormPanel extends JPanel {
         visibilityModel.addElement(new FileCategory(2, "Hidden"));
         visibilityList.setModel(visibilityModel);
 
-        visibilityList.setPreferredSize(new Dimension(100, 20));
+        visibilityList.setPreferredSize(new Dimension(100, 24));
         visibilityList.setBorder(BorderFactory.createEtchedBorder());
         visibilityList.setSelectedIndex(0);
 
@@ -235,11 +370,11 @@ public class FormPanel extends JPanel {
         fileCompareModel.addElement(new FileCategory(1, "equals to"));
         fileCompareModel.addElement(new FileCategory(2, "greater than"));
         fileCompareModel.addElement(new FileCategory(3, "Less than"));
-        fileCompareList.setModel(fileCompareModel);
+        fileSizeCompareList.setModel(fileCompareModel);
 
-        fileCompareList.setPreferredSize(new Dimension(100, 20));
-        fileCompareList.setBorder(BorderFactory.createEtchedBorder());
-        fileCompareList.setSelectedIndex(0);
+        fileSizeCompareList.setPreferredSize(new Dimension(100, 24));
+        fileSizeCompareList.setBorder(BorderFactory.createEtchedBorder());
+        fileSizeCompareList.setSelectedIndex(0);
 
         DefaultComboBoxModel fileSizeModel = new DefaultComboBoxModel();
         fileSizeModel.addElement(new FileCategory(0, ""));
@@ -248,7 +383,7 @@ public class FormPanel extends JPanel {
         fileSizeModel.addElement(new FileCategory(3, "GB"));
         fileSizeList.setModel(fileSizeModel);
 
-        fileSizeList.setPreferredSize(new Dimension(100, 20));
+        fileSizeList.setPreferredSize(new Dimension(100, 24));
         fileSizeList.setBorder(BorderFactory.createEtchedBorder());
         fileSizeList.setSelectedIndex(0);
 
@@ -272,19 +407,19 @@ public class FormPanel extends JPanel {
         gc.insets = new Insets(0,0,0,0);
         // use anchor to align the elements of GC to either start or end of the line
         gc.anchor = GridBagConstraints.LINE_START;
-        add(pathButtonLabel, gc);
+        add(folderButtonLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 0;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(pathField, gc);
+        add(folderTextField, gc);
 
         gc.gridx = 2;
         gc.gridy = 0;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(pathButton, gc);
+        add(folderButton, gc);
 
         // set second row
         gc.gridx = 0;
@@ -298,7 +433,7 @@ public class FormPanel extends JPanel {
         gc.gridy = 1;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(searchField, gc);
+        add(searchTextField, gc);
 
         gc.gridx = 2;
         gc.gridy = 1;
@@ -310,90 +445,111 @@ public class FormPanel extends JPanel {
         gc.gridx = 0;
         gc.gridy = 2;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,0,1,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(extLabel, gc);
+        add(extensionLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 2;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,0,1,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(extList, gc);
+        add(extensionList, gc);
 
         gc.gridx = 2;
         gc.gridy = 2;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,0,1,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(dateCreatedLabel, gc);
+        add(visibilityLabel, gc);
 
         gc.gridx = 3;
         gc.gridy = 2;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,0,1,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(dateCreatedPicker, gc);
+        add(visibilityList, gc);
 
         // set forth row
         gc.gridx = 0;
         gc.gridy = 3;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,0,1,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(visibilityLabel, gc);
+        add(ownerLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 3;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,0,1,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(visibilityList, gc);
+        add(ownerTextField, gc);
 
         gc.gridx = 2;
         gc.gridy = 3;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,0,1,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(dateModifiedLabel, gc);
+        add(fileIsReadOnlyLabel, gc);
 
         gc.gridx = 3;
         gc.gridy = 3;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,0,1,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(dateModifiedPicker, gc);
+        add(fileIsReadOnlyCheckBox, gc);
 
         // set fifth row
         gc.gridx = 0;
         gc.gridy = 4;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,0,1,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(ownerLabel, gc);
+        add(fileSizeLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 4;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,0,1,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(ownerField, gc);
+        add(fileSizeCompareList, gc);
 
         gc.gridx = 2;
         gc.gridy = 4;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,0,1,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(dateAccessedLabel, gc);
+        add(fileSizeTextField, gc);
 
         gc.gridx = 3;
         gc.gridy = 4;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,0,1,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(dateAccessedPicker, gc);
+        add(fileSizeList, gc);
 
         // set sixth row
         gc.gridx = 0;
         gc.gridy = 5;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(1,0,3,0);
+        gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(new JLabel("By Size"), gc);
+        add(dateCreatedLabel, gc);
+
+        gc.gridx = 1;
+        gc.gridy = 5;
+        gc.fill = GridBagConstraints.NONE;
+        gc.insets = new Insets(0,0,0,0);
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(dateCreatedInitialPicker, gc);
+
+        gc.gridx = 2;
+        gc.gridy = 5;
+        gc.fill = GridBagConstraints.NONE;
+        gc.insets = new Insets(0,0,0,0);
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(new JLabel(" to "), gc);
+
+        gc.gridx = 3;
+        gc.gridy = 5;
+        gc.fill = GridBagConstraints.NONE;
+        gc.insets = new Insets(0,0,0,0);
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(dateCreatedFinalPicker, gc);
 
         // set seventh row
         gc.gridx = 0;
@@ -401,26 +557,28 @@ public class FormPanel extends JPanel {
         gc.fill = GridBagConstraints.NONE;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(fileSizeLabel, gc);
+        add(dateModifiedLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 6;
+        gc.fill = GridBagConstraints.NONE;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(fileCompareList, gc);
+        add(dateModifiedInitialPicker, gc);
 
         gc.gridx = 2;
         gc.gridy = 6;
         gc.fill = GridBagConstraints.NONE;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(fileAttribute, gc);
+        add(new JLabel(" to "), gc);
 
         gc.gridx = 3;
         gc.gridy = 6;
+        gc.fill = GridBagConstraints.NONE;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(fileIsReadOnly, gc);
+        add(dateModifiedFinalPicker, gc);
 
         // set eight row
         gc.gridx = 0;
@@ -428,13 +586,28 @@ public class FormPanel extends JPanel {
         gc.fill = GridBagConstraints.NONE;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(fileSizeField, gc);
+        add(dateAccessedLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 7;
+        gc.fill = GridBagConstraints.NONE;
         gc.insets = new Insets(0,0,0,0);
         gc.anchor = GridBagConstraints.LINE_START;
-        add(fileSizeList, gc);
+        add(dateAccessedInitialPicker, gc);
+
+        gc.gridx = 2;
+        gc.gridy = 7;
+        gc.fill = GridBagConstraints.NONE;
+        gc.insets = new Insets(0,0,0,0);
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(new JLabel(" to "), gc);
+
+        gc.gridx = 3;
+        gc.gridy = 7;
+        gc.fill = GridBagConstraints.NONE;
+        gc.insets = new Insets(0,0,0,0);
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(dateAccessedFinalPicker, gc);
     }
 
 }

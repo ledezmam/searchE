@@ -68,7 +68,7 @@ public class Controller {
 
         boolean flag = true;
 
-        String path = view.getFormPanel().getPathField().getText();
+        String path = view.getFormPanel().getFolderTextField().getText();
         if (path != null && !path.isEmpty()) {
             if (validate.validatePath(path)) {
                 criteria.setPath(path);
@@ -81,7 +81,7 @@ public class Controller {
             flag = false;
         }
 
-        String fileName = view.getFormPanel().getSearchField().getText();
+        String fileName = view.getFormPanel().getSearchTextField().getText();
         if (fileName != null && !fileName.isEmpty()) {
             if (validate.validateFileName(fileName)) {
                 criteria.setFileName(fileName);
