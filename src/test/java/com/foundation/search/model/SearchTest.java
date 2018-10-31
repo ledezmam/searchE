@@ -76,13 +76,39 @@ public class SearchTest {
      */
     @Test
     public void searchFilesByCriteriaWhenAFileDoesNotExist () {
-        String path="src/test/java/com/foundation/search/test", fileName = "DoesNotExist.txt";
-        search = new Search();
-        SearchCriteria criteria = new SearchCriteria();
-        criteria.setPath(path);
-        criteria.setFileName(fileName);
-        List<FileFound> actualFiles = search.searchFilesByCriteria(criteria);
-        Assert.assertEquals(0, actualFiles.size());
+        try {
+            String path="src/test/java/com/foundation/search/test", fileName = "DoesNotExist.txt";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileName(fileName);
+            List<FileFound> actualFiles = search.searchFilesByCriteria(criteria);
+            Assert.assertEquals(0, actualFiles.size());
+        } catch (IOException e) {
+
+        }
+    }
+
+    /**
+     * Method that tests method searchFilesByCriteria when the path does not
+     * exist
+     */
+    @Test
+    public void searchFilesByCriteriaWhenPathDoesNotExist () {
+        IOException exception = null;
+        try {
+            String path="", fileName = "testJPG2.jpg";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileName(fileName);
+            List<FileFound> actualFiles = search.searchFilesByCriteria(criteria);
+
+        } catch (IOException e) {
+            exception = e;
+        }
+
+        Assert.assertNotNull(exception);
     }
 
     /**
@@ -90,14 +116,18 @@ public class SearchTest {
      */
     @Test
     public void searchFilesByCriteriaWhenATextFileExists () {
-        String path="src/test/java/com/foundation/search/test", fileName = "testTXT0.txt";
-        search = new Search();
-        SearchCriteria criteria = new SearchCriteria();
-        criteria.setPath(path);
-        criteria.setFileName(fileName);
-        List<FileFound> actualFiles = search.searchFilesByCriteria(criteria);
-        Assert.assertEquals("testTXT0.txt",
-                actualFiles.get(0).getFilename());
+        try{
+            String path="src/test/java/com/foundation/search/test", fileName = "testTXT0.txt";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileName(fileName);
+            List<FileFound> actualFiles = search.searchFilesByCriteria(criteria);
+            Assert.assertEquals("testTXT0.txt",
+                    actualFiles.get(0).getFilename());
+        } catch (IOException e) {
+
+        }
     }
 
     /**
@@ -106,17 +136,21 @@ public class SearchTest {
      */
     @Test
     public void searchFilesByCriteriaThatMatchesTheCriteriaByName () {
-        String path="src/test/java/com/foundation/search/test", fileName = "testTXT";
-        search = new Search();
-        SearchCriteria criteria = new SearchCriteria();
-        criteria.setPath(path);
-        criteria.setFileName(fileName);
-        List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
-        String expectedFiles = "testTXT";
-        int i = 0;
-        for (FileFound file: actualFiles) {
-            Assert.assertEquals(expectedFiles + Integer.toString(i) + ".txt", file.getFilename());
-            i++;
+        try{
+            String path="src/test/java/com/foundation/search/test", fileName = "testTXT";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileName(fileName);
+            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            String expectedFiles = "testTXT";
+            int i = 0;
+            for (FileFound file: actualFiles) {
+                Assert.assertEquals(expectedFiles + Integer.toString(i) + ".txt", file.getFilename());
+                i++;
+            }
+        } catch (IOException e) {
+
         }
     }
 
@@ -126,14 +160,18 @@ public class SearchTest {
      */
     @Test
     public void searchFilesByCriteriaThatMatchesTheCriteriaInDirAndSubDir () {
-        String path="src/test/java/com/foundation/search/test", fileName = "testCSV0.csv";
-        search = new Search();
-        SearchCriteria criteria = new SearchCriteria();
-        criteria.setPath(path);
-        criteria.setFileName(fileName);
-        List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
-        int expectedSizeFiles = 3;
-        Assert.assertEquals(expectedSizeFiles, actualFiles.size());
+        try{
+            String path="src/test/java/com/foundation/search/test", fileName = "testcsv0.csv";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileName(fileName);
+            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            int expectedSizeFiles = 3;
+            Assert.assertEquals(expectedSizeFiles, actualFiles.size());
+        } catch (IOException e) {
+
+        }
     }
 
     /**
@@ -141,20 +179,88 @@ public class SearchTest {
      */
     @Test
     public void searchFilesByCriteriaGivenAnExtension () {
-        String path="src/test/java/com/foundation/search/test", extension = ".csv";
-        search = new Search();
-        SearchCriteria criteria = new SearchCriteria();
-        criteria.setPath(path);
-        criteria.setFileExtension(extension);
-        List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
-        List<String> expectedFiles = new ArrayList<>();
-        expectedFiles.add("testCSV0.csv");
-        expectedFiles.add("testCSV0.csv");
-        expectedFiles.add("testCSV0.csv");
-        expectedFiles.add("testCSV1.csv");
+        try{
+            String path="src/test/java/com/foundation/search/test", extension = ".csv";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileExtension(extension);
+            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<String> expectedFiles = new ArrayList<>();
+            expectedFiles.add("testCSV0.csv");
+            expectedFiles.add("testCSV0.csv");
+            expectedFiles.add("testCSV0.csv");
+            expectedFiles.add("testCSV1.csv");
 
-        for (int i = 0; i < expectedFiles.size(); i++) {
-            Assert.assertEquals(actualFiles.get(i).getFilename(), expectedFiles.get(i));
+            for (int i = 0; i < expectedFiles.size(); i++) {
+                Assert.assertEquals(actualFiles.get(i).getFilename(), expectedFiles.get(i));
+            }
+        } catch (IOException e) {
+
+        }
+    }
+
+    /**
+     * Method that tests searchFilesByCriteria to search by hidden
+     */
+    @Test
+    public void searchFilesByCriteriaWhenAFileIsHidden () {
+        try{
+            String path="src/test/java/com/foundation/search/test",
+                    visibility = "Hidden";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileVisibility(visibility);
+            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<String> expectedFiles = new ArrayList<>();
+            expectedFiles.add("FileHidden.bmp");
+            for (int i = 0; i < expectedFiles.size(); i++) {
+                Assert.assertEquals(actualFiles.get(i).getFilename(), expectedFiles.get(i));
+            }
+        } catch (IOException e) {
+
+        }
+    }
+
+    /**
+     * Method that tests method searchFilesByCriteria to search by name when
+     * file and directory match the criteria in the name
+     */
+    @Test
+    public void searchFilesByCriteriaWhenFileAndDirMatchNameCriteria () {
+        try{
+            String path="src/test/java/com/foundation/search/test",
+                    fileName = "samename";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileName(fileName);
+            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            int expectedSizeFiles = 2;
+            Assert.assertEquals(expectedSizeFiles, actualFiles.size());
+        } catch (IOException e) {
+
+        }
+    }
+
+    /**
+     * Method that tests method searchFilesByCriteria to search by owner
+     */
+    @Test
+    public void searchFilesByCriteriaGivenAnOwnerName () {
+        try{
+            String path="src/test/java/com/foundation/search/test",
+                    owner = "MariaL";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileOwner(owner);
+            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            int expectedSizeFiles = 16;
+            Assert.assertEquals(expectedSizeFiles, actualFiles.size());
+        } catch (IOException e) {
+
         }
     }
 }

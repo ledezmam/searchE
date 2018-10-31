@@ -11,6 +11,8 @@
  */
 package com.foundation.view;
 
+import org.jdatepicker.JDatePanel;
+
 import java.awt.event.ActionListener;
 import java.util.EventObject;
 
@@ -29,7 +31,6 @@ public class FormEvent extends EventObject {
 
     /**
      * Form event constructor with Source only
-     *
      * @param actionListener
      * @param string
      * @param extCategory
@@ -39,9 +40,12 @@ public class FormEvent extends EventObject {
      * @param dateModifiedCategory
      * @param dateAccessedCategory
      * @param fileCompareCategory
+     * @param readOnly
+     * @param dateCreatedFinalCategory
+     * @param dateModifiedFinalCategory
      * @param source gets the Source from the event
      */
-    public FormEvent(ActionListener actionListener, String string, FileCategory extCategory, FileCategory visibilityCategory, FileCategory fileSizeCategory, FileCategory dateCreatedCategory, FileCategory dateModifiedCategory, FileCategory dateAccessedCategory, FileCategory fileCompareCategory, Object source) {
+    public FormEvent(ActionListener actionListener, String string, FileCategory extCategory, FileCategory visibilityCategory, FileCategory fileSizeCategory, JDatePanel dateCreatedCategory, JDatePanel dateModifiedCategory, JDatePanel dateAccessedCategory, FileCategory fileCompareCategory, boolean readOnly, JDatePanel dateCreatedFinalCategory, JDatePanel dateModifiedFinalCategory, Object source) {
         super(source);
     }
 

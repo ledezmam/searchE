@@ -28,7 +28,8 @@ import java.util.List;
 public class SearchTableModel extends AbstractTableModel {
 
     private List<FileFound> results;
-    private String[] colNames = {"Path", "File Name", "File Size", "Owner", "Date Created", "Date Modified", "Date Accessed", "Hidden"};
+    private String[] colNames = {"Path", "File Name", "File Size", "Owner",
+            "Date Created", "Date Modified", "Date Accessed", "Hidden"};
     private int rowCount;
 
     /**
@@ -71,9 +72,9 @@ public class SearchTableModel extends AbstractTableModel {
     /**
      *
      */
-    public void setRowCount(int rowCount){
+   /* public void setRowCount(int rowCount){
         this.rowCount = rowCount;
-    }
+    }*/
 
     /**
      * Define the total number of columns

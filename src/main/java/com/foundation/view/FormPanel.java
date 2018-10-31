@@ -11,6 +11,7 @@
  */
 package com.foundation.view;
 
+import org.jdatepicker.JDatePanel;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -60,6 +61,18 @@ public class FormPanel extends JPanel {
         dim.width = 200;
         dim.height = 240;
         setPreferredSize(dim);
+    }
+
+    public JComboBox getExtList() {
+        return extensionList;
+    }
+
+//    public JComboBox getVisibilityList() {
+//        return visibilityList;
+//    }
+
+    public JTextField getOwnerField() {
+        return ownerTextField;
     }
 
     /**
@@ -241,6 +254,7 @@ public class FormPanel extends JPanel {
         dateCreatedLabel = new JLabel("Date Created");
         dateModifiedLabel = new JLabel("Date Modified");
         dateAccessedLabel = new JLabel("Date Accessed");
+
         fileIsReadOnlyLabel = new JLabel("Read only");
         fileIsReadOnlyCheckBox = new JCheckBox();
 
@@ -255,16 +269,19 @@ public class FormPanel extends JPanel {
         UtilDateModel modelCreatedFinal = new UtilDateModel();
         UtilDateModel modelModifiedFinal = new UtilDateModel();
         UtilDateModel modelAccessedFinal = new UtilDateModel();
+
+
         Properties p = new Properties();
         p.put("text.today", "Today");
         p.put("text.month", "Month");
         p.put("text.year", "Year");
+
         JDatePanelImpl datePanelCreatedInitial = new JDatePanelImpl(modelCreatedInitial, p);
         JDatePanelImpl datePanelModifiedInitial = new JDatePanelImpl(modelModifiedInitial, p);
         JDatePanelImpl datePanelAccessedInitial = new JDatePanelImpl(modelAccessedInitial, p);
-        JDatePanelImpl datePanelCreatedFinal = new JDatePanelImpl(modelCreatedInitial, p);
-        JDatePanelImpl datePanelModifiedFinal = new JDatePanelImpl(modelModifiedInitial, p);
-        JDatePanelImpl datePanelAccessedFinal = new JDatePanelImpl(modelAccessedInitial, p);
+        JDatePanelImpl datePanelCreatedFinal = new JDatePanelImpl(modelCreatedFinal, p);
+        JDatePanelImpl datePanelModifiedFinal = new JDatePanelImpl(modelModifiedFinal, p);
+        JDatePanelImpl datePanelAccessedFinal = new JDatePanelImpl(modelAccessedFinal, p);
         dateCreatedInitialPicker = new JDatePickerImpl(datePanelCreatedInitial, new DateLabelFormatter());
         dateModifiedInitialPicker = new JDatePickerImpl(datePanelModifiedInitial, new DateLabelFormatter());
         dateAccessedInitialPicker = new JDatePickerImpl(datePanelAccessedInitial, new DateLabelFormatter());
@@ -273,6 +290,7 @@ public class FormPanel extends JPanel {
         dateAccessedFinalPicker = new JDatePickerImpl(datePanelAccessedFinal, new DateLabelFormatter());
 
         folderButton.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 JFileChooser pathChooser = new JFileChooser();
                 pathChooser.setCurrentDirectory(new java.io.File("."));
@@ -295,14 +313,19 @@ public class FormPanel extends JPanel {
                 FileCategory extCategory = (FileCategory) extensionList.getSelectedItem();
                 FileCategory visibilityCategory = (FileCategory) visibilityList.getSelectedItem();
                 FileCategory fileSizeCategory = (FileCategory) fileSizeList.getSelectedItem();
-                FileCategory dateCreatedCategory = (FileCategory) dateCreatedInitialPicker.getJDateInstantPanel();
-                FileCategory dateModifiedCategory = (FileCategory) dateModifiedInitialPicker.getJDateInstantPanel();
-                FileCategory dateAccessedCategory = (FileCategory) dateAccessedInitialPicker.getJDateInstantPanel();
+
+                JDatePanel dateCreatedInitialCategory = dateCreatedInitialPicker.getJDateInstantPanel();
+                JDatePanel dateModifiedInitialCategory = dateModifiedInitialPicker.getJDateInstantPanel();
+                JDatePanel dateAccessedInitialCategory = dateAccessedInitialPicker.getJDateInstantPanel();
+                JDatePanel dateCreatedFinalCategory = dateCreatedFinalPicker.getJDateInstantPanel();
+                JDatePanel dateModifiedFinalCategory = dateModifiedFinalPicker.getJDateInstantPanel();
+                JDatePanel dateAccessedFinalCategory = dateAccessedFinalPicker.getJDateInstantPanel();
                 FileCategory fileCompareCategory = (FileCategory) fileSizeCompareList.getSelectedItem();
-                boolean readOnly = fileIsReadOnlyCheckBox.isSelected();
+                boolean readOnly = getFileIsReadOnlyCheckBox().isSelected();
+
                 FormEvent event = new FormEvent(this, string, extCategory, visibilityCategory,
-                        fileSizeCategory, dateCreatedCategory, dateModifiedCategory, dateAccessedCategory,
-                        fileCompareCategory, readOnly);
+                        fileSizeCategory, dateCreatedInitialCategory, dateModifiedInitialCategory, dateAccessedInitialCategory,
+                        fileCompareCategory, readOnly, dateCreatedFinalCategory, dateModifiedFinalCategory, dateAccessedFinalCategory);
                 if (formListener != null) {
                     formListener.formEventOccurred(event);
                 }
@@ -312,9 +335,20 @@ public class FormPanel extends JPanel {
 
         DefaultComboBoxModel extModel = new DefaultComboBoxModel();
         extModel.addElement(new FileCategory(0, ""));
-        extModel.addElement(new FileCategory(1, "txt"));
-        extModel.addElement(new FileCategory(2, "jpg"));
-        extModel.addElement(new FileCategory(3, "csv"));
+        extModel.addElement(new FileCategory(1, ".txt"));
+        extModel.addElement(new FileCategory(2, ".gif"));
+        extModel.addElement(new FileCategory(3, ".pdf"));
+        extModel.addElement(new FileCategory(4, ".doc"));
+        extModel.addElement(new FileCategory(5, ".docx"));
+        extModel.addElement(new FileCategory(6, ".xls"));
+        extModel.addElement(new FileCategory(7, ".xlsx"));
+        extModel.addElement(new FileCategory(8, ".xml"));
+        extModel.addElement(new FileCategory(9, ".java"));
+        extModel.addElement(new FileCategory(10, ".jpg"));
+        extModel.addElement(new FileCategory(11, ".bmp"));
+        extModel.addElement(new FileCategory(12, ".zip"));
+        extModel.addElement(new FileCategory(13, ".exe"));
+        extModel.addElement(new FileCategory(14, ".csv"));
         extensionList.setModel(extModel);
 
         extensionList.setPreferredSize(new Dimension(100, 24));

@@ -18,6 +18,7 @@ import com.foundation.view.View;
 
 import javax.swing.SwingUtilities;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.util.List;
@@ -47,9 +48,11 @@ public class Controller {
 
         view.getFormPanel().getSearchButton().addActionListener(e -> {
             try {
+                view.getTextPanel().clean();
                 view.getTablePanel().refresh();
+                //view.getTablePanel().setData(null);
                 getCriteriaView();
-            } catch (ParseException e1) {
+            } catch (ParseException | IOException e1) {
                 e1.printStackTrace();
             }
         });
@@ -61,27 +64,40 @@ public class Controller {
      *
      * @throws ParseException
      */
-    private void getCriteriaView() throws ParseException {
+    private void getCriteriaView() throws ParseException, IOException {
 
-        // All hardcoded data must be replaced with data read from UI
-        String path = view.getFormPanel().getPathField().getText();
-        System.out.println(path);
-        if (path != null && validate.validatePath(path)) {
-            criteria.setPath(path);
+        boolean flag = true;
+
+        String path = view.getFormPanel().getFolderTextField().getText();
+        if (path != null && !path.isEmpty()) {
+            if (validate.validatePath(path)) {
+                criteria.setPath(path);
+            } else {
+                view.setTextPanel("The specified path is not valid.!!!");
+                flag = false;
+            }
+        } else {
+            view.setTextPanel("Folder path is empty");
+            flag = false;
         }
 
-        String fileName = view.getFormPanel().getSearchField().getText();
-        if (fileName != null && validate.validateFileName(fileName)) {
-            criteria.setFileName(fileName);
+        String fileName = view.getFormPanel().getSearchTextField().getText();
+        if (fileName != null && !fileName.isEmpty()) {
+            if (validate.validateFileName(fileName)) {
+                criteria.setFileName(fileName);
+            } else {
+                view.setTextPanel("File Name contains one of these invalid characters: <>:\"\\/|?*");
+                flag = false;
+            }
         }
-/*
-        String fileType = ".jpg";
+
+        String fileType = view.getFormPanel().getExtList().getSelectedItem().toString();
         if (fileType != null && validate.validateFileType(fileType)) {
             criteria.setFileExtension(fileType);
         }
 
-        String visibility = "Hidden";
-        if (visibility != null) {
+        String visibility = view.getFormPanel().getVisibilityList().getSelectedItem().toString();
+        if (visibility != null && !visibility.isEmpty()) {
             criteria.setFileVisibility(visibility);
         }
 
@@ -126,19 +142,21 @@ public class Controller {
         if (dateAccessed != null && validate.validateDate(dateAccessed)) {
             criteria.setDateAccessed(dateAccessed);
         }
-
-        String owner = "Marco Velasquez";
-        if (owner != null && validate.validateOwnerName(owner)) {
+*/
+        String owner = view.getFormPanel().getOwnerField().getText();
+        if (owner != null && !owner.isEmpty()) {
             criteria.setFileOwner(owner);
         }
-
+/*
         String content = "any text here";
         if (content != null) {
             criteria.setFileContent(content);
         }
 */
-        List<FileFound> results = search.searchFilesByCriteria(criteria);
-        printResult(results);
+        if (flag) {
+            List<FileFound> results = search.searchFilesByCriteria(criteria);
+            printResult(results);
+        }
     }
 
     /**
@@ -148,6 +166,7 @@ public class Controller {
      */
     public void printResult(List<FileFound> results) throws ParseException {
         for (FileFound item : results) {
+            //view.getTablePanel().clear();
             view.getTablePanel().setData(results);
         }
     }

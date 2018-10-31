@@ -63,11 +63,9 @@ public class TablePanel extends JPanel {
     /**
      *Method to clear the table
      */
-    public void clear(){
-//        table.selectAll();
-//        table.clearSelection();
-        //tableModel.se;
+    /*public void clear(){
+        tableModel..setRowCount(0);
     }
-
+*/
 
 }
