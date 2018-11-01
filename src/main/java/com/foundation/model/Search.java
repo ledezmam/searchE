@@ -105,9 +105,9 @@ public class Search {
             FileTime dateModified = attr.lastModifiedTime();
             FileTime dateAccessed = attr.lastAccessTime();
 
-            Date criteriaDateCreated = criteria.getDateCreated();
-            Date criteriaDateModified = criteria.getDateModified();
-            Date criteriaDateAccessed = criteria.getDateAccessed();
+            //Date criteriaDateCreated = criteria.getDateCreated();
+            //Date criteriaDateModified = criteria.getDateModified();
+            //Date criteriaDateAccessed = criteria.getDateAccessed();
 
             if(criteria.getFileName() != null && !doesFileMatchesName(file.getName(), criteria.getFileName())){
                 return false;
@@ -120,7 +120,7 @@ public class Search {
             if(criteria.getFileOwner()!= null && !owner.contains(criteria.getFileOwner())){
                 return false;
             }
-
+/*
             if (criteriaDateCreated != null && criteriaDateCreated.getTime() != dateCreation.toMillis()){
                 return false;
             }
@@ -132,7 +132,7 @@ public class Search {
             if (criteriaDateAccessed != null && criteriaDateAccessed.getTime() != dateAccessed.toMillis()){
                 return false;
             }
-
+*/
             if (criteria.getFileSize() != null && !doesFileSizeMatch(criteria.getFileSize(), file.length())){
                 return false;
             }
