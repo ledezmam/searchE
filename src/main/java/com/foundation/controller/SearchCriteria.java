@@ -32,11 +32,15 @@ public class SearchCriteria {
     private String fileExtension;
     private String visibility;
     private Map fileSize;
-    private Date dateModified;
-    private Date dateCreated;
-    private Date dateAccessed;
+    private Date dateModifiedStart;
+    private Date dateModifiedEnd;
+    private Date dateCreatedStart;
+    private Date dateCreatedEnd;
+    private Date dateAccessedStart;
+    private Date dateAccessedEnd;
     private String owner;
     private String content;
+    private boolean readOnly;
 
     /**
      * Class constructor
@@ -47,11 +51,15 @@ public class SearchCriteria {
         fileExtension = null;
         visibility = null;
         fileSize = null;
-        dateModified = null;
-        dateCreated = null;
-        dateAccessed = null;
+        dateModifiedStart = null;
+        dateModifiedEnd = null;
+        dateCreatedStart = null;
+        dateCreatedEnd = null;
+        dateAccessedStart = null;
+        dateAccessedEnd = null;
         owner = null;
         content = null;
+        readOnly = false;
     }
 
     /**
@@ -147,60 +155,117 @@ public class SearchCriteria {
     }
 
     /**
-     * Method to set the date modified of the file
+     * Method to set the start date modified of the file
      *
-     * @param date date modified as "MM/DD/YYYY"
+     * @param date start date modified as "MM/DD/YYYY"
      */
-    public void setDateModified(String date) throws ParseException {
+    public void setDateModifiedStart(String date) throws ParseException {
         DateFormat sourceFormat = new SimpleDateFormat("MM/dd/yyyy");
-        this.dateModified = sourceFormat.parse(date);
+        this.dateModifiedStart = sourceFormat.parse(date);
     }
 
     /**
-     * Method to get the date modified of the file
+     * Method to get the start date modified of the file
      *
-     * @return date modified as "MM/DD/YYYY"
+     * @return start date modified as "MM/DD/YYYY"
      */
-    public Date getDateModified() {
-        return this.dateModified;
+    public Date getDateModifiedStart() {
+        return this.dateModifiedStart;
     }
 
     /**
-     * Method to set the date created of the file
+     * Method to set the start date modified of the file
      *
-     * @param date date created as "MM/DD/YYYY"
+     * @param date start date modified as "MM/DD/YYYY"
      */
-    public void setDateCreated(String date) throws ParseException {
+    public void setDateModifiedEnd(String date) throws ParseException {
         DateFormat sourceFormat = new SimpleDateFormat("MM/dd/yyyy");
-        this.dateCreated = sourceFormat.parse(date);
+        this.dateModifiedEnd = sourceFormat.parse(date);
     }
 
     /**
-     * Method to get the date created of the file
+     * Method to get the end date modified of the file
      *
-     * @return date created as "MM/DD/YYYY"
+     * @return end date modified as "MM/DD/YYYY"
      */
-    public Date getDateCreated() {
-        return this.dateCreated;
+    public Date getDateModifiedEnd() {
+        return this.dateModifiedEnd;
     }
 
     /**
-     * Method to set the date accessed of the file
+     * Method to set the start date created of the file
      *
-     * @param date date accessed as "MM/DD/YYYY"
+     * @param date start date created as "MM/DD/YYYY"
      */
-    public void setDateAccessed(String date) throws ParseException {
+    public void setDateCreatedStart(String date) throws ParseException {
         DateFormat sourceFormat = new SimpleDateFormat("MM/dd/yyyy");
-        this.dateAccessed = sourceFormat.parse(date);
+        this.dateCreatedStart = sourceFormat.parse(date);
     }
 
     /**
-     * Method to get the date accessed of the file
+     * Method to get the start date created of the file
      *
-     * @return date accessed as "MM/DD/YYYY"
+     * @return start date created as "MM/DD/YYYY"
      */
-    public Date getDateAccessed() {
-        return this.dateAccessed;
+    public Date getDateCreatedStart() {
+        return this.dateCreatedStart;
+    }
+
+    /**
+     * Method to set the end date created of the file
+     *
+     * @param date end date created as "MM/DD/YYYY"
+     */
+    public void setDateCreatedEnd(String date) throws ParseException {
+        DateFormat sourceFormat = new SimpleDateFormat("MM/dd/yyyy");
+        this.dateCreatedEnd = sourceFormat.parse(date);
+    }
+
+    /**
+     * Method to get the end date created of the file
+     *
+     * @return end date created as "MM/DD/YYYY"
+     */
+    public Date getDateCreatedEnd() {
+        return this.dateCreatedEnd;
+    }
+
+    /**
+     * Method to set the start date accessed of the file
+     *
+     * @param date start date accessed as "MM/DD/YYYY"
+     */
+    public void setDateAccessedStart(String date) throws ParseException {
+        DateFormat sourceFormat = new SimpleDateFormat("MM/dd/yyyy");
+        this.dateAccessedStart = sourceFormat.parse(date);
+    }
+
+    /**
+     * Method to get the start date accessed of the file
+     *
+     * @return start date accessed as "MM/DD/YYYY"
+     */
+    public Date getDateAccessedStart() {
+        return this.dateAccessedStart;
+    }
+
+    /**
+     * Method to set the end date accessed of the file
+     *
+     * @param date end date accessed as "MM/DD/YYYY"
+     */
+    public void setDateAccessedEnd(String date) throws ParseException {
+        DateFormat sourceFormat = new SimpleDateFormat("MM/dd/yyyy");
+        this.dateAccessedEnd = sourceFormat.parse(date);
+    }
+
+    /**
+     * Method to get the end date accessed of the file
+     *
+     * @return end date accessed as "MM/DD/YYYY"
+     */
+    public Date getDateAccessedEnd() {
+        return this.dateAccessedEnd;
     }
 
     /**
@@ -237,5 +302,23 @@ public class SearchCriteria {
      */
     public String getFileContent() {
         return this.content;
+    }
+
+    /**
+     * Method to set read only status
+     *
+     * @param readOnly content of the file
+     */
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
+    /**
+     * Method to get the the read only status
+     *
+     * @return read only status as boolean
+     */
+    public boolean getReadOnly() {
+        return this.readOnly;
     }
 }

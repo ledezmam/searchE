@@ -77,7 +77,7 @@ public class Controller {
                 flag = false;
             }
         } else {
-            view.setTextPanel("Folder path is empty");
+            view.setTextPanel("Folder path is empty, you must specify a path.!!!");
             flag = false;
         }
 
@@ -86,63 +86,115 @@ public class Controller {
             if (validate.validateFileName(fileName)) {
                 criteria.setFileName(fileName);
             } else {
-                view.setTextPanel("File Name contains one of these invalid characters: <>:\"\\/|?*");
+                view.setTextPanel("File Name contains one of these invalid" +
+                        " characters: <>:\"\\/|?*");
                 flag = false;
             }
         }
 
-        String fileType = view.getFormPanel().getExtList().getSelectedItem().toString();
+        String fileType = view.getFormPanel().getExtList().getSelectedItem()
+                .toString();
         if (fileType != null && validate.validateFileType(fileType)) {
             criteria.setFileExtension(fileType);
         }
 
-        String visibility = view.getFormPanel().getVisibilityList().getSelectedItem().toString();
+        String visibility = view.getFormPanel().getVisibilityList()
+                .getSelectedItem().toString();
         if (visibility != null && !visibility.isEmpty()) {
             criteria.setFileVisibility(visibility);
         }
 
+        boolean readOnly = view.getFormPanel().getFileIsReadOnlyCheckBox().isSelected();
+        if (readOnly) {
+            criteria.setReadOnly(readOnly);
+        }
+
         /* file size will be validated an converted to bytes */
-/*        String operator = "greater than";
-        String fileSize = "12";
-        String unit = "MB";
-        if (fileSize != null
-                && (operator != null)
-                && (unit != null)
-                && validate.validateFileSize(fileSize)) {
+        String operator = view.getFormPanel().getFileSizeCompareList()
+                .getSelectedItem().toString();
+        String unit = view.getFormPanel().getFileSizeList().getSelectedItem()
+                .toString();
+        String fileSize = view.getFormPanel().getFileSizeTextField().getText();
 
-            long size = Long.valueOf(fileSize);
-            switch (unit) {
-                case "KB":
-                    size = size * 1024;
-                    break;
-                case "MB":
-                    size = size * 1024 *1024;
-                    break;
-                case "GB":
-                    size = size * 1024 * 1024 * 1024;
-                    break;
-                default:
-                    break;
+        if ((!fileSize.isEmpty()) && ((operator.isEmpty()) || (unit.isEmpty()))
+                || ((!operator.isEmpty()) && ((fileSize.isEmpty()) || (unit.isEmpty())))
+                || ((!unit.isEmpty()) && ((fileSize.isEmpty()) || (operator.isEmpty())))) {
+            view.setTextPanel("Please specify all three parameters to search by File Size.!!!");
+            flag = false;
+        } else if (!fileSize.isEmpty()) {
+            if (validate.validateFileSize(fileSize)) {
+                long size = Long.valueOf(fileSize);
+                switch (unit) {
+                    case "KB":
+                        size = size * 1024;
+                        break;
+                    case "MB":
+                        size = size * 1024 * 1024;
+                        break;
+                    case "GB":
+                        size = size * 1024 * 1024 * 1024;
+                        break;
+                    default:
+                        break;
+                }
+
+                criteria.setFileSize(operator, size);
+            } else {
+                view.setTextPanel("An invalid file size was specified. " +
+                        "Please ensure it's numeric.!!!");
+                flag = false;
             }
-
-            criteria.setFileSize(operator, size);
         }
 
-        String dateModified = "10/17/2018";
-        if (dateModified != null && validate.validateDate(dateModified)) {
-            criteria.setDateModified(dateModified);
+        String dateModifiedStart = view.getFormPanel().getDateModifiedInitialPicker()
+                .getJFormattedTextField().getText();
+        String dateModifiedEnd = view.getFormPanel()
+                .getDateModifiedFinalPicker()
+                .getJFormattedTextField().getText();
+        if ((!dateModifiedStart.isEmpty() && dateModifiedEnd.isEmpty())
+                || (dateModifiedStart.isEmpty() && !dateModifiedEnd.isEmpty())) {
+            view.setTextPanel("One of the modified date is empty, " +
+                    "ensure you have entered both.!!!");
+            flag = false;
+        } else if (validate.validateDate(dateModifiedStart)
+                && validate.validateDate(dateModifiedEnd)) {
+            criteria.setDateModifiedStart(dateModifiedStart);
+            criteria.setDateModifiedEnd(dateModifiedEnd);
         }
 
-        String dateCreated = "10/17/2018";
-        if (dateCreated != null && validate.validateDate(dateCreated)) {
-            criteria.setDateCreated(dateCreated);
+        String dateCreatedStart = view.getFormPanel().getDateCreatedInitialPicker()
+                .getJFormattedTextField().getText();
+        String dateCreatedEnd = view.getFormPanel()
+                .getDateCreatedFinalPicker()
+                .getJFormattedTextField().getText();
+        if ((!dateCreatedStart.isEmpty() && dateCreatedEnd.isEmpty())
+                || (dateCreatedStart.isEmpty() && !dateCreatedEnd.isEmpty())) {
+            view.setTextPanel("One of the created date is empty, " +
+                    "ensure you have entered both.!!!");
+            flag = false;
+        } else if (validate.validateDate(dateCreatedStart)
+                && validate.validateDate(dateCreatedEnd)) {
+            criteria.setDateCreatedStart(dateCreatedStart);
+            criteria.setDateCreatedEnd(dateCreatedEnd);
         }
 
-        String dateAccessed = "10/17/2018";
-        if (dateAccessed != null && validate.validateDate(dateAccessed)) {
-            criteria.setDateAccessed(dateAccessed);
+        String dateAccessedStart = view.getFormPanel()
+                .getDateAccessedInitialPicker()
+                .getJFormattedTextField().getText();
+        String dateAccessedEnd = view.getFormPanel()
+                .getDateAccessedFinalPicker()
+                .getJFormattedTextField().getText();
+        if ((!dateAccessedStart.isEmpty() && dateAccessedEnd.isEmpty())
+                || (dateAccessedStart.isEmpty() && !dateAccessedEnd.isEmpty())) {
+            view.setTextPanel("One of the accessed date is empty, " +
+                    "ensure you have entered both.!!!");
+            flag = false;
+        } else if (validate.validateDate(dateAccessedStart)
+                && validate.validateDate(dateAccessedEnd)) {
+            criteria.setDateAccessedStart(dateAccessedStart);
+            criteria.setDateAccessedEnd(dateAccessedEnd);
         }
-*/
+
         String owner = view.getFormPanel().getOwnerField().getText();
         if (owner != null && !owner.isEmpty()) {
             criteria.setFileOwner(owner);
