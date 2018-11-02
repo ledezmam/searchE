@@ -16,9 +16,20 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.border.Border;
-import java.awt.*;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.BorderFactory;
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -32,9 +43,11 @@ import java.util.Properties;
  */
 public class FormPanel extends JPanel {
 
-    private JLabel folderButtonLabel, searchButtonLabel, extensionLabel, visibilityLabel, ownerLabel,
-            fileSizeLabel, dateCreatedLabel, dateModifiedLabel, dateAccessedLabel, fileIsReadOnlyLabel;
-    private JTextField folderTextField, searchTextField, ownerTextField, fileSizeTextField;
+    private JLabel folderButtonLabel, searchButtonLabel, extensionLabel, visibilityLabel,
+            ownerLabel, fileSizeLabel, dateCreatedLabel, dateModifiedLabel, dateAccessedLabel,
+            fileIsReadOnlyLabel, fileContentLabel;
+    private JTextField folderTextField, searchTextField, ownerTextField, fileSizeTextField,
+            fileContentTextField;
     private JButton folderButton, searchButton;
     private FormListener formListener;
     private JComboBox extensionList, visibilityList, fileSizeCompareList, fileSizeList;
@@ -59,18 +72,24 @@ public class FormPanel extends JPanel {
         // check the current preferred Size and set a new one
         Dimension dim = getPreferredSize();
         dim.width = 200;
-        dim.height = 240;
+        dim.height = 280;
         setPreferredSize(dim);
     }
 
+    /**
+     * Combobox getter
+     *
+     * @return extension list of combobox
+     */
     public JComboBox getExtList() {
         return extensionList;
     }
 
-//    public JComboBox getVisibilityList() {
-//        return visibilityList;
-//    }
-
+    /**
+     * Owner text field getter
+     *
+     * @return Owner text input
+     */
     public JTextField getOwnerField() {
         return ownerTextField;
     }
@@ -238,6 +257,15 @@ public class FormPanel extends JPanel {
     }
 
     /**
+     * File content text getter
+     *
+     * @return file content
+     */
+    public JTextField getFileContentTextField() {
+        return fileContentTextField;
+    }
+
+    /**
      * Method with the components of the class
       */
     public void components(){
@@ -254,6 +282,8 @@ public class FormPanel extends JPanel {
         dateCreatedLabel = new JLabel("Date Created");
         dateModifiedLabel = new JLabel("Date Modified");
         dateAccessedLabel = new JLabel("Date Accessed");
+        fileContentLabel = new JLabel("Content");
+        fileContentTextField = new JTextField(10);
 
         fileIsReadOnlyLabel = new JLabel("Read only");
         fileIsReadOnlyCheckBox = new JCheckBox();
@@ -269,7 +299,6 @@ public class FormPanel extends JPanel {
         UtilDateModel modelCreatedFinal = new UtilDateModel();
         UtilDateModel modelModifiedFinal = new UtilDateModel();
         UtilDateModel modelAccessedFinal = new UtilDateModel();
-
 
         Properties p = new Properties();
         p.put("text.today", "Today");
@@ -351,7 +380,7 @@ public class FormPanel extends JPanel {
         extModel.addElement(new FileCategory(14, ".csv"));
         extensionList.setModel(extModel);
 
-        extensionList.setPreferredSize(new Dimension(100, 24));
+        extensionList.setPreferredSize(new Dimension(100, 25));
         extensionList.setBorder(BorderFactory.createEtchedBorder());
         extensionList.setSelectedIndex(0);
 
@@ -361,7 +390,7 @@ public class FormPanel extends JPanel {
         visibilityModel.addElement(new FileCategory(2, "Hidden"));
         visibilityList.setModel(visibilityModel);
 
-        visibilityList.setPreferredSize(new Dimension(100, 24));
+        visibilityList.setPreferredSize(new Dimension(100, 25));
         visibilityList.setBorder(BorderFactory.createEtchedBorder());
         visibilityList.setSelectedIndex(0);
 
@@ -372,7 +401,7 @@ public class FormPanel extends JPanel {
         fileCompareModel.addElement(new FileCategory(3, "Less than"));
         fileSizeCompareList.setModel(fileCompareModel);
 
-        fileSizeCompareList.setPreferredSize(new Dimension(100, 24));
+        fileSizeCompareList.setPreferredSize(new Dimension(100, 25));
         fileSizeCompareList.setBorder(BorderFactory.createEtchedBorder());
         fileSizeCompareList.setSelectedIndex(0);
 
@@ -383,7 +412,7 @@ public class FormPanel extends JPanel {
         fileSizeModel.addElement(new FileCategory(3, "GB"));
         fileSizeList.setModel(fileSizeModel);
 
-        fileSizeList.setPreferredSize(new Dimension(100, 24));
+        fileSizeList.setPreferredSize(new Dimension(100, 25));
         fileSizeList.setBorder(BorderFactory.createEtchedBorder());
         fileSizeList.setSelectedIndex(0);
 
@@ -404,20 +433,20 @@ public class FormPanel extends JPanel {
         gc.gridy = 0;
         gc.fill = GridBagConstraints.NONE;
         // give gc a little space between components
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         // use anchor to align the elements of GC to either start or end of the line
         gc.anchor = GridBagConstraints.LINE_START;
         add(folderButtonLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 0;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(folderTextField, gc);
 
         gc.gridx = 2;
         gc.gridy = 0;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(folderButton, gc);
 
@@ -425,19 +454,19 @@ public class FormPanel extends JPanel {
         gc.gridx = 0;
         gc.gridy = 1;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(searchButtonLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 1;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(searchTextField, gc);
 
         gc.gridx = 2;
         gc.gridy = 1;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(searchButton, gc);
 
@@ -445,26 +474,26 @@ public class FormPanel extends JPanel {
         gc.gridx = 0;
         gc.gridy = 2;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(1,0,1,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(extensionLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 2;
-        gc.insets = new Insets(1,0,1,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(extensionList, gc);
 
         gc.gridx = 2;
         gc.gridy = 2;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(1,0,1,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(visibilityLabel, gc);
 
         gc.gridx = 3;
         gc.gridy = 2;
-        gc.insets = new Insets(1,0,1,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(visibilityList, gc);
 
@@ -472,26 +501,26 @@ public class FormPanel extends JPanel {
         gc.gridx = 0;
         gc.gridy = 3;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(1,0,1,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(ownerLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 3;
-        gc.insets = new Insets(1,0,1,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(ownerTextField, gc);
 
         gc.gridx = 2;
         gc.gridy = 3;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(1,0,1,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(fileIsReadOnlyLabel, gc);
 
         gc.gridx = 3;
         gc.gridy = 3;
-        gc.insets = new Insets(1,0,1,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(fileIsReadOnlyCheckBox, gc);
 
@@ -499,26 +528,26 @@ public class FormPanel extends JPanel {
         gc.gridx = 0;
         gc.gridy = 4;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(1,0,1,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(fileSizeLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 4;
-        gc.insets = new Insets(1,0,1,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(fileSizeCompareList, gc);
 
         gc.gridx = 2;
         gc.gridy = 4;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(1,0,1,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(fileSizeTextField, gc);
 
         gc.gridx = 3;
         gc.gridy = 4;
-        gc.insets = new Insets(1,0,1,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(fileSizeList, gc);
 
@@ -526,28 +555,28 @@ public class FormPanel extends JPanel {
         gc.gridx = 0;
         gc.gridy = 5;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(dateCreatedLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 5;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(dateCreatedInitialPicker, gc);
 
         gc.gridx = 2;
         gc.gridy = 5;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(new JLabel(" to "), gc);
 
         gc.gridx = 3;
         gc.gridy = 5;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(dateCreatedFinalPicker, gc);
 
@@ -555,59 +584,74 @@ public class FormPanel extends JPanel {
         gc.gridx = 0;
         gc.gridy = 6;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(dateModifiedLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 6;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(dateModifiedInitialPicker, gc);
 
         gc.gridx = 2;
         gc.gridy = 6;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(new JLabel(" to "), gc);
 
         gc.gridx = 3;
         gc.gridy = 6;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(dateModifiedFinalPicker, gc);
 
-        // set eight row
+        // set eighth row
         gc.gridx = 0;
         gc.gridy = 7;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(dateAccessedLabel, gc);
 
         gc.gridx = 1;
         gc.gridy = 7;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(dateAccessedInitialPicker, gc);
 
         gc.gridx = 2;
         gc.gridy = 7;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(new JLabel(" to "), gc);
 
         gc.gridx = 3;
         gc.gridy = 7;
         gc.fill = GridBagConstraints.NONE;
-        gc.insets = new Insets(0,0,0,0);
+        gc.insets = new Insets(1,1,1,1);
         gc.anchor = GridBagConstraints.LINE_START;
         add(dateAccessedFinalPicker, gc);
+
+        // set ninth row
+        gc.gridx = 0;
+        gc.gridy = 8;
+        gc.fill = GridBagConstraints.NONE;
+        gc.insets = new Insets(1,1,1,1);
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(fileContentLabel, gc);
+
+        gc.gridx = 1;
+        gc.gridy = 8;
+        gc.fill = GridBagConstraints.NONE;
+        gc.insets = new Insets(1,1,1,1);
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(fileContentTextField, gc);
     }
 
 }
