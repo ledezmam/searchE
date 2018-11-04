@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -48,6 +47,13 @@ public class Search {
     }
 
     /**
+     * Method that cleans ups the list of results
+     */
+    public void resetResults(){
+        this.resultFiles.clear();
+    }
+
+    /**
      * Method that looks for the files that matches the criteria under the path
      * specified
      * @param criteria The criteria of the search, it can be a filename,
@@ -68,7 +74,7 @@ public class Search {
         if(fileList != null) {
             for (File file : fileList) {
                 if (file.isDirectory()){
-                    if (criteria.getFileName()!= null && doesFileMatchesName(file.getName(), criteria.getFileName())){
+                    if (doesFileMatchesCriteria(file, criteria)){
                         FileFound fileFound = new FileFound(file);
                         resultFiles.add(fileFound);
                     }
@@ -95,8 +101,9 @@ public class Search {
      * @return true if the files matches the criteria and false if not.
      */
     private boolean doesFileMatchesCriteria(File file, SearchCriteria criteria) {
-
+        boolean match = true;
         try {
+
             BasicFileAttributes attr = Files.readAttributes(file.toPath(),
                     BasicFileAttributes.class);
             String owner = Files.getOwner(file.toPath()).getName();
@@ -110,41 +117,44 @@ public class Search {
             //Date criteriaDateAccessed = criteria.getDateAccessed();
 
             if(criteria.getFileName() != null && !doesFileMatchesName(file.getName(), criteria.getFileName())){
-                return false;
+                match = false;
             }
 
             if(criteria.getFileExtension() != null && !doesFileMatchesExtension(file.getName(), criteria.getFileExtension())){
-                return false;
+                match = false;
             }
 
             if(criteria.getFileOwner()!= null && !owner.contains(criteria.getFileOwner())){
-                return false;
+                match = false;
             }
 /*
             if (criteriaDateCreated != null && criteriaDateCreated.getTime() != dateCreation.toMillis()){
-                return false;
+                match = false;
             }
 
             if (criteriaDateModified != null && criteriaDateModified.getTime() != dateModified.toMillis()){
-                return false;
+                match = false;
             }
 
             if (criteriaDateAccessed != null && criteriaDateAccessed.getTime() != dateAccessed.toMillis()){
-                return false;
+                match = false;
             }
 */
             if (criteria.getFileSize() != null && !doesFileSizeMatch(criteria.getFileSize(), file.length())){
-                return false;
+                match = false;
             }
             if (criteria.getFileVisibility() != null && !doesFileMatchVisibility(criteria.getFileVisibility(), file)){
-                return false;
+                match = false;
+            }
+            if (criteria.getReadOnly() != false && file.canRead() != criteria.getReadOnly()){
+                match = false;
             }
 
         }catch(IOException e){
             System.out.println(e.getMessage());
         }
 
-        return true;
+        return match;
     }
 
     /**

@@ -18,8 +18,8 @@ import com.foundation.controller.SearchCriteria;
 import com.foundation.model.FileFound;
 import com.foundation.model.Search;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -214,6 +214,7 @@ public class SearchTest {
             criteria.setFileVisibility(visibility);
             List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
             List<String> expectedFiles = new ArrayList<>();
+            expectedFiles.add("docHidden.docx");
             expectedFiles.add("FileHidden.bmp");
             for (int i = 0; i < expectedFiles.size(); i++) {
                 Assert.assertEquals(actualFiles.get(i).getFilename(), expectedFiles.get(i));
@@ -257,8 +258,34 @@ public class SearchTest {
             criteria.setPath(path);
             criteria.setFileOwner(owner);
             List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
-            int expectedSizeFiles = 16;
+            int expectedSizeFiles = 20;
             Assert.assertEquals(expectedSizeFiles, actualFiles.size());
+        } catch (IOException e) {
+
+        }
+    }
+
+    /**
+     * Method that tests searchFilesByCriteria to search by more than one
+     * condition
+     */
+    @Test
+    public void searchFilesByCriteriaGivenSeveralConditions () {
+        try{
+            String path="src/test/java/com/foundation/search/test",
+                    extension = ".docx", visibility = "Hidden";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileExtension(extension);
+            criteria.setFileVisibility(visibility);
+            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<String> expectedFiles = new ArrayList<>();
+            expectedFiles.add("docHidden.docx");
+
+            for (int i = 0; i < expectedFiles.size(); i++) {
+                Assert.assertEquals(actualFiles.get(i).getFilename(), expectedFiles.get(i));
+            }
         } catch (IOException e) {
 
         }
