@@ -16,10 +16,7 @@ import com.foundation.model.FileFound;
 import com.foundation.model.Search;
 import com.foundation.view.View;
 
-import javax.swing.SwingUtilities;
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.util.List;
 
@@ -206,6 +203,7 @@ public class Controller {
         }
 */
         if (flag) {
+            search.resetResults();
             List<FileFound> results = search.searchFilesByCriteria(criteria);
             printResult(results);
         }
