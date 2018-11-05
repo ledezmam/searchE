@@ -64,6 +64,7 @@ public class Controller {
     private void getCriteriaView() throws ParseException {
 
         boolean flag = true;
+        criteria.setCriteriaAsNull();
 
         String path = view.getFormPanel().getFolderTextField().getText();
         if (!path.isEmpty()) {
@@ -73,9 +74,6 @@ public class Controller {
                 view.setTextPanel("The specified path is not valid.!!!");
                 flag = false;
             }
-        } else {
-            view.setTextPanel("Folder path is empty, you must specify a path.!!!");
-            flag = false;
         }
 
         String fileName = view.getFormPanel().getSearchTextField().getText();
@@ -87,31 +85,23 @@ public class Controller {
                         " characters: <>:\"\\/|?*");
                 flag = false;
             }
-        } else {
-            criteria.setFileName(null);
         }
 
         String fileType = view.getFormPanel().getExtList().getSelectedItem()
                 .toString();
         if (!fileType.isEmpty() && validate.validateFileType(fileType)) {
             criteria.setFileExtension(fileType);
-        } else {
-            criteria.setFileExtension(null);
         }
 
         String visibility = view.getFormPanel().getVisibilityList()
                 .getSelectedItem().toString();
         if (visibility != null && !visibility.isEmpty()) {
             criteria.setFileVisibility(visibility);
-        } else {
-            criteria.setFileVisibility(null);
         }
 
         boolean readOnly = view.getFormPanel().getFileIsReadOnlyCheckBox()
                 .isSelected();
         if (readOnly) {
-            criteria.setReadOnly(readOnly);
-        } else {
             criteria.setReadOnly(readOnly);
         }
 
@@ -204,8 +194,6 @@ public class Controller {
         String owner = view.getFormPanel().getOwnerField().getText();
         if (!owner.isEmpty()) {
             criteria.setFileOwner(owner);
-        } else {
-            criteria.setFileOwner(null);
         }
 /*
         String content = "any text here";
