@@ -252,7 +252,7 @@ public class SearchTest {
     public void searchFilesByCriteriaGivenAnOwnerName () {
         try{
             String path="src/test/java/com/foundation/search/test",
-                    owner = "MariaL";
+                    owner = "Admin";
             search = new Search();
             SearchCriteria criteria = new SearchCriteria();
             criteria.setPath(path);

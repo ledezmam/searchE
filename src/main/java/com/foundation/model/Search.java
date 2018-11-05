@@ -31,7 +31,7 @@ import java.util.Map;
  * @version 1.0.0 Oct 2018
  * @author Maria Ledezma
  */
-public class Search {
+public class Search implements ISearch {
 
     /**
      * resultFiles, the list of files as the result of the search.
