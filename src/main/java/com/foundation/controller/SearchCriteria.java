@@ -46,6 +46,13 @@ public class SearchCriteria {
      * Class constructor
      */
     public SearchCriteria() {
+        setCriteriaAsNull();
+    }
+
+    /**
+     * Setting up class variables
+     */
+    public void setCriteriaAsNull() {
         path = null;
         fileName = null;
         fileExtension = null;
