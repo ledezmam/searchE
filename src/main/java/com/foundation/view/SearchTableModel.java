@@ -88,7 +88,7 @@ public class SearchTableModel extends AbstractTableModel {
      */
     @Override
     public Object getValueAt(int row, int column) {
-        FileFound filefound = (FileFound) results.get(row);
+        Asset filefound = results.get(row);
 
         switch(column){
             case 0:
