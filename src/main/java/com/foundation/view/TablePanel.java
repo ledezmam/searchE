@@ -12,6 +12,7 @@
  */
 package com.foundation.view;
 
+import com.foundation.model.Asset;
 import com.foundation.model.FileFound;
 
 import javax.swing.JPanel;
@@ -49,7 +50,7 @@ public class TablePanel extends JPanel {
      *
      * @param results gives the results of the search
      */
-    public void setData(List<FileFound> results){
+    public void setData(List<Asset> results){
         tableModel.setData(results);
     }
 
