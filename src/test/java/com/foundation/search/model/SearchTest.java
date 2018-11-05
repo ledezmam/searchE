@@ -15,12 +15,11 @@
 package com.foundation.search.model;
 
 import com.foundation.controller.SearchCriteria;
-import com.foundation.model.FileFound;
+import com.foundation.model.Asset;
 import com.foundation.model.Search;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,37 +39,6 @@ public class SearchTest {
     Search search;
 
     /**
-     * Method that creates files given an extension with or without content
-     * @param path The path of the folder where the files will be created.
-     * @param patternName The pattern name for the files that will be generated.
-     * @param extension The extension of the files that will be generated.
-     * @param includeContent The flag that indicates if the the files will
-     *                       include some content.
-     * @param numbFiles The number of files that will be generated.
-     */
-    private void createFilesByExtension(String path, String patternName,
-                                        String extension, boolean includeContent,
-                                        int numbFiles) {
-
-        for (int i = 0; i < numbFiles; i++) {
-            StringBuffer sb = new StringBuffer();
-            sb.append(patternName);
-            sb.append(i);
-            sb.append('.');
-            sb.append(extension);
-            String fileName = sb.toString();
-            try{
-                File file = new File(path + "/" + fileName);
-                if (!file.exists()){
-                    file.createNewFile();
-                }
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
      * Method that tests method searchFilesByCriteria when the file does not
      * exist
      */
@@ -82,7 +50,7 @@ public class SearchTest {
             SearchCriteria criteria = new SearchCriteria();
             criteria.setPath(path);
             criteria.setFileName(fileName);
-            List<FileFound> actualFiles = search.searchFilesByCriteria(criteria);
+            List<Asset> actualFiles = search.searchFilesByCriteria(criteria);
             Assert.assertEquals(0, actualFiles.size());
         } catch (IOException e) {
 
@@ -102,7 +70,7 @@ public class SearchTest {
             SearchCriteria criteria = new SearchCriteria();
             criteria.setPath(path);
             criteria.setFileName(fileName);
-            List<FileFound> actualFiles = search.searchFilesByCriteria(criteria);
+            List<Asset> actualFiles = search.searchFilesByCriteria(criteria);
 
         } catch (IOException e) {
             exception = e;
@@ -122,7 +90,7 @@ public class SearchTest {
             SearchCriteria criteria = new SearchCriteria();
             criteria.setPath(path);
             criteria.setFileName(fileName);
-            List<FileFound> actualFiles = search.searchFilesByCriteria(criteria);
+            List<Asset> actualFiles = search.searchFilesByCriteria(criteria);
             Assert.assertEquals("testTXT0.txt",
                     actualFiles.get(0).getFilename());
         } catch (IOException e) {
@@ -142,10 +110,10 @@ public class SearchTest {
             SearchCriteria criteria = new SearchCriteria();
             criteria.setPath(path);
             criteria.setFileName(fileName);
-            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<Asset>  actualFiles = search.searchFilesByCriteria(criteria);
             String expectedFiles = "testTXT";
             int i = 0;
-            for (FileFound file: actualFiles) {
+            for (Asset file: actualFiles) {
                 Assert.assertEquals(expectedFiles + Integer.toString(i) + ".txt", file.getFilename());
                 i++;
             }
@@ -166,7 +134,7 @@ public class SearchTest {
             SearchCriteria criteria = new SearchCriteria();
             criteria.setPath(path);
             criteria.setFileName(fileName);
-            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<Asset>  actualFiles = search.searchFilesByCriteria(criteria);
             int expectedSizeFiles = 3;
             Assert.assertEquals(expectedSizeFiles, actualFiles.size());
         } catch (IOException e) {
@@ -185,7 +153,7 @@ public class SearchTest {
             SearchCriteria criteria = new SearchCriteria();
             criteria.setPath(path);
             criteria.setFileExtension(extension);
-            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<Asset>  actualFiles = search.searchFilesByCriteria(criteria);
             List<String> expectedFiles = new ArrayList<>();
             expectedFiles.add("testCSV0.csv");
             expectedFiles.add("testCSV0.csv");
@@ -212,7 +180,7 @@ public class SearchTest {
             SearchCriteria criteria = new SearchCriteria();
             criteria.setPath(path);
             criteria.setFileVisibility(visibility);
-            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<Asset> actualFiles = search.searchFilesByCriteria(criteria);
             List<String> expectedFiles = new ArrayList<>();
             expectedFiles.add("docHidden.docx");
             expectedFiles.add("FileHidden.bmp");
@@ -237,7 +205,7 @@ public class SearchTest {
             SearchCriteria criteria = new SearchCriteria();
             criteria.setPath(path);
             criteria.setFileName(fileName);
-            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<Asset> actualFiles = search.searchFilesByCriteria(criteria);
             int expectedSizeFiles = 2;
             Assert.assertEquals(expectedSizeFiles, actualFiles.size());
         } catch (IOException e) {
@@ -257,7 +225,7 @@ public class SearchTest {
             SearchCriteria criteria = new SearchCriteria();
             criteria.setPath(path);
             criteria.setFileOwner(owner);
-            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<Asset> actualFiles = search.searchFilesByCriteria(criteria);
             int expectedSizeFiles = 20;
             Assert.assertEquals(expectedSizeFiles, actualFiles.size());
         } catch (IOException e) {
@@ -279,7 +247,7 @@ public class SearchTest {
             criteria.setPath(path);
             criteria.setFileExtension(extension);
             criteria.setFileVisibility(visibility);
-            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<Asset> actualFiles = search.searchFilesByCriteria(criteria);
             List<String> expectedFiles = new ArrayList<>();
             expectedFiles.add("docHidden.docx");
 
@@ -302,7 +270,7 @@ public class SearchTest {
             SearchCriteria criteria = new SearchCriteria();
             criteria.setPath(path);
             criteria.setReadOnly(true);
-            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<Asset> actualFiles = search.searchFilesByCriteria(criteria);
             List<String> expectedFiles = new ArrayList<>();
             expectedFiles.add("OtherFile.docx");
             expectedFiles.add("testCSV0.csv");
@@ -327,7 +295,7 @@ public class SearchTest {
             SearchCriteria criteria = new SearchCriteria();
             criteria.setPath(path);
             criteria.setFileSize("less than",60000);
-            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<Asset> actualFiles = search.searchFilesByCriteria(criteria);
             int expectedSizeFiles = 15;
             Assert.assertEquals(expectedSizeFiles, actualFiles.size());
 
@@ -348,7 +316,7 @@ public class SearchTest {
             SearchCriteria criteria = new SearchCriteria();
             criteria.setPath(path);
             criteria.setFileSize("greater than",60000);
-            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<Asset> actualFiles = search.searchFilesByCriteria(criteria);
             int expectedSizeFiles = 2;
             Assert.assertEquals(expectedSizeFiles, actualFiles.size());
 
@@ -369,7 +337,7 @@ public class SearchTest {
             SearchCriteria criteria = new SearchCriteria();
             criteria.setPath(path);
             criteria.setFileSize("equals to",0);
-            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<Asset> actualFiles = search.searchFilesByCriteria(criteria);
             int expectedSizeFiles = 14;
             Assert.assertEquals(expectedSizeFiles, actualFiles.size());
 

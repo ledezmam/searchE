@@ -36,14 +36,14 @@ public class Search implements ISearch {
     /**
      * resultFiles, the list of files as the result of the search.
      */
-      List<FileFound> resultFiles;
+      List<Asset> resultFiles;
 
     /**
      * Default constructor of the class
      */
     public Search(){
 
-        resultFiles = new ArrayList<FileFound>();
+        resultFiles = new ArrayList<>();
 
     }
 
@@ -61,7 +61,7 @@ public class Search implements ISearch {
      *                 extension or part of the name of the files to search.
      * @return A list of files that matched with the criteria
      */
-    public List<FileFound> searchFilesByCriteria(SearchCriteria criteria)
+    public List<Asset> searchFilesByCriteria(SearchCriteria criteria)
             throws IOException{
         File fileDir = new File(criteria.getPath());
         if (criteria.getPath().isEmpty()){

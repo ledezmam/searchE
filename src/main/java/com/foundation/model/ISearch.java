@@ -19,5 +19,5 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ISearch {
-    List<FileFound> searchFilesByCriteria(SearchCriteria criteria) throws IOException;
+    List<Asset> searchFilesByCriteria(SearchCriteria criteria) throws IOException;
 }
