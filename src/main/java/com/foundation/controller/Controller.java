@@ -195,12 +195,12 @@ public class Controller {
         if (!owner.isEmpty()) {
             criteria.setFileOwner(owner);
         }
-/*
-        String content = "any text here";
-        if (content != null) {
+
+        String content = view.getFormPanel().getFileContentTextField().getText();
+        if (!content.isEmpty()) {
             criteria.setFileContent(content);
         }
-*/
+
         if (flag) {
             search.resetResults();
             try {
