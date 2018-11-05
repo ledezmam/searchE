@@ -231,9 +231,7 @@ public class Controller {
      * @throws ParseException
      */
     public void printResult(List<Asset> results) throws ParseException {
-        //for (Asset item : results) {
-            view.getTablePanel().setData(results);
-        //}
+        view.getTablePanel().setData(results);
     }
 
 }

@@ -31,7 +31,6 @@ public class SearchTableModel extends AbstractTableModel {
     private List<Asset> results;
     private String[] colNames = {"Path", "File Name", "File Size", "Owner",
             "Date Created", "Date Modified", "Date Accessed", "Hidden"};
-    private int rowCount;
 
     /**
      * Table model constructor
@@ -69,13 +68,6 @@ public class SearchTableModel extends AbstractTableModel {
     public int getRowCount() {
         return results.size();
     }
-
-    /**
-     *
-     */
-   /* public void setRowCount(int rowCount){
-        this.rowCount = rowCount;
-    }*/
 
     /**
      * Define the total number of columns
