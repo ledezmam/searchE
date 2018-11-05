@@ -12,6 +12,7 @@
 
 package com.foundation.controller;
 
+import com.foundation.model.Asset;
 import com.foundation.model.FileFound;
 import com.foundation.model.Search;
 import com.foundation.view.View;
@@ -48,7 +49,7 @@ public class Controller {
                 view.getTextPanel().clean();
                 view.getTablePanel().refresh();
                 getCriteriaView();
-            } catch (ParseException | IOException e1) {
+            } catch (ParseException e1) {
                 e1.printStackTrace();
             }
         });
@@ -60,7 +61,7 @@ public class Controller {
      *
      * @throws ParseException
      */
-    private void getCriteriaView() throws ParseException, IOException {
+    private void getCriteriaView() throws ParseException {
 
         boolean flag = true;
 
@@ -86,23 +87,31 @@ public class Controller {
                         " characters: <>:\"\\/|?*");
                 flag = false;
             }
+        } else {
+            criteria.setFileName(null);
         }
 
         String fileType = view.getFormPanel().getExtList().getSelectedItem()
                 .toString();
         if (!fileType.isEmpty() && validate.validateFileType(fileType)) {
             criteria.setFileExtension(fileType);
+        } else {
+            criteria.setFileExtension(null);
         }
 
         String visibility = view.getFormPanel().getVisibilityList()
                 .getSelectedItem().toString();
         if (visibility != null && !visibility.isEmpty()) {
             criteria.setFileVisibility(visibility);
+        } else {
+            criteria.setFileVisibility(null);
         }
 
         boolean readOnly = view.getFormPanel().getFileIsReadOnlyCheckBox()
                 .isSelected();
         if (readOnly) {
+            criteria.setReadOnly(readOnly);
+        } else {
             criteria.setReadOnly(readOnly);
         }
 
@@ -195,6 +204,8 @@ public class Controller {
         String owner = view.getFormPanel().getOwnerField().getText();
         if (!owner.isEmpty()) {
             criteria.setFileOwner(owner);
+        } else {
+            criteria.setFileOwner(null);
         }
 /*
         String content = "any text here";
@@ -204,8 +215,13 @@ public class Controller {
 */
         if (flag) {
             search.resetResults();
-            List<FileFound> results = search.searchFilesByCriteria(criteria);
-            printResult(results);
+            try {
+                List<Asset> results = search.searchFilesByCriteria(criteria);
+                printResult(results);
+            }
+            catch (IOException e) {
+                view.setTextPanel(e.getMessage());
+            }
         }
     }
 
@@ -214,11 +230,10 @@ public class Controller {
      *
      * @throws ParseException
      */
-    public void printResult(List<FileFound> results) throws ParseException {
-        for (FileFound item : results) {
-            //view.getTablePanel().clear();
+    public void printResult(List<Asset> results) throws ParseException {
+        //for (Asset item : results) {
             view.getTablePanel().setData(results);
-        }
+        //}
     }
 
 }

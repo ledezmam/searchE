@@ -13,6 +13,7 @@
 
 package com.foundation.view;
 
+import com.foundation.model.Asset;
 import com.foundation.model.FileFound;
 
 import javax.swing.table.AbstractTableModel;
@@ -27,7 +28,7 @@ import java.util.List;
  */
 public class SearchTableModel extends AbstractTableModel {
 
-    private List<FileFound> results;
+    private List<Asset> results;
     private String[] colNames = {"Path", "File Name", "File Size", "Owner",
             "Date Created", "Date Modified", "Date Accessed", "Hidden"};
     private int rowCount;
@@ -55,7 +56,7 @@ public class SearchTableModel extends AbstractTableModel {
      *
      * @param results read search results
      */
-    public void setData(List<FileFound> results){
+    public void setData(List<Asset> results){
         this.results = results;
     }
 
@@ -95,7 +96,7 @@ public class SearchTableModel extends AbstractTableModel {
      */
     @Override
     public Object getValueAt(int row, int column) {
-        FileFound filefound = results.get(row);
+        FileFound filefound = (FileFound) results.get(row);
 
         switch(column){
             case 0:
