@@ -16,20 +16,9 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
+import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.BorderFactory;
-import java.awt.Dimension;
-import java.awt.Insets;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -398,7 +387,7 @@ public class FormPanel extends JPanel {
         fileCompareModel.addElement(new FileCategory(0, ""));
         fileCompareModel.addElement(new FileCategory(1, "equals to"));
         fileCompareModel.addElement(new FileCategory(2, "greater than"));
-        fileCompareModel.addElement(new FileCategory(3, "Less than"));
+        fileCompareModel.addElement(new FileCategory(3, "less than"));
         fileSizeCompareList.setModel(fileCompareModel);
 
         fileSizeCompareList.setPreferredSize(new Dimension(100, 25));

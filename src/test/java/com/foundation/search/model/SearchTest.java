@@ -290,4 +290,91 @@ public class SearchTest {
 
         }
     }
+
+    /**
+     * Method that tests searchFilesByCriteria to search by read-only criteria
+     */
+    @Test
+    public void searchFilesByReadOnlyCriteria() {
+        try{
+            String path="src/test/java/com/foundation/search/test";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setReadOnly(true);
+            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            List<String> expectedFiles = new ArrayList<>();
+            expectedFiles.add("OtherFile.docx");
+            expectedFiles.add("testCSV0.csv");
+
+            for (int i = 0; i < expectedFiles.size(); i++) {
+                Assert.assertEquals(actualFiles.get(i).getFilename(), expectedFiles.get(i));
+            }
+        } catch (IOException e) {
+
+        }
+    }
+
+    /**
+     * Method that tests searchFilesByCriteria to search files that are less
+     * than 60 KB
+     */
+    @Test
+    public void searchFilesByCriteriaWhenASizeIsSpecifiedLessThan60KB() {
+        try{
+            String path="src/test/java/com/foundation/search/test";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileSize("less than",60000);
+            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            int expectedSizeFiles = 15;
+            Assert.assertEquals(expectedSizeFiles, actualFiles.size());
+
+        } catch (IOException e) {
+
+        }
+    }
+
+    /**
+     * Method that tests searchFilesByCriteria to search files that are greater
+     * than 60 KB
+     */
+    @Test
+    public void searchFilesByCriteriaWhenASizeIsSpecifiedGreaterThan60KB() {
+        try{
+            String path="src/test/java/com/foundation/search/test";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileSize("greater than",60000);
+            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            int expectedSizeFiles = 2;
+            Assert.assertEquals(expectedSizeFiles, actualFiles.size());
+
+        } catch (IOException e) {
+
+        }
+    }
+
+    /**
+     * Method that tests searchFilesByCriteria to search files that are equals
+     * to 0 KB
+     */
+    @Test
+    public void searchFilesByCriteriaWhenASizeIsEqualsTo0KB() {
+        try{
+            String path="src/test/java/com/foundation/search/test";
+            search = new Search();
+            SearchCriteria criteria = new SearchCriteria();
+            criteria.setPath(path);
+            criteria.setFileSize("equals to",0);
+            List<FileFound>  actualFiles = search.searchFilesByCriteria(criteria);
+            int expectedSizeFiles = 14;
+            Assert.assertEquals(expectedSizeFiles, actualFiles.size());
+
+        } catch (IOException e) {
+
+        }
+    }
 }

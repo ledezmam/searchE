@@ -48,7 +48,7 @@ public class FileFound  extends File{
             this.owner = Files.getOwner(file.toPath()).toString();
             this.path = file.getPath();
             this.filename = file.getName();
-            this.size =  String.valueOf(file.getTotalSpace());
+            this.size =  String.valueOf(file.length());
             this.dateCreation = attr.creationTime().toString();
             this.dateModified = attr.lastModifiedTime().toString();
             this.dateAccessed = attr.lastAccessTime().toString();

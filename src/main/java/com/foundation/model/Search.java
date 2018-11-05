@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -107,14 +108,15 @@ public class Search {
             BasicFileAttributes attr = Files.readAttributes(file.toPath(),
                     BasicFileAttributes.class);
             String owner = Files.getOwner(file.toPath()).getName();
-            Long size =  file.getTotalSpace();
             FileTime dateCreation = attr.creationTime();
             FileTime dateModified = attr.lastModifiedTime();
             FileTime dateAccessed = attr.lastAccessTime();
-
-            //Date criteriaDateCreated = criteria.getDateCreated();
-            //Date criteriaDateModified = criteria.getDateModified();
-            //Date criteriaDateAccessed = criteria.getDateAccessed();
+            Date startDateCreatedCrit = criteria.getDateCreatedStart();
+            Date endDateCreatedCrit = criteria.getDateCreatedEnd();
+            Date startDateModifiedCrit = criteria.getDateModifiedStart();
+            Date endDateModifiedCrit = criteria.getDateModifiedEnd();
+            Date startDateAccessedCrit = criteria.getDateAccessedStart();
+            Date endDateAccessedCrit = criteria.getDateAccessedEnd();
 
             if(criteria.getFileName() != null && !doesFileMatchesName(file.getName(), criteria.getFileName())){
                 match = false;
@@ -127,26 +129,26 @@ public class Search {
             if(criteria.getFileOwner()!= null && !owner.contains(criteria.getFileOwner())){
                 match = false;
             }
-/*
-            if (criteriaDateCreated != null && criteriaDateCreated.getTime() != dateCreation.toMillis()){
+
+            if (startDateCreatedCrit != null && !doesDateMatchCriteria(startDateCreatedCrit, endDateCreatedCrit, dateCreation)){
                 match = false;
             }
 
-            if (criteriaDateModified != null && criteriaDateModified.getTime() != dateModified.toMillis()){
+            if (startDateModifiedCrit != null && !doesDateMatchCriteria(startDateModifiedCrit, endDateModifiedCrit, dateModified)){
                 match = false;
             }
 
-            if (criteriaDateAccessed != null && criteriaDateAccessed.getTime() != dateAccessed.toMillis()){
+            if (startDateAccessedCrit != null && !doesDateMatchCriteria(startDateAccessedCrit, endDateAccessedCrit, dateAccessed)){
                 match = false;
             }
-*/
-            if (criteria.getFileSize() != null && !doesFileSizeMatch(criteria.getFileSize(), file.length())){
+
+            if (criteria.getFileSize() != null && !doesFileSizeMatch(criteria.getFileSize(), file)){
                 match = false;
             }
             if (criteria.getFileVisibility() != null && !doesFileMatchVisibility(criteria.getFileVisibility(), file)){
                 match = false;
             }
-            if (criteria.getReadOnly() != false && file.canRead() != criteria.getReadOnly()){
+            if (criteria.getReadOnly() != false && file.canWrite()){
                 match = false;
             }
 
@@ -192,28 +194,34 @@ public class Search {
      * Method that will verify if the file matches the size criteria
      * @param mapSize The map that contains the operator and target size to be
      *                compared
-     * @param currentFileSize the current size of the file that is being
+     * @param file the current size of the file that is being
      *                        analyzed
      * @return true if the files matches the criteria and false if not.
      */
-    private boolean doesFileSizeMatch(Map<String, Long> mapSize, Long currentFileSize){
+    private boolean doesFileSizeMatch(Map<String, Long> mapSize, File file){
         boolean match = false;
-        for ( String operator : mapSize.keySet() ) {
-            switch (operator){
-                case "greater than":
-                    if (mapSize.get(operator) > currentFileSize){
-                        match = true;
-                    }
-                case "less than":
-                    if (mapSize.get(operator) < currentFileSize){
-                        match = true;
-                    }
-                case "equals":
-                    if (mapSize.get(operator) == currentFileSize){
-                        match = true;
-                    }
-                default:
-                    break;
+        if (!file.isDirectory()){
+            Long currentFileSize = file.length();
+            for ( String operator : mapSize.keySet() ) {
+                switch (operator){
+                    case "greater than":
+                        if (currentFileSize > mapSize.get(operator)){
+                            match = true;
+                        }
+                        break;
+                    case "less than":
+                        if (currentFileSize < mapSize.get(operator)){
+                            match = true;
+                        }
+                        break;
+                    case "equals to":
+                        if (mapSize.get(operator) == currentFileSize){
+                            match = true;
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         return match;
@@ -235,6 +243,23 @@ public class Search {
             if (file.isHidden() == true){
                 match = true;
             }
+        }
+        return match;
+    }
+
+    /**
+     * Method that will verify if the file date is between the given start date
+     * and end date of the search criteria.
+     * @param startDateCrit start date that comes from the criteria
+     * @param endDateCrit end date that comes from the criteria
+     * @param fileTime represents the value of a file's time stamp
+     * @return true if the files matches the criteria and false if not.
+     */
+    private boolean doesDateMatchCriteria(Date startDateCrit, Date endDateCrit, FileTime fileTime){
+        boolean match = false;
+
+        if (fileTime.toMillis() >= startDateCrit.getTime() && fileTime.toMillis() <= endDateCrit.getTime() ){
+            match = true;
         }
         return match;
     }
