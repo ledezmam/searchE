@@ -47,7 +47,6 @@ public class Controller {
             try {
                 view.getTextPanel().clean();
                 view.getTablePanel().refresh();
-                //view.getTablePanel().setData(null);
                 getCriteriaView();
             } catch (ParseException | IOException e1) {
                 e1.printStackTrace();
@@ -66,7 +65,7 @@ public class Controller {
         boolean flag = true;
 
         String path = view.getFormPanel().getFolderTextField().getText();
-        if (path != null && !path.isEmpty()) {
+        if (!path.isEmpty()) {
             if (validate.validatePath(path)) {
                 criteria.setPath(path);
             } else {
@@ -79,7 +78,7 @@ public class Controller {
         }
 
         String fileName = view.getFormPanel().getSearchTextField().getText();
-        if (fileName != null && !fileName.isEmpty()) {
+        if (!fileName.isEmpty()) {
             if (validate.validateFileName(fileName)) {
                 criteria.setFileName(fileName);
             } else {
@@ -91,7 +90,7 @@ public class Controller {
 
         String fileType = view.getFormPanel().getExtList().getSelectedItem()
                 .toString();
-        if (fileType != null && validate.validateFileType(fileType)) {
+        if (!fileType.isEmpty() && validate.validateFileType(fileType)) {
             criteria.setFileExtension(fileType);
         }
 
@@ -101,7 +100,8 @@ public class Controller {
             criteria.setFileVisibility(visibility);
         }
 
-        boolean readOnly = view.getFormPanel().getFileIsReadOnlyCheckBox().isSelected();
+        boolean readOnly = view.getFormPanel().getFileIsReadOnlyCheckBox()
+                .isSelected();
         if (readOnly) {
             criteria.setReadOnly(readOnly);
         }
@@ -193,7 +193,7 @@ public class Controller {
         }
 
         String owner = view.getFormPanel().getOwnerField().getText();
-        if (owner != null && !owner.isEmpty()) {
+        if (!owner.isEmpty()) {
             criteria.setFileOwner(owner);
         }
 /*
