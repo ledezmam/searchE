@@ -76,16 +76,14 @@ public class Search implements ISearch {
             for (File file : fileList) {
                 if (file.isDirectory()){
                     if (doesFileMatchesCriteria(file, criteria)){
-                        FileFound fileFound = new FileFound(file);
-                        resultFiles.add(fileFound);
+                        resultFiles.add(FactoryAsset.createAsset(file));
                     }
                     criteria.setPath(file.getPath());
                     searchFilesByCriteria(criteria);
                 }
                 else {
                     if (doesFileMatchesCriteria(file, criteria)){
-                        FileFound fileFound = new FileFound(file);
-                        resultFiles.add(fileFound);
+                        resultFiles.add(FactoryAsset.createAsset(file));
                     }
                 }
             }
