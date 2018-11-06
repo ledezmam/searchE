@@ -16,13 +16,25 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.BorderFactory;
 import javax.swing.border.Border;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Properties;
+
 
 /**
  * Panel class setting with grid definition
@@ -325,6 +337,7 @@ public class FormPanel extends JPanel {
         searchButtonLabel = new JLabel("File Name: ");
         searchTextField = new JTextField(25);
         searchButton = new JButton("Search ");
+
         searchActionListener = new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 String string = searchTextField.getText();

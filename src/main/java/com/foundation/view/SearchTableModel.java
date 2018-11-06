@@ -14,7 +14,6 @@
 package com.foundation.view;
 
 import com.foundation.model.Asset;
-import com.foundation.model.FileFound;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class SearchTableModel extends AbstractTableModel {
 
     private List<Asset> results;
     private String[] colNames = {"Path", "File Name", "File Size", "Owner",
-            "Date Created", "Date Modified", "Date Accessed", "Hidden"};
+            "Date Created", "Date Modified", "Date Accessed", "Hidden", "Read Only"};
 
     /**
      * Table model constructor
@@ -76,7 +75,7 @@ public class SearchTableModel extends AbstractTableModel {
      */
     @Override
     public int getColumnCount() {
-        return 8;
+        return 9;
     }
 
     /**
@@ -107,6 +106,8 @@ public class SearchTableModel extends AbstractTableModel {
                 return filefound.getDateAccessed();
             case 7:
                 return filefound.getHidden();
+            case 8:
+                return filefound.isReadable();
         }
         return null;
     }

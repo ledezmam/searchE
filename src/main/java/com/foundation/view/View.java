@@ -18,9 +18,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
+import javax.swing.KeyStroke;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 /**
  * View class with variables set.
@@ -149,6 +151,13 @@ public class View extends JFrame {
                 }
             }
         });
+
+        optionsMenu.setMnemonic(KeyEvent.VK_M);
+        aboutOption.setMnemonic(KeyEvent.VK_A);
+        exitOption.setMnemonic((KeyEvent.VK_X));
+
+        exitOption.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
+                ActionEvent.CTRL_MASK));
 
         return menuBar;
     }
