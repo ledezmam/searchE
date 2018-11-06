@@ -21,7 +21,6 @@ import java.io.File;
  * @version 1.0.0 Oct 2018
  * @author Maria Ledezma
  */
-
 public class FactoryAsset {
 
     /**

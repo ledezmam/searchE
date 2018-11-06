@@ -74,6 +74,9 @@ public class Controller {
                 view.setTextPanel("The specified path is not valid.!!!");
                 flag = false;
             }
+        } else {
+            view.setTextPanel("The specified path is empty.!!!");
+            flag = false;
         }
 
         String fileName = view.getFormPanel().getSearchTextField().getText();
