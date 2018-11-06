@@ -51,7 +51,7 @@ public class Asset extends File {
             this.dateModified = attr.lastModifiedTime().toString();
             this.dateAccessed = attr.lastAccessTime().toString();
             this.hidden = file.isHidden();
-            this.isReadable = file.canRead();
+            this.isReadable = file.canWrite() ? false : true;
 
         }catch(IOException e){
             System.out.println(e.getMessage());
