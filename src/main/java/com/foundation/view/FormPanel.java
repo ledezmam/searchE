@@ -26,6 +26,7 @@ import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
+import javax.swing.ImageIcon;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -34,6 +35,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Properties;
+import java.net.URL;
 
 
 /**
@@ -267,6 +269,21 @@ public class FormPanel extends JPanel {
     }
 
     /**
+     * Method to load an icon
+     *
+     * @param path where the icon is located
+     * @return icon loaded
+     */
+    private ImageIcon createIcon(String path) {
+        URL url = getClass().getResource(path);
+        if(url ==null){
+            System.err.println("Unable to load image: " + path);
+        }
+        ImageIcon icon = new ImageIcon(url);
+        return icon;
+    }
+
+    /**
      * Method with the components of the class
       */
     public void components(){
@@ -337,6 +354,7 @@ public class FormPanel extends JPanel {
         searchButtonLabel = new JLabel("File Name: ");
         searchTextField = new JTextField(25);
         searchButton = new JButton("Search ");
+        //searchButton.setIcon(createIcon("/src/images/icon.png"));
 
         searchActionListener = new ActionListener(){
             public void actionPerformed(ActionEvent e) {
