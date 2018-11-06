@@ -13,7 +13,6 @@
 package com.foundation.view;
 
 import com.foundation.model.Asset;
-import com.foundation.model.FileFound;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -60,13 +59,4 @@ public class TablePanel extends JPanel {
     public void refresh(){
         tableModel.fireTableDataChanged();
     }
-
-    /**
-     *Method to clear the table
-     */
-    /*public void clear(){
-        tableModel..setRowCount(0);
-    }
-*/
-
 }
